@@ -14,8 +14,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
 spec:
   dnsNames:
-    - mariadb-operator-webhook.default.svc
-    - mariadb-operator-webhook.default.svc.cluster.local
+    - mariadb-operator-webhook.dbo-mariadb.svc
+    - mariadb-operator-webhook.dbo-mariadb.svc.cluster.local
   issuerRef:
     kind: Issuer
     name: mariadb-operator-selfsigned-issuer

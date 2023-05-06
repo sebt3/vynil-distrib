@@ -21,7 +21,7 @@ spec:
       app.kubernetes.io/instance: mariadb-operator
   namespaceSelector:
     matchNames:
-    - "default"
+    - "dbo-mariadb"
   endpoints:
   - port: metrics
     interval: 30s

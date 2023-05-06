@@ -16,7 +16,7 @@ metadata:
   annotations:
     
     
-    cert-manager.io/inject-ca-from: default/mariadb-operator-webhook-cert
+    cert-manager.io/inject-ca-from: dbo-mariadb/mariadb-operator-webhook-cert
     
   
 webhooks:
@@ -25,7 +25,7 @@ webhooks:
     clientConfig:
       service:
         name: mariadb-operator-webhook
-        namespace: default
+        namespace: dbo-mariadb
         path: /validate-mariadb-mmontes-io-v1alpha1-backup
       
     failurePolicy: Fail
@@ -46,7 +46,7 @@ webhooks:
     clientConfig:
       service:
         name: mariadb-operator-webhook
-        namespace: default
+        namespace: dbo-mariadb
         path: /validate-mariadb-mmontes-io-v1alpha1-connection
       
     failurePolicy: Fail
@@ -67,7 +67,7 @@ webhooks:
     clientConfig:
       service:
         name: mariadb-operator-webhook
-        namespace: default
+        namespace: dbo-mariadb
         path: /validate-mariadb-mmontes-io-v1alpha1-database
       
     failurePolicy: Fail
@@ -88,7 +88,7 @@ webhooks:
     clientConfig:
       service:
         name: mariadb-operator-webhook
-        namespace: default
+        namespace: dbo-mariadb
         path: /validate-mariadb-mmontes-io-v1alpha1-grant
       
     failurePolicy: Fail
@@ -109,7 +109,7 @@ webhooks:
     clientConfig:
       service:
         name: mariadb-operator-webhook
-        namespace: default
+        namespace: dbo-mariadb
         path: /validate-mariadb-mmontes-io-v1alpha1-mariadb
       
     failurePolicy: Fail
@@ -130,7 +130,7 @@ webhooks:
     clientConfig:
       service:
         name: mariadb-operator-webhook
-        namespace: default
+        namespace: dbo-mariadb
         path: /validate-mariadb-mmontes-io-v1alpha1-restore
       
     failurePolicy: Fail
@@ -151,7 +151,7 @@ webhooks:
     clientConfig:
       service:
         name: mariadb-operator-webhook
-        namespace: default
+        namespace: dbo-mariadb
         path: /validate-mariadb-mmontes-io-v1alpha1-sqljob
       
     failurePolicy: Fail
@@ -172,7 +172,7 @@ webhooks:
     clientConfig:
       service:
         name: mariadb-operator-webhook
-        namespace: default
+        namespace: dbo-mariadb
         path: /validate-mariadb-mmontes-io-v1alpha1-user
       
     failurePolicy: Fail
