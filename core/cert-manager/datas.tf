@@ -1,6 +1,5 @@
 
 data "kustomization_overlay" "data" {
-  namespace = var.namespace
   resources = [
     "https://github.com/cert-manager/cert-manager/releases/download/v${var.release}/cert-manager.yaml",
   ]
