@@ -1,100 +1,106 @@
+---
 apiVersion: vinyl.solidite.fr/v1beta1
 kind: Component
 category: core
 metadata:
   name: vynil
-  description: |-
-    Vynil is a package manager for the kubernetes operating system
+  description: Vynil is a package manager for the kubernetes operating system
 options:
   images:
-    type: object
-    properties:
-      operator:
-        type: object
-        properties:
-          registry:
-            type: string
-            default: docker.io
-          repository:
-            type: string
-            default: sebt3/vynil-operator
-          tag:
-            type: string
-            description: vynil-operator version to use
-            default: 0.1.0
-          pullPolicy:
-            type: string
-            enum:
-            - Always
-            - Never
-            - IfNotPresent
-            default: Always
-        default:
-          registry: docker.io
-          repository: sebt3/vynil-operator
-          tag: 0.1.0
-          pullPolicy: Always
+    default:
       agent:
+        pullPolicy: Always
+        registry: docker.io
+        repository: sebt3/vynil-agent
+        tag: 0.1.1
+      operator:
+        pullPolicy: Always
+        registry: docker.io
+        repository: sebt3/vynil-operator
+        tag: 0.1.1
+    type: object
+    properties:
+      agent:
+        default:
+          pullPolicy: Always
+          registry: docker.io
+          repository: sebt3/vynil-agent
+          tag: 0.1.1
         type: object
         properties:
-          registry:
-            type: string
-            default: docker.io
-          repository:
-            type: string
-            default: sebt3/vynil-agent
-          tag:
-            type: string
-            description: code-server version to use
-            default: 0.1.0
           pullPolicy:
+            default: Always
             type: string
             enum:
             - Always
             - Never
             - IfNotPresent
-            default: Always
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: sebt3/vynil-agent
+            type: string
+          tag:
+            description: vynil-agent version to use
+            default: 0.1.1
+            type: string
+      operator:
         default:
-          registry: docker.io
-          repository: sebt3/vynil-agent
-          tag: 0.1.0
           pullPolicy: Always
-      default:
-        agent:
-          registry: docker.io
-          repository: sebt3/vynil-agent
-          tag: 0.1.0
-          pullPolicy: Always
-        operator:
           registry: docker.io
           repository: sebt3/vynil-operator
-          tag: 0.1.0
-          pullPolicy: Always
+          tag: 0.1.1
+        type: object
+        properties:
+          pullPolicy:
+            default: Always
+            type: string
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: sebt3/vynil-operator
+            type: string
+          tag:
+            description: vynil-operator version to use
+            default: 0.1.1
+            type: string
   resources:
-    type: object
-    properties:
-      limits:
-        type: object
-        properties:
-          cpu:
-            type: string
-            default: "200m"
-          memory:
-            type: string
-            default: "256Mi"
-      requests:
-        type: object
-        properties:
-          cpu:
-            type: string
-            default: "50m"
-          memory:
-            type: string
-            default: "100Mi"
     default:
       limits:
-        cpu: "200m"
-        memory: "256Mi"
+        cpu: 200m
+        memory: 256Mi
       requests:
-        cpu: "50m"
-        memory: "100Mi"
+        cpu: 50m
+        memory: 100Mi
+    type: object
+    properties:
+      limits:
+        default:
+          cpu: 200m
+          memory: 256Mi
+        type: object
+        properties:
+          cpu:
+            default: 200m
+            type: string
+          memory:
+            default: 256Mi
+            type: string
+      requests:
+        default:
+          cpu: 50m
+          memory: 100Mi
+        type: object
+        properties:
+          cpu:
+            default: 50m
+            type: string
+          memory:
+            default: 100Mi
+            type: string

@@ -1,0 +1,96 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: dbo-pg
+  description: PostgreSQL database operator made by Zalando
+options:
+  release:
+    description: postgres-operator version to use
+    default: 1.8.2
+    type: string
+  images:
+    default:
+      connectionPooler:
+        registry: registry.opensource.zalan.do
+        repository: acid/pgbouncer
+        tag: master-22
+      logicalBackup:
+        registry: registry.opensource.zalan.do
+        repository: acid/logical-backup
+        tag: v1.8.2
+      operator:
+        registry: registry.opensource.zalan.do
+        repository: acid/postgres-operator
+        tag: v1.8.2-43-g3e148ea5
+      spilo:
+        registry: registry.opensource.zalan.do
+        repository: acid/spilo-14
+        tag: 2.1-p6
+    type: object
+    properties:
+      connectionPooler:
+        default:
+          registry: registry.opensource.zalan.do
+          repository: acid/pgbouncer
+          tag: master-22
+        type: object
+        properties:
+          registry:
+            default: registry.opensource.zalan.do
+            type: string
+          repository:
+            default: acid/pgbouncer
+            type: string
+          tag:
+            default: master-22
+            type: string
+      logicalBackup:
+        default:
+          registry: registry.opensource.zalan.do
+          repository: acid/logical-backup
+          tag: v1.8.2
+        type: object
+        properties:
+          registry:
+            default: registry.opensource.zalan.do
+            type: string
+          repository:
+            default: acid/logical-backup
+            type: string
+          tag:
+            default: v1.8.2
+            type: string
+      operator:
+        default:
+          registry: registry.opensource.zalan.do
+          repository: acid/postgres-operator
+          tag: v1.8.2-43-g3e148ea5
+        type: object
+        properties:
+          registry:
+            default: registry.opensource.zalan.do
+            type: string
+          repository:
+            default: acid/postgres-operator
+            type: string
+          tag:
+            default: v1.8.2-43-g3e148ea5
+            type: string
+      spilo:
+        default:
+          registry: registry.opensource.zalan.do
+          repository: acid/spilo-14
+          tag: 2.1-p6
+        type: object
+        properties:
+          registry:
+            default: registry.opensource.zalan.do
+            type: string
+          repository:
+            default: acid/spilo-14
+            type: string
+          tag:
+            default: 2.1-p6
+            type: string
