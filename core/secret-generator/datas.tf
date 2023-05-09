@@ -21,7 +21,7 @@ data "kustomization_overlay" "data" {
       name = "kubernetes-secret-generator"
     }
     patch = <<-EOF
-    - op: delete
+    - op: remove
       path: /spec/template/spec/containers/0/env/0/valueFrom
     EOF
   }
