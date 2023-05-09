@@ -1,0 +1,34 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: secret-generator
+  description: Automatically generated secrets for Kubernetes
+options:
+  release:
+    description: secret-generator version to use
+    default: 3.4.0
+    type: string
+  namespaces:
+    default: ''
+    type: string
+  secret_length:
+    default: 40
+    type: integer
+  image:
+    default:
+      registry: quay.io
+      repository: mittwald/kubernetes-secret-generator
+      tag: latest
+    type: object
+    properties:
+      registry:
+        default: quay.io
+        type: string
+      repository:
+        default: mittwald/kubernetes-secret-generator
+        type: string
+      tag:
+        default: latest
+        type: string
