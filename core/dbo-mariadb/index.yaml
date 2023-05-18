@@ -6,4 +6,7 @@ metadata:
   name: dbo-mariadb
   description: Run and operate MariaDB in a cloud native way. Declaratively manage your MariaDB using Kubernetes CRDs rather than imperative commands.
 options: {}
-dependencies: []
+dependencies:
+- dist: null
+  category: core
+  component: cert-manager
