@@ -6,10 +6,6 @@ metadata:
   name: dbo-pg
   description: PostgreSQL database operator made by Zalando
 options:
-  release:
-    description: postgres-operator version to use
-    default: 1.8.2
-    type: string
   images:
     default:
       connectionPooler:
@@ -28,14 +24,29 @@ options:
         registry: registry.opensource.zalan.do
         repository: acid/spilo-14
         tag: 2.1-p6
-    type: object
+    examples:
+    - connectionPooler:
+        registry: registry.opensource.zalan.do
+        repository: acid/pgbouncer
+        tag: master-22
+      logicalBackup:
+        registry: registry.opensource.zalan.do
+        repository: acid/logical-backup
+        tag: v1.8.2
+      operator:
+        registry: registry.opensource.zalan.do
+        repository: acid/postgres-operator
+        tag: v1.8.2-43-g3e148ea5
+      spilo:
+        registry: registry.opensource.zalan.do
+        repository: acid/spilo-14
+        tag: 2.1-p6
     properties:
       connectionPooler:
         default:
           registry: registry.opensource.zalan.do
           repository: acid/pgbouncer
           tag: master-22
-        type: object
         properties:
           registry:
             default: registry.opensource.zalan.do
@@ -46,12 +57,12 @@ options:
           tag:
             default: master-22
             type: string
+        type: object
       logicalBackup:
         default:
           registry: registry.opensource.zalan.do
           repository: acid/logical-backup
           tag: v1.8.2
-        type: object
         properties:
           registry:
             default: registry.opensource.zalan.do
@@ -62,12 +73,12 @@ options:
           tag:
             default: v1.8.2
             type: string
+        type: object
       operator:
         default:
           registry: registry.opensource.zalan.do
           repository: acid/postgres-operator
           tag: v1.8.2-43-g3e148ea5
-        type: object
         properties:
           registry:
             default: registry.opensource.zalan.do
@@ -78,12 +89,12 @@ options:
           tag:
             default: v1.8.2-43-g3e148ea5
             type: string
+        type: object
       spilo:
         default:
           registry: registry.opensource.zalan.do
           repository: acid/spilo-14
           tag: 2.1-p6
-        type: object
         properties:
           registry:
             default: registry.opensource.zalan.do
@@ -94,3 +105,12 @@ options:
           tag:
             default: 2.1-p6
             type: string
+        type: object
+    type: object
+  release:
+    default: 1.8.2
+    description: postgres-operator version to use
+    examples:
+    - 1.8.2
+    type: string
+dependencies: []

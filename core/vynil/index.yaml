@@ -6,70 +6,6 @@ metadata:
   name: vynil
   description: Vynil is a package manager for the kubernetes operating system
 options:
-  images:
-    default:
-      agent:
-        pullPolicy: Always
-        registry: docker.io
-        repository: sebt3/vynil-agent
-        tag: 0.1.1
-      operator:
-        pullPolicy: Always
-        registry: docker.io
-        repository: sebt3/vynil-operator
-        tag: 0.1.1
-    type: object
-    properties:
-      agent:
-        default:
-          pullPolicy: Always
-          registry: docker.io
-          repository: sebt3/vynil-agent
-          tag: 0.1.1
-        type: object
-        properties:
-          pullPolicy:
-            default: Always
-            type: string
-            enum:
-            - Always
-            - Never
-            - IfNotPresent
-          registry:
-            default: docker.io
-            type: string
-          repository:
-            default: sebt3/vynil-agent
-            type: string
-          tag:
-            description: vynil-agent version to use
-            default: 0.1.1
-            type: string
-      operator:
-        default:
-          pullPolicy: Always
-          registry: docker.io
-          repository: sebt3/vynil-operator
-          tag: 0.1.1
-        type: object
-        properties:
-          pullPolicy:
-            default: Always
-            type: string
-            enum:
-            - Always
-            - Never
-            - IfNotPresent
-          registry:
-            default: docker.io
-            type: string
-          repository:
-            default: sebt3/vynil-operator
-            type: string
-          tag:
-            description: vynil-operator version to use
-            default: 0.1.1
-            type: string
   resources:
     default:
       limits:
@@ -78,13 +14,18 @@ options:
       requests:
         cpu: 50m
         memory: 100Mi
-    type: object
+    examples:
+    - limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
     properties:
       limits:
         default:
           cpu: 200m
           memory: 256Mi
-        type: object
         properties:
           cpu:
             default: 200m
@@ -92,11 +33,11 @@ options:
           memory:
             default: 256Mi
             type: string
+        type: object
       requests:
         default:
           cpu: 50m
           memory: 100Mi
-        type: object
         properties:
           cpu:
             default: 50m
@@ -104,3 +45,81 @@ options:
           memory:
             default: 100Mi
             type: string
+        type: object
+    type: object
+  images:
+    default:
+      agent:
+        pullPolicy: Always
+        registry: docker.io
+        repository: sebt3/vynil-agent
+        tag: 0.1.2
+      operator:
+        pullPolicy: Always
+        registry: docker.io
+        repository: sebt3/vynil-operator
+        tag: 0.1.2
+    examples:
+    - agent:
+        pullPolicy: Always
+        registry: docker.io
+        repository: sebt3/vynil-agent
+        tag: 0.1.2
+      operator:
+        pullPolicy: Always
+        registry: docker.io
+        repository: sebt3/vynil-operator
+        tag: 0.1.2
+    properties:
+      agent:
+        default:
+          pullPolicy: Always
+          registry: docker.io
+          repository: sebt3/vynil-agent
+          tag: 0.1.2
+        properties:
+          pullPolicy:
+            default: Always
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: sebt3/vynil-agent
+            type: string
+          tag:
+            default: 0.1.2
+            description: vynil-agent version to use
+            type: string
+        type: object
+      operator:
+        default:
+          pullPolicy: Always
+          registry: docker.io
+          repository: sebt3/vynil-operator
+          tag: 0.1.2
+        properties:
+          pullPolicy:
+            default: Always
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: sebt3/vynil-operator
+            type: string
+          tag:
+            default: 0.1.2
+            description: vynil-operator version to use
+            type: string
+        type: object
+    type: object
+dependencies: []

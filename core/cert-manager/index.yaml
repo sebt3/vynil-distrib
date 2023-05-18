@@ -9,8 +9,10 @@ metadata:
     X.509 certificate management for Kubernetes
 options:
   release:
-    description: cert-manager version to use
     default: 1.11.0
+    description: cert-manager version to use
+    examples:
+    - 1.11.0
     type: string
   images:
     default:
@@ -30,14 +32,29 @@ options:
         registry: quay.io
         repository: jetstack/cert-manager-webhook
         tag: v1.11.0
-    type: object
+    examples:
+    - cainjector:
+        registry: quay.io
+        repository: jetstack/cert-manager-cainjector
+        tag: v1.11.0
+      controller:
+        registry: quay.io
+        repository: jetstack/cert-manager-controller
+        tag: v1.11.0
+      startupapicheck:
+        registry: quay.io
+        repository: jetstack/cert-manager-ctl
+        tag: v1.11.0
+      webhook:
+        registry: quay.io
+        repository: jetstack/cert-manager-webhook
+        tag: v1.11.0
     properties:
       cainjector:
         default:
           registry: quay.io
           repository: jetstack/cert-manager-cainjector
           tag: v1.11.0
-        type: object
         properties:
           registry:
             default: quay.io
@@ -48,12 +65,12 @@ options:
           tag:
             default: v1.11.0
             type: string
+        type: object
       controller:
         default:
           registry: quay.io
           repository: jetstack/cert-manager-controller
           tag: v1.11.0
-        type: object
         properties:
           registry:
             default: quay.io
@@ -64,12 +81,12 @@ options:
           tag:
             default: v1.11.0
             type: string
+        type: object
       startupapicheck:
         default:
           registry: quay.io
           repository: jetstack/cert-manager-ctl
           tag: v1.11.0
-        type: object
         properties:
           registry:
             default: quay.io
@@ -80,12 +97,12 @@ options:
           tag:
             default: v1.11.0
             type: string
+        type: object
       webhook:
         default:
           registry: quay.io
           repository: jetstack/cert-manager-webhook
           tag: v1.11.0
-        type: object
         properties:
           registry:
             default: quay.io
@@ -96,3 +113,6 @@ options:
           tag:
             default: v1.11.0
             type: string
+        type: object
+    type: object
+dependencies: []

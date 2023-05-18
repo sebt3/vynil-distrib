@@ -7,21 +7,20 @@ metadata:
   description: Automatically generated secrets for Kubernetes
 options:
   release:
-    description: secret-generator version to use
     default: 3.4.0
+    description: secret-generator version to use
+    examples:
+    - 3.4.0
     type: string
-  namespaces:
-    default: ''
-    type: string
-  secret_length:
-    default: 40
-    type: integer
   image:
     default:
       registry: quay.io
       repository: mittwald/kubernetes-secret-generator
       tag: latest
-    type: object
+    examples:
+    - registry: quay.io
+      repository: mittwald/kubernetes-secret-generator
+      tag: latest
     properties:
       registry:
         default: quay.io
@@ -32,3 +31,15 @@ options:
       tag:
         default: latest
         type: string
+    type: object
+  secret_length:
+    default: 40
+    examples:
+    - 40
+    type: integer
+  namespaces:
+    default: ''
+    examples:
+    - ''
+    type: string
+dependencies: []
