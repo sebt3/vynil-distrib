@@ -1,0 +1,17 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: cert-manager-self-sign
+  description: Configure cert-manager to use self-signed certificates.
+options:
+  commonName:
+    default: self-signed
+    examples:
+    - self-signed
+    type: string
+dependencies:
+- dist: null
+  category: core
+  component: cert-manager
