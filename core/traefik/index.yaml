@@ -1,0 +1,43 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: traefik
+  description: Traefik is an open-source Edge Router that makes publishing your services a fun and easy experience. It receives requests on behalf of your system and finds out which components are responsible for handling them.
+options:
+  image:
+    default:
+      pullPolicy: IfNotPresent
+      registry: registry.opensource.zalan.do
+      repository: acid/pgbouncer
+      tag: master-22
+    examples:
+    - pullPolicy: IfNotPresent
+      registry: registry.opensource.zalan.do
+      repository: acid/pgbouncer
+      tag: master-22
+    properties:
+      pullPolicy:
+        default: IfNotPresent
+        type: string
+      registry:
+        default: registry.opensource.zalan.do
+        type: string
+      repository:
+        default: acid/pgbouncer
+        type: string
+      tag:
+        default: master-22
+        type: string
+    type: object
+dependencies:
+- dist: null
+  category: core
+  component: cert-manager
+- dist: null
+  category: core
+  component: crd-traefik
+- dist: null
+  category: core
+  component: crd-prometheus
