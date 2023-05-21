@@ -9,36 +9,36 @@ options:
   images:
     default:
       agent:
-        pullPolicy: Always
+        pullPolicy: IfNotPresent
         registry: docker.io
         repository: sebt3/vynil-agent
         tag: 0.1.2
       operator:
-        pullPolicy: Always
+        pullPolicy: IfNotPresent
         registry: docker.io
         repository: sebt3/vynil-operator
         tag: 0.1.2
     examples:
     - agent:
-        pullPolicy: Always
+        pullPolicy: IfNotPresent
         registry: docker.io
         repository: sebt3/vynil-agent
         tag: 0.1.2
       operator:
-        pullPolicy: Always
+        pullPolicy: IfNotPresent
         registry: docker.io
         repository: sebt3/vynil-operator
         tag: 0.1.2
     properties:
       agent:
         default:
-          pullPolicy: Always
+          pullPolicy: IfNotPresent
           registry: docker.io
           repository: sebt3/vynil-agent
           tag: 0.1.2
         properties:
           pullPolicy:
-            default: Always
+            default: IfNotPresent
             enum:
             - Always
             - Never
@@ -57,13 +57,13 @@ options:
         type: object
       operator:
         default:
-          pullPolicy: Always
+          pullPolicy: IfNotPresent
           registry: docker.io
           repository: sebt3/vynil-operator
           tag: 0.1.2
         properties:
           pullPolicy:
-            default: Always
+            default: IfNotPresent
             enum:
             - Always
             - Never

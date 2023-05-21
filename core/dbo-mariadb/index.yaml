@@ -10,3 +10,6 @@ dependencies:
 - dist: null
   category: core
   component: cert-manager
+- dist: null
+  category: core
+  component: crd-prometheus

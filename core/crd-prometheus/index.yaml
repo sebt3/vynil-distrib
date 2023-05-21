@@ -1,0 +1,14 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: crd-prometheus
+  description: CRD for Prometheus Operator
+options:
+  release:
+    default: 3.0.0
+    examples:
+    - 3.0.0
+    type: string
+dependencies: []
