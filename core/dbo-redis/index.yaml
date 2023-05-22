@@ -6,11 +6,6 @@ metadata:
   name: dbo-redis
   description: Redis Operator is a software to set up and manage Redis on Kubernetes.
 options:
-  release:
-    default: 0.14.3
-    examples:
-    - 0.14.3
-    type: string
   resources:
     default:
       limits:
@@ -52,6 +47,11 @@ options:
             type: string
         type: object
     type: object
+  release:
+    default: 0.14.3
+    examples:
+    - 0.14.3
+    type: string
   image:
     default:
       pullPolicy: IfNotPresent
