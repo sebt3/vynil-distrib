@@ -11,35 +11,6 @@ options:
     examples:
     - 0.14.3
     type: string
-  image:
-    default:
-      pullPolicy: IfNotPresent
-      registry: quay.io
-      repository: opstree/redis-operator
-      tag: v0.14.0
-    examples:
-    - pullPolicy: IfNotPresent
-      registry: quay.io
-      repository: opstree/redis-operator
-      tag: v0.14.0
-    properties:
-      pullPolicy:
-        default: IfNotPresent
-        enum:
-        - Always
-        - Never
-        - IfNotPresent
-        type: string
-      registry:
-        default: quay.io
-        type: string
-      repository:
-        default: opstree/redis-operator
-        type: string
-      tag:
-        default: v0.14.0
-        type: string
-    type: object
   resources:
     default:
       limits:
@@ -81,7 +52,33 @@ options:
             type: string
         type: object
     type: object
-dependencies:
-- dist: null
-  category: core
-  component: crd-dbo-redis
+  image:
+    default:
+      pullPolicy: IfNotPresent
+      registry: quay.io
+      repository: opstree/redis-operator
+      tag: v0.14.0
+    examples:
+    - pullPolicy: IfNotPresent
+      registry: quay.io
+      repository: opstree/redis-operator
+      tag: v0.14.0
+    properties:
+      pullPolicy:
+        default: IfNotPresent
+        enum:
+        - Always
+        - Never
+        - IfNotPresent
+        type: string
+      registry:
+        default: quay.io
+        type: string
+      repository:
+        default: opstree/redis-operator
+        type: string
+      tag:
+        default: v0.14.0
+        type: string
+    type: object
+dependencies: []
