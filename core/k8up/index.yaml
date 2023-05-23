@@ -6,70 +6,6 @@ metadata:
   name: k8up
   description: Vynil is a package manager for the kubernetes operating system
 options:
-  timezone:
-    default: Europe/Paris
-    examples:
-    - Europe/Paris
-    type: string
-  images:
-    default:
-      backup:
-        registry: ghcr.io
-        repository: k8up-io/k8up
-        tag: v2.7.1
-      operator:
-        pullPolicy: Always
-        registry: ghcr.io
-        repository: k8up-io/k8up
-        tag: v2.7.1
-    examples:
-    - backup:
-        registry: ghcr.io
-        repository: k8up-io/k8up
-        tag: v2.7.1
-      operator:
-        pullPolicy: Always
-        registry: ghcr.io
-        repository: k8up-io/k8up
-        tag: v2.7.1
-    properties:
-      backup:
-        default:
-          registry: ghcr.io
-          repository: k8up-io/k8up
-          tag: v2.7.1
-        properties:
-          registry:
-            default: ghcr.io
-            type: string
-          repository:
-            default: k8up-io/k8up
-            type: string
-          tag:
-            default: v2.7.1
-            type: string
-        type: object
-      operator:
-        default:
-          pullPolicy: Always
-          registry: ghcr.io
-          repository: k8up-io/k8up
-          tag: v2.7.1
-        properties:
-          pullPolicy:
-            default: Always
-            type: string
-          registry:
-            default: ghcr.io
-            type: string
-          repository:
-            default: k8up-io/k8up
-            type: string
-          tag:
-            default: v2.7.1
-            type: string
-        type: object
-    type: object
   resources:
     default:
       limits:
@@ -108,6 +44,74 @@ options:
             type: string
           memory:
             default: 128Mi
+            type: string
+        type: object
+    type: object
+  timezone:
+    default: Europe/Paris
+    examples:
+    - Europe/Paris
+    type: string
+  images:
+    default:
+      backup:
+        registry: ghcr.io
+        repository: k8up-io/k8up
+        tag: v2.7.1
+      operator:
+        pullPolicy: IfNotPresent
+        registry: ghcr.io
+        repository: k8up-io/k8up
+        tag: v2.7.1
+    examples:
+    - backup:
+        registry: ghcr.io
+        repository: k8up-io/k8up
+        tag: v2.7.1
+      operator:
+        pullPolicy: IfNotPresent
+        registry: ghcr.io
+        repository: k8up-io/k8up
+        tag: v2.7.1
+    properties:
+      backup:
+        default:
+          registry: ghcr.io
+          repository: k8up-io/k8up
+          tag: v2.7.1
+        properties:
+          registry:
+            default: ghcr.io
+            type: string
+          repository:
+            default: k8up-io/k8up
+            type: string
+          tag:
+            default: v2.7.1
+            type: string
+        type: object
+      operator:
+        default:
+          pullPolicy: IfNotPresent
+          registry: ghcr.io
+          repository: k8up-io/k8up
+          tag: v2.7.1
+        properties:
+          pullPolicy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: ghcr.io
+            type: string
+          repository:
+            default: k8up-io/k8up
+            type: string
+          tag:
+            default: v2.7.1
             type: string
         type: object
     type: object

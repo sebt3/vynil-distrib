@@ -1,12 +1,6 @@
 
 data "kustomization_overlay" "data" {
   namespace = var.namespace
-  crds = [
-    "https://raw.githubusercontent.com/OT-CONTAINER-KIT/helm-charts/redis-operator-${var.release}/charts/redis-operator/crds/redis-cluster.yaml",
-    "https://raw.githubusercontent.com/OT-CONTAINER-KIT/helm-charts/redis-operator-${var.release}/charts/redis-operator/crds/redis-replication.yaml",
-    "https://raw.githubusercontent.com/OT-CONTAINER-KIT/helm-charts/redis-operator-${var.release}/charts/redis-operator/crds/redis-sentinel.yaml",
-    "https://raw.githubusercontent.com/OT-CONTAINER-KIT/helm-charts/redis-operator-${var.release}/charts/redis-operator/crds/redis.yaml"
-  ]
   resources = [ for file in fileset(path.module, "*.yaml"): file if file != "index.yaml"]
   patches {
     target {
