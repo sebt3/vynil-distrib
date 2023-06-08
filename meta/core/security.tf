@@ -1,12 +1,12 @@
 locals {
-    secret-manager = { for k, v in var.security.secret-manager : k => v if k!="enable" }
+    secret-generator = { for k, v in var.security.secret-generator : k => v if k!="enable" }
     cert-manager = { for k, v in var.security.cert-manager : k => v if k!="enable" }
     letsencrypt = { for k, v in var.security.letsencrypt : k => v if k!="enable" }
     self-sign = { for k, v in var.security.self-sign : k => v if k!="enable" }
 }
 
 resource "kubernetes_namespace_v1" "security-ns" {
-  count = ( (var.databases.mariadb.enable || var.security.cert-manager.enable) || var.security.secret-manager.enable )? 1 : 0
+  count = ( (var.databases.mariadb.enable || var.security.cert-manager.enable) || var.security.secret-generator.enable )? 1 : 0
   metadata {
     annotations = {
       "vynil.solidite.fr/meta" = "core"
@@ -22,8 +22,8 @@ resource "kubernetes_namespace_v1" "security-ns" {
   }
 }
 
-resource "kubernetes_manifest" "secret-manager" {
-  count = var.security.secret-manager.enable ? 1 : 0
+resource "kubernetes_manifest" "secret-generator" {
+  count = var.security.secret-generator.enable ? 1 : 0
   depends_on = [kubernetes_namespace_v1.security-ns]
   manifest = {
     "apiVersion" = "vynil.solidite.fr/v1"
@@ -41,8 +41,8 @@ resource "kubernetes_manifest" "secret-manager" {
     "spec" = {
       "distrib" = "core"
       "category" = "core"
-      "component" = "secret-manager"
-      "options" = local.secret-manager
+      "component" = "secret-generator"
+      "options" = local.secret-generator
     }
   }
 }
@@ -79,7 +79,7 @@ resource "kubernetes_manifest" "letsencrypt" {
     "apiVersion" = "vynil.solidite.fr/v1"
     "kind"       = "Install"
     "metadata" = {
-      "name"      = "cert-manager"
+      "name"      = "cert-manager-letsencrypt"
       "namespace" = var.security.namespace
       "labels" = {
         "vynil.solidite.fr/owner-namespace" = var.namespace
@@ -104,7 +104,7 @@ resource "kubernetes_manifest" "self-sign" {
     "apiVersion" = "vynil.solidite.fr/v1"
     "kind"       = "Install"
     "metadata" = {
-      "name"      = "cert-manager"
+      "name"      = "cert-manager-self-sign"
       "namespace" = var.security.namespace
       "labels" = {
         "vynil.solidite.fr/owner-namespace" = var.namespace

@@ -6,126 +6,20 @@ metadata:
   name: core
   description: core meta-component installing all the core components
 options:
-  backup:
+  traefik:
     default:
-      k8up:
-        enable: true
-      namespace: vynil-backup
+      enable: true
+      namespace: traefik
     examples:
-    - k8up:
-        enable: true
-      namespace: vynil-backup
+    - enable: true
+      namespace: traefik
     properties:
-      k8up:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
+      enable:
+        default: true
+        type: boolean
       namespace:
-        default: vynil-backup
+        default: traefik
         type: string
-    type: object
-  crds:
-    default:
-      prometheus:
-        enable: true
-      redis:
-        enable: true
-      traefik:
-        enable: true
-    examples:
-    - prometheus:
-        enable: true
-      redis:
-        enable: true
-      traefik:
-        enable: true
-    properties:
-      prometheus:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      redis:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      traefik:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-    type: object
-  security:
-    default:
-      cert-manager:
-        enable: true
-      letsencrypt:
-        enable: false
-      namespace: vynil-security
-      secret-manager:
-        enable: true
-      self-sign:
-        enable: false
-    examples:
-    - cert-manager:
-        enable: true
-      letsencrypt:
-        enable: false
-      namespace: vynil-security
-      secret-manager:
-        enable: true
-      self-sign:
-        enable: false
-    properties:
-      cert-manager:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      letsencrypt:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      namespace:
-        default: vynil-security
-        type: string
-      secret-manager:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      self-sign:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
     type: object
   databases:
     default:
@@ -185,19 +79,125 @@ options:
             type: boolean
         type: object
     type: object
-  traefik:
+  crds:
     default:
-      enable: true
-      namespace: traefik
+      prometheus:
+        enable: true
+      redis:
+        enable: true
+      traefik:
+        enable: true
     examples:
-    - enable: true
-      namespace: traefik
+    - prometheus:
+        enable: true
+      redis:
+        enable: true
+      traefik:
+        enable: true
     properties:
-      enable:
-        default: true
-        type: boolean
+      prometheus:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      redis:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      traefik:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+    type: object
+  security:
+    default:
+      cert-manager:
+        enable: true
+      letsencrypt:
+        enable: false
+      namespace: vynil-security
+      secret-generator:
+        enable: true
+      self-sign:
+        enable: false
+    examples:
+    - cert-manager:
+        enable: true
+      letsencrypt:
+        enable: false
+      namespace: vynil-security
+      secret-generator:
+        enable: true
+      self-sign:
+        enable: false
+    properties:
+      cert-manager:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      letsencrypt:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
       namespace:
-        default: traefik
+        default: vynil-security
+        type: string
+      secret-generator:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      self-sign:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+    type: object
+  backup:
+    default:
+      k8up:
+        enable: true
+      namespace: vynil-backup
+    examples:
+    - k8up:
+        enable: true
+      namespace: vynil-backup
+    properties:
+      k8up:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      namespace:
+        default: vynil-backup
         type: string
     type: object
 dependencies: []
