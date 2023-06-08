@@ -27,7 +27,7 @@ resource "kubernetes_manifest" "traefik" {
     "kind"       = "Install"
     "metadata" = {
       "name"      = "traefik"
-      "namespace" = var.security.namespace
+      "namespace" = var.traefik.namespace
       "labels" = {
         "vynil.solidite.fr/owner-namespace" = var.namespace
         "vynil.solidite.fr/owner-category" = "meta"

@@ -12,6 +12,16 @@ options:
     examples:
     - 3.4.0
     type: string
+  secret_length:
+    default: 40
+    examples:
+    - 40
+    type: integer
+  namespaces:
+    default: ''
+    examples:
+    - ''
+    type: string
   image:
     default:
       registry: quay.io
@@ -32,15 +42,5 @@ options:
         default: latest
         type: string
     type: object
-  namespaces:
-    default: ''
-    examples:
-    - ''
-    type: string
-  secret_length:
-    default: 40
-    examples:
-    - 40
-    type: integer
 dependencies: []
 providers: null

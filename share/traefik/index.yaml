@@ -6,16 +6,6 @@ metadata:
   name: traefik
   description: Traefik is an open-source Edge Router that makes publishing your services a fun and easy experience. It receives requests on behalf of your system and finds out which components are responsible for handling them.
 options:
-  ingressClass:
-    default: traefik
-    examples:
-    - traefik
-    type: string
-  is-default:
-    default: 'true'
-    examples:
-    - 'true'
-    type: string
   image:
     default:
       pullPolicy: IfNotPresent
@@ -45,6 +35,16 @@ options:
         default: v2.10.1
         type: string
     type: object
+  ingressClass:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  is-default:
+    default: 'true'
+    examples:
+    - 'true'
+    type: string
 dependencies:
 - dist: null
   category: crd

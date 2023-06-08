@@ -21,104 +21,27 @@ options:
         default: traefik
         type: string
     type: object
-  databases:
+  backup:
     default:
-      mariadb:
-        enable: false
-      namespace: vynil-dbo
-      postgresql:
+      k8up:
         enable: true
-      rabbitmq:
-        enable: false
-      redis:
-        enable: true
+      namespace: vynil-backup
     examples:
-    - mariadb:
-        enable: false
-      namespace: vynil-dbo
-      postgresql:
+    - k8up:
         enable: true
-      rabbitmq:
-        enable: false
-      redis:
-        enable: true
+      namespace: vynil-backup
     properties:
-      mariadb:
+      k8up:
         default:
-          enable: false
+          enable: true
         properties:
           enable:
-            default: false
+            default: true
             type: boolean
         type: object
       namespace:
-        default: vynil-dbo
+        default: vynil-backup
         type: string
-      postgresql:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      rabbitmq:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      redis:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-    type: object
-  crds:
-    default:
-      prometheus:
-        enable: true
-      redis:
-        enable: true
-      traefik:
-        enable: true
-    examples:
-    - prometheus:
-        enable: true
-      redis:
-        enable: true
-      traefik:
-        enable: true
-    properties:
-      prometheus:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      redis:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      traefik:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
     type: object
   security:
     default:
@@ -178,17 +101,23 @@ options:
             type: boolean
         type: object
     type: object
-  backup:
+  crds:
     default:
-      k8up:
+      prometheus:
         enable: true
-      namespace: vynil-backup
+      redis:
+        enable: true
+      traefik:
+        enable: true
     examples:
-    - k8up:
+    - prometheus:
         enable: true
-      namespace: vynil-backup
+      redis:
+        enable: true
+      traefik:
+        enable: true
     properties:
-      k8up:
+      prometheus:
         default:
           enable: true
         properties:
@@ -196,9 +125,80 @@ options:
             default: true
             type: boolean
         type: object
+      redis:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      traefik:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+    type: object
+  databases:
+    default:
+      mariadb:
+        enable: false
+      namespace: vynil-dbo
+      postgresql:
+        enable: true
+      rabbitmq:
+        enable: false
+      redis:
+        enable: true
+    examples:
+    - mariadb:
+        enable: false
+      namespace: vynil-dbo
+      postgresql:
+        enable: true
+      rabbitmq:
+        enable: false
+      redis:
+        enable: true
+    properties:
+      mariadb:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
       namespace:
-        default: vynil-backup
+        default: vynil-dbo
         type: string
+      postgresql:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      rabbitmq:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      redis:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
     type: object
 dependencies: []
 providers:
