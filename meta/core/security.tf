@@ -1,0 +1,123 @@
+locals {
+    secret-manager = { for k, v in var.security.secret-manager : k => v if k!="enable" }
+    cert-manager = { for k, v in var.security.cert-manager : k => v if k!="enable" }
+    letsencrypt = { for k, v in var.security.letsencrypt : k => v if k!="enable" }
+    self-sign = { for k, v in var.security.self-sign : k => v if k!="enable" }
+}
+
+resource "kubernetes_namespace_v1" "security-ns" {
+  count = ( (var.databases.mariadb.enable || var.security.cert-manager.enable) || var.security.secret-manager.enable )? 1 : 0
+  metadata {
+    annotations = {
+      "vynil.solidite.fr/meta" = "core"
+      "vynil.solidite.fr/name" = var.namespace
+    }
+    labels = {
+      "vynil.solidite.fr/owner-namespace" = var.namespace
+      "vynil.solidite.fr/owner-category" = "meta"
+      "vynil.solidite.fr/owner-component" = "core"
+      "app.kubernetes.io/managed-by" = "vynil"
+    }
+    name = var.security.namespace
+  }
+}
+
+resource "kubernetes_manifest" "secret-manager" {
+  count = var.security.secret-manager.enable ? 1 : 0
+  depends_on = [kubernetes_namespace_v1.security-ns]
+  manifest = {
+    "apiVersion" = "vynil.solidite.fr/v1"
+    "kind"       = "Install"
+    "metadata" = {
+      "name"      = "cert-manager"
+      "namespace" = var.security.namespace
+      "labels" = {
+        "vynil.solidite.fr/owner-namespace" = var.namespace
+        "vynil.solidite.fr/owner-category" = "meta"
+        "vynil.solidite.fr/owner-component" = "core"
+        "app.kubernetes.io/managed-by" = "vynil"
+      }
+    }
+    "spec" = {
+      "distrib" = "core"
+      "category" = "core"
+      "component" = "secret-manager"
+      "options" = local.secret-manager
+    }
+  }
+}
+
+resource "kubernetes_manifest" "cert-manager" {
+  count = (var.databases.mariadb.enable || var.security.cert-manager.enable) ? 1 : 0
+  depends_on = [kubernetes_namespace_v1.security-ns]
+  manifest = {
+    "apiVersion" = "vynil.solidite.fr/v1"
+    "kind"       = "Install"
+    "metadata" = {
+      "name"      = "cert-manager"
+      "namespace" = var.security.namespace
+      "labels" = {
+        "vynil.solidite.fr/owner-namespace" = var.namespace
+        "vynil.solidite.fr/owner-category" = "meta"
+        "vynil.solidite.fr/owner-component" = "core"
+        "app.kubernetes.io/managed-by" = "vynil"
+      }
+    }
+    "spec" = {
+      "distrib" = "core"
+      "category" = "core"
+      "component" = "cert-manager"
+      "options" = local.cert-manager
+    }
+  }
+}
+
+resource "kubernetes_manifest" "letsencrypt" {
+  count = ((var.databases.mariadb.enable || var.security.cert-manager.enable) && var.security.letsencrypt.enable)? 1 : 0
+  depends_on = [kubernetes_namespace_v1.security-ns, kubernetes_manifest.cert-manager]
+  manifest = {
+    "apiVersion" = "vynil.solidite.fr/v1"
+    "kind"       = "Install"
+    "metadata" = {
+      "name"      = "cert-manager"
+      "namespace" = var.security.namespace
+      "labels" = {
+        "vynil.solidite.fr/owner-namespace" = var.namespace
+        "vynil.solidite.fr/owner-category" = "meta"
+        "vynil.solidite.fr/owner-component" = "core"
+        "app.kubernetes.io/managed-by" = "vynil"
+      }
+    }
+    "spec" = {
+      "distrib" = "core"
+      "category" = "core"
+      "component" = "cert-manager-letsencrypt"
+      "options" = local.letsencrypt
+    }
+  }
+}
+
+resource "kubernetes_manifest" "self-sign" {
+  count = ((var.databases.mariadb.enable || var.security.cert-manager.enable) && var.security.self-sign.enable)? 1 : 0
+  depends_on = [kubernetes_namespace_v1.security-ns, kubernetes_manifest.cert-manager]
+  manifest = {
+    "apiVersion" = "vynil.solidite.fr/v1"
+    "kind"       = "Install"
+    "metadata" = {
+      "name"      = "cert-manager"
+      "namespace" = var.security.namespace
+      "labels" = {
+        "vynil.solidite.fr/owner-namespace" = var.namespace
+        "vynil.solidite.fr/owner-category" = "meta"
+        "vynil.solidite.fr/owner-component" = "core"
+        "app.kubernetes.io/managed-by" = "vynil"
+      }
+    }
+    "spec" = {
+      "distrib" = "core"
+      "category" = "core"
+      "component" = "cert-manager-self-sign"
+      "options" = local.self-sign
+    }
+  }
+}

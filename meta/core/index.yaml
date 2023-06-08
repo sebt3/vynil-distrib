@@ -1,0 +1,208 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: meta
+metadata:
+  name: core
+  description: core meta-component installing all the core components
+options:
+  databases:
+    default:
+      mariadb:
+        enable: false
+      namespace: vynil-dbo
+      postgresql:
+        enable: true
+      rabbitmq:
+        enable: false
+      redis:
+        enable: true
+    examples:
+    - mariadb:
+        enable: false
+      namespace: vynil-dbo
+      postgresql:
+        enable: true
+      rabbitmq:
+        enable: false
+      redis:
+        enable: true
+    properties:
+      mariadb:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      namespace:
+        default: vynil-dbo
+        type: string
+      postgresql:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      rabbitmq:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      redis:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+    type: object
+  crds:
+    default:
+      prometheus:
+        enable: true
+      redis:
+        enable: true
+      traefik:
+        enable: true
+    examples:
+    - prometheus:
+        enable: true
+      redis:
+        enable: true
+      traefik:
+        enable: true
+    properties:
+      prometheus:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      redis:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      traefik:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+    type: object
+  backup:
+    default:
+      k8up:
+        enable: true
+      namespace: vynil-backup
+    examples:
+    - k8up:
+        enable: true
+      namespace: vynil-backup
+    properties:
+      k8up:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      namespace:
+        default: vynil-backup
+        type: string
+    type: object
+  security:
+    default:
+      cert-manager:
+        enable: true
+      letsencrypt:
+        enable: true
+      namespace: vynil-security
+      secret-manager:
+        enable: true
+      self-sign:
+        enable: false
+    examples:
+    - cert-manager:
+        enable: true
+      letsencrypt:
+        enable: true
+      namespace: vynil-security
+      secret-manager:
+        enable: true
+      self-sign:
+        enable: false
+    properties:
+      cert-manager:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      letsencrypt:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      namespace:
+        default: vynil-security
+        type: string
+      secret-manager:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      self-sign:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+    type: object
+  traefik:
+    default:
+      enable: true
+      namespace: traefik
+    examples:
+    - enable: true
+      namespace: traefik
+    properties:
+      enable:
+        default: true
+        type: boolean
+      namespace:
+        default: traefik
+        type: string
+    type: object
+dependencies: []
+providers:
+  kubernetes: true
+  authentik: null
+  kubectl: null
+  postgresql: null

@@ -21,4 +21,20 @@ spec:
         imagePullPolicy: "${var.image.pullPolicy}"
     EOF
   }
+  patches {
+    target {
+      kind = "Service"
+      name = "traefik"
+    }
+    patch = <<-EOF
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  ipFamilyPolicy: PreferDualStack
+    EOF
+  }
 }

@@ -1,0 +1,48 @@
+# Source: mariadb-operator/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb-operator
+  labels:
+    
+    helm.sh/chart: mariadb-operator-0.15.1
+    app.kubernetes.io/name: mariadb-operator
+    app.kubernetes.io/instance: mariadb-operator
+    app.kubernetes.io/version: "v0.0.15"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  
+  selector:
+    matchLabels:
+      
+      app.kubernetes.io/name: mariadb-operator
+      app.kubernetes.io/instance: mariadb-operator
+  template:
+    metadata:
+      
+      labels:
+        
+        app.kubernetes.io/name: mariadb-operator
+        app.kubernetes.io/instance: mariadb-operator
+    spec:
+      serviceAccountName: mariadb-controller-manager
+      terminationGracePeriodSeconds: 10
+      
+      
+      
+      
+      containers:
+        - image: "ghcr.io/mariadb-operator/mariadb-operator:v0.0.15"
+          imagePullPolicy: IfNotPresent
+          name: controller
+          args:
+            - --metrics-addr=:8080
+            - --log-level=INFO
+            - --service-monitor-reconciler
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+              name: metrics
+          env: 
+            - name: CLUSTER_NAME
+              value: cluster.local

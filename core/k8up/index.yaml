@@ -119,3 +119,4 @@ dependencies:
 - dist: null
   category: core
   component: crd-prometheus
+providers: null

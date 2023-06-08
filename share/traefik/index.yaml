@@ -20,6 +20,10 @@ options:
     properties:
       pullPolicy:
         default: IfNotPresent
+        enum:
+        - Always
+        - Never
+        - IfNotPresent
         type: string
       registry:
         default: docker.io
@@ -34,10 +38,8 @@ options:
 dependencies:
 - dist: null
   category: core
-  component: cert-manager
-- dist: null
-  category: core
   component: crd-traefik
 - dist: null
   category: core
   component: crd-prometheus
+providers: null

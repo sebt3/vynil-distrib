@@ -32,14 +32,15 @@ options:
         default: latest
         type: string
     type: object
-  secret_length:
-    default: 40
-    examples:
-    - 40
-    type: integer
   namespaces:
     default: ''
     examples:
     - ''
     type: string
+  secret_length:
+    default: 40
+    examples:
+    - 40
+    type: integer
 dependencies: []
+providers: null
