@@ -23,6 +23,31 @@ spec:
   }
   patches {
     target {
+      kind = "DaemonSet"
+      name = "traefik"
+    }
+    patch = <<-EOF
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: "--providers.kubernetesingress.ingressclass=${var.ingressClass}"
+    EOF
+  }
+  patches {
+    target {
+      kind = "IngressClass"
+      name = "traefik"
+    }
+    patch = <<-EOF
+      - op: replace
+        path: /metadata/name
+        value: "${var.ingressClass}"
+      - op: replace
+        path: "/metadata/annotations/ingressclass.kubernetes.io~1is-default-class"
+        value: "${var.is-default}"
+    EOF
+  }
+  patches {
+    target {
       kind = "Service"
       name = "traefik"
     }

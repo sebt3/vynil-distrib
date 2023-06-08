@@ -64,6 +64,101 @@ options:
             type: boolean
         type: object
     type: object
+  security:
+    default:
+      cert-manager:
+        enable: true
+      letsencrypt:
+        enable: false
+      namespace: vynil-security
+      secret-manager:
+        enable: true
+      self-sign:
+        enable: false
+    examples:
+    - cert-manager:
+        enable: true
+      letsencrypt:
+        enable: false
+      namespace: vynil-security
+      secret-manager:
+        enable: true
+      self-sign:
+        enable: false
+    properties:
+      cert-manager:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      letsencrypt:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      namespace:
+        default: vynil-security
+        type: string
+      secret-manager:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      self-sign:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+    type: object
+  traefik:
+    default:
+      enable: true
+      namespace: traefik
+    examples:
+    - enable: true
+      namespace: traefik
+    properties:
+      enable:
+        default: true
+        type: boolean
+      namespace:
+        default: traefik
+        type: string
+    type: object
+  backup:
+    default:
+      k8up:
+        enable: true
+      namespace: vynil-backup
+    examples:
+    - k8up:
+        enable: true
+      namespace: vynil-backup
+    properties:
+      k8up:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      namespace:
+        default: vynil-backup
+        type: string
+    type: object
   crds:
     default:
       prometheus:
@@ -104,101 +199,6 @@ options:
             default: true
             type: boolean
         type: object
-    type: object
-  backup:
-    default:
-      k8up:
-        enable: true
-      namespace: vynil-backup
-    examples:
-    - k8up:
-        enable: true
-      namespace: vynil-backup
-    properties:
-      k8up:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      namespace:
-        default: vynil-backup
-        type: string
-    type: object
-  security:
-    default:
-      cert-manager:
-        enable: true
-      letsencrypt:
-        enable: true
-      namespace: vynil-security
-      secret-manager:
-        enable: true
-      self-sign:
-        enable: false
-    examples:
-    - cert-manager:
-        enable: true
-      letsencrypt:
-        enable: true
-      namespace: vynil-security
-      secret-manager:
-        enable: true
-      self-sign:
-        enable: false
-    properties:
-      cert-manager:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      letsencrypt:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      namespace:
-        default: vynil-security
-        type: string
-      secret-manager:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      self-sign:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-    type: object
-  traefik:
-    default:
-      enable: true
-      namespace: traefik
-    examples:
-    - enable: true
-      namespace: traefik
-    properties:
-      enable:
-        default: true
-        type: boolean
-      namespace:
-        default: traefik
-        type: string
     type: object
 dependencies: []
 providers:

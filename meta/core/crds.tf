@@ -5,7 +5,7 @@ locals {
 }
 
 resource "kubernetes_manifest" "crd-prometheus" {
-  count = (var.crds.prometheus.enabled || var.databases.mariadb.enable) ? 1 : 0
+  count = (var.crds.prometheus.enable || var.databases.mariadb.enable) ? 1 : 0
   manifest = {
     "apiVersion" = "vynil.solidite.fr/v1"
     "kind"       = "Install"
@@ -29,7 +29,7 @@ resource "kubernetes_manifest" "crd-prometheus" {
 }
 
 resource "kubernetes_manifest" "crd-traefik" {
-  count = var.crds.traefik.enabled ? 1 : 0
+  count = var.crds.traefik.enable ? 1 : 0
   manifest = {
     "apiVersion" = "vynil.solidite.fr/v1"
     "kind"       = "Install"
@@ -53,7 +53,7 @@ resource "kubernetes_manifest" "crd-traefik" {
 }
 
 resource "kubernetes_manifest" "crd-redis" {
-  count = (var.crds.redis.enabled || var.databases.redis.enable)? 1 : 0
+  count = (var.crds.redis.enable || var.databases.redis.enable)? 1 : 0
   manifest = {
     "apiVersion" = "vynil.solidite.fr/v1"
     "kind"       = "Install"
