@@ -40,8 +40,8 @@ resource "kubernetes_manifest" "dbo-postgresql" {
     }
     "spec" = {
       "distrib" = "core"
-      "category" = "core"
-      "component" = "dbo-pg"
+      "category" = "dbo"
+      "component" = "postgresql"
       "options" = local.postgresql
     }
   }
@@ -65,8 +65,8 @@ resource "kubernetes_manifest" "dbo-redis" {
     }
     "spec" = {
       "distrib" = "core"
-      "category" = "core"
-      "component" = "dbo-redis"
+      "category" = "dbo"
+      "component" = "redis"
       "options" = local.redis
     }
   }
@@ -90,8 +90,8 @@ resource "kubernetes_manifest" "rabbitmq" {
     }
     "spec" = {
       "distrib" = "core"
-      "category" = "core"
-      "component" = "dbo-rabbitmq"
+      "category" = "dbo"
+      "component" = "rabbitmq"
       "options" = local.letsencrypt
     }
   }
@@ -115,8 +115,8 @@ resource "kubernetes_manifest" "mariadb" {
     }
     "spec" = {
       "distrib" = "core"
-      "category" = "core"
-      "component" = "dbo-mariadb"
+      "category" = "dbo"
+      "component" = "mariadb"
       "options" = local.mariadb
     }
   }
