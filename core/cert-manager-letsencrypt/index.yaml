@@ -6,6 +6,11 @@ metadata:
   name: cert-manager-letsencrypt
   description: Configure cert-manager to use Let's Encrypt certificates.
 options:
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
   mail:
     default: contact@change-this-name.com
     examples:

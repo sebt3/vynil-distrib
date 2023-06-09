@@ -1,12 +1,19 @@
+locals {
+    labels = {
+      "vynil.solidite.fr/owner-namespace" = var.namespace
+      "vynil.solidite.fr/owner-category" = "core"
+      "vynil.solidite.fr/owner-component" = "cert-manager-self-sign"
+      "app.kubernetes.io/managed-by" = "vynil"
+    }
+}
+
 resource "kubernetes_manifest" "selfsigned-issuer" {
   manifest = {
     "apiVersion" = "cert-manager.io/v1"
     "kind"       = "ClusterIssuer"
     "metadata" = {
-      "name"      = "selfsigned-issuer"
-      "labels" = {
-        "app.kubernetes.io/managed-by" = "vynil"
-      }
+      "name"   = "selfsigned-issuer"
+      "labels" = local.labels
     }
     "spec" = {
       "selfSigned" = {}
@@ -21,9 +28,7 @@ resource "kubernetes_manifest" "selfsigned-ca" {
     "metadata" = {
       "name"      = "selfsigned-ca"
       "namespace" = var.namespace
-      "labels" = {
-        "app.kubernetes.io/managed-by" = "vynil"
-      }
+      "labels"    = local.labels
     }
     "spec" = {
       "isCA" = true
@@ -47,10 +52,8 @@ resource "kubernetes_manifest" "ca-issuer" {
     "apiVersion" = "cert-manager.io/v1"
     "kind"       = "ClusterIssuer"
     "metadata" = {
-      "name"      = "ca-issuer"
-      "labels" = {
-        "app.kubernetes.io/managed-by" = "vynil"
-      }
+      "name"   = "ca-issuer"
+      "labels" = local.labels
     }
     "spec" = {
       "ca" = {
