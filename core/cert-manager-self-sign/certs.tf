@@ -55,7 +55,6 @@ resource "kubernetes_manifest" "ca-issuer" {
     "spec" = {
       "ca" = {
         "secretName" = "selfsigned-ca"
-        "namespace"  = var.namespace
       }
     }
   }
