@@ -166,11 +166,9 @@ resource "kubernetes_manifest" "authentik_https_redirect" {
       "labels"    = local.labels
     }
     "spec" = {
-      "secretName" = "${local.app-name}-cert"
-      "issuerRef"  = {
-        "name"  = "${var.issuer}"
-        "kind"  = "ClusterIssuer"
-        "group" = "cert-manager.io"
+      "redirectScheme" = {
+        "scheme" = "https"
+        "permanent" = true
       }
     }
   }
