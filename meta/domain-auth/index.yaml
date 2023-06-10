@@ -1,0 +1,39 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: meta
+metadata:
+  name: domain-auth
+  description: null
+options:
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  authentik:
+    default:
+      enable: true
+    examples:
+    - enable: true
+    properties:
+      enable:
+        default: true
+        type: boolean
+    type: object
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+dependencies: []
+providers:
+  kubernetes: true
+  authentik: null
+  kubectl: null
+  postgresql: null
