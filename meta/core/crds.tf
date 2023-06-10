@@ -1,4 +1,14 @@
 locals {
+    labels = {
+      "vynil.solidite.fr/owner-namespace" = var.namespace
+      "vynil.solidite.fr/owner-category" = "meta"
+      "vynil.solidite.fr/owner-component" = "core"
+      "app.kubernetes.io/managed-by" = "vynil"
+    }
+    annotations = {
+      "vynil.solidite.fr/meta" = "core"
+      "vynil.solidite.fr/name" = var.namespace
+    }
     crd-prometheus = { for k, v in var.crds.prometheus : k => v if k!="enable" }
     crd-traefik = { for k, v in var.crds.traefik : k => v if k!="enable" }
     crd-redis = { for k, v in var.crds.redis : k => v if k!="enable" }
@@ -12,12 +22,7 @@ resource "kubernetes_manifest" "crd-prometheus" {
     "metadata" = {
       "name"      = "crd-prometheus"
       "namespace" = var.namespace
-      "labels" = {
-        "vynil.solidite.fr/owner-namespace" = var.namespace
-        "vynil.solidite.fr/owner-category" = "meta"
-        "vynil.solidite.fr/owner-component" = "core"
-        "app.kubernetes.io/managed-by" = "vynil"
-      }
+      "labels" = local.labels
     }
     "spec" = {
       "distrib" = "core"
@@ -36,12 +41,7 @@ resource "kubernetes_manifest" "crd-traefik" {
     "metadata" = {
       "name"      = "crd-traefik"
       "namespace" = var.namespace
-      "labels" = {
-        "vynil.solidite.fr/owner-namespace" = var.namespace
-        "vynil.solidite.fr/owner-category" = "meta"
-        "vynil.solidite.fr/owner-component" = "core"
-        "app.kubernetes.io/managed-by" = "vynil"
-      }
+      "labels" = local.labels
     }
     "spec" = {
       "distrib" = "core"
@@ -60,12 +60,7 @@ resource "kubernetes_manifest" "crd-redis" {
     "metadata" = {
       "name"      = "crd-redis"
       "namespace" = var.namespace
-      "labels" = {
-        "vynil.solidite.fr/owner-namespace" = var.namespace
-        "vynil.solidite.fr/owner-category" = "meta"
-        "vynil.solidite.fr/owner-component" = "core"
-        "app.kubernetes.io/managed-by" = "vynil"
-      }
+      "labels" = local.labels
     }
     "spec" = {
       "distrib" = "core"

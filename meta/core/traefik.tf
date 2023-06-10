@@ -5,16 +5,8 @@ locals {
 resource "kubernetes_namespace_v1" "traefik-ns" {
   count = var.traefik.enable? 1 : 0
   metadata {
-    annotations = {
-      "vynil.solidite.fr/meta" = "core"
-      "vynil.solidite.fr/name" = var.namespace
-    }
-    labels = {
-      "vynil.solidite.fr/owner-namespace" = var.namespace
-      "vynil.solidite.fr/owner-category" = "meta"
-      "vynil.solidite.fr/owner-component" = "core"
-      "app.kubernetes.io/managed-by" = "vynil"
-    }
+    annotations = local.annotations
+    labels = local.labels
     name = var.traefik.namespace
   }
 }
@@ -28,12 +20,7 @@ resource "kubernetes_manifest" "traefik" {
     "metadata" = {
       "name"      = "traefik"
       "namespace" = var.traefik.namespace
-      "labels" = {
-        "vynil.solidite.fr/owner-namespace" = var.namespace
-        "vynil.solidite.fr/owner-category" = "meta"
-        "vynil.solidite.fr/owner-component" = "core"
-        "app.kubernetes.io/managed-by" = "vynil"
-      }
+      "labels" = local.labels
     }
     "spec" = {
       "distrib" = "core"

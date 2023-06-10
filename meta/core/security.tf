@@ -8,16 +8,8 @@ locals {
 resource "kubernetes_namespace_v1" "security-ns" {
   count = ( (var.databases.mariadb.enable || var.security.cert-manager.enable) || var.security.secret-generator.enable )? 1 : 0
   metadata {
-    annotations = {
-      "vynil.solidite.fr/meta" = "core"
-      "vynil.solidite.fr/name" = var.namespace
-    }
-    labels = {
-      "vynil.solidite.fr/owner-namespace" = var.namespace
-      "vynil.solidite.fr/owner-category" = "meta"
-      "vynil.solidite.fr/owner-component" = "core"
-      "app.kubernetes.io/managed-by" = "vynil"
-    }
+    annotations = local.annotations
+    labels = local.labels
     name = var.security.namespace
   }
 }
@@ -29,14 +21,9 @@ resource "kubernetes_manifest" "secret-generator" {
     "apiVersion" = "vynil.solidite.fr/v1"
     "kind"       = "Install"
     "metadata" = {
-      "name"      = "cert-manager"
+      "name"      = "secret-generator"
       "namespace" = var.security.namespace
-      "labels" = {
-        "vynil.solidite.fr/owner-namespace" = var.namespace
-        "vynil.solidite.fr/owner-category" = "meta"
-        "vynil.solidite.fr/owner-component" = "core"
-        "app.kubernetes.io/managed-by" = "vynil"
-      }
+      "labels" = local.labels
     }
     "spec" = {
       "distrib" = "core"
@@ -56,12 +43,7 @@ resource "kubernetes_manifest" "cert-manager" {
     "metadata" = {
       "name"      = "cert-manager"
       "namespace" = var.security.namespace
-      "labels" = {
-        "vynil.solidite.fr/owner-namespace" = var.namespace
-        "vynil.solidite.fr/owner-category" = "meta"
-        "vynil.solidite.fr/owner-component" = "core"
-        "app.kubernetes.io/managed-by" = "vynil"
-      }
+      "labels" = local.labels
     }
     "spec" = {
       "distrib" = "core"
@@ -81,12 +63,7 @@ resource "kubernetes_manifest" "letsencrypt" {
     "metadata" = {
       "name"      = "cert-manager-letsencrypt"
       "namespace" = var.security.namespace
-      "labels" = {
-        "vynil.solidite.fr/owner-namespace" = var.namespace
-        "vynil.solidite.fr/owner-category" = "meta"
-        "vynil.solidite.fr/owner-component" = "core"
-        "app.kubernetes.io/managed-by" = "vynil"
-      }
+      "labels" = local.labels
     }
     "spec" = {
       "distrib" = "core"
@@ -106,12 +83,7 @@ resource "kubernetes_manifest" "self-sign" {
     "metadata" = {
       "name"      = "cert-manager-self-sign"
       "namespace" = var.security.namespace
-      "labels" = {
-        "vynil.solidite.fr/owner-namespace" = var.namespace
-        "vynil.solidite.fr/owner-category" = "meta"
-        "vynil.solidite.fr/owner-component" = "core"
-        "app.kubernetes.io/managed-by" = "vynil"
-      }
+      "labels" = local.labels
     }
     "spec" = {
       "distrib" = "core"
