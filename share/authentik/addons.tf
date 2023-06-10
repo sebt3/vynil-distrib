@@ -10,7 +10,7 @@ locals {
     }
     app-name  = "authentik"
     dns-names = ["${var.sub-domain}.${var.domain-name}"]
-    middlewares = ["${local.app-name}-https"]
+    middlewares = [{"name" = "${local.app-name}-https"}]
     services = [{
       "kind" = "Service"
       "name" = local.app-name
@@ -146,10 +146,10 @@ resource "kubernetes_manifest" "authentik_certificate" {
     }
     "spec" = {
         "secretName" = "${local.app-name}-cert"
-        "dnsNames" = [""]
-        "issuerRef" = {
-          "name" = "{{ issuer }}"
-          "kind" = "ClusterIssuer"
+        "dnsNames"   = local.dns-names
+        "issuerRef"  = {
+          "name"  = var.issuer
+          "kind"  = "ClusterIssuer"
           "group" = "cert-manager.io"
         }
     }
@@ -167,7 +167,6 @@ resource "kubernetes_manifest" "authentik_https_redirect" {
     }
     "spec" = {
       "secretName" = "${local.app-name}-cert"
-      "dnsNames"   = local.dns-names
       "issuerRef"  = {
         "name"  = "${var.issuer}"
         "kind"  = "ClusterIssuer"
