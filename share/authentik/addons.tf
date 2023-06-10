@@ -18,7 +18,7 @@ locals {
       "port" = 80
     }]
     routes = [ for v in local.dns-names : {
-      "kind" = "Route"
+      "kind" = "Rule"
       "match" = "Host(`${v}`)"
       "middlewares" = local.middlewares
       "services" = local.services
