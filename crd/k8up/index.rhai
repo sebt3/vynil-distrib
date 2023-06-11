@@ -14,6 +14,6 @@ fn pre_install() {
         "k8up.io_schedules.yaml",
         "k8up.io_snapshots.yaml"
     ] {
-        shell(`kubectl apply -f https://raw.githubusercontent.com/k8up-io/k8up/${global::VERSION}/config/crd/apiextensions.k8s.io/v1/${file}`);
+        shell(`kubectl apply -f https://raw.githubusercontent.com/k8up-io/k8up/v${global::VERSION}/config/crd/apiextensions.k8s.io/v1/${file}`);
     }
 }
