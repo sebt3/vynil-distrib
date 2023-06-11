@@ -6,6 +6,86 @@ metadata:
   name: core
   description: core meta-component installing all the core components
 options:
+  databases:
+    default:
+      mariadb:
+        enable: false
+      namespace: vynil-dbo
+      postgresql:
+        enable: true
+      rabbitmq:
+        enable: false
+      redis:
+        enable: true
+    examples:
+    - mariadb:
+        enable: false
+      namespace: vynil-dbo
+      postgresql:
+        enable: true
+      rabbitmq:
+        enable: false
+      redis:
+        enable: true
+    properties:
+      mariadb:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      namespace:
+        default: vynil-dbo
+        type: string
+      postgresql:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      rabbitmq:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      redis:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+    type: object
+  backup:
+    default:
+      k8up:
+        enable: true
+      namespace: vynil-backup
+    examples:
+    - k8up:
+        enable: true
+      namespace: vynil-backup
+    properties:
+      k8up:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      namespace:
+        default: vynil-backup
+        type: string
+    type: object
   crds:
     default:
       cert-manager:
@@ -106,86 +186,6 @@ options:
             default: false
             type: boolean
         type: object
-    type: object
-  databases:
-    default:
-      mariadb:
-        enable: false
-      namespace: vynil-dbo
-      postgresql:
-        enable: true
-      rabbitmq:
-        enable: false
-      redis:
-        enable: true
-    examples:
-    - mariadb:
-        enable: false
-      namespace: vynil-dbo
-      postgresql:
-        enable: true
-      rabbitmq:
-        enable: false
-      redis:
-        enable: true
-    properties:
-      mariadb:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      namespace:
-        default: vynil-dbo
-        type: string
-      postgresql:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      rabbitmq:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      redis:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-    type: object
-  backup:
-    default:
-      k8up:
-        enable: true
-      namespace: vynil-backup
-    examples:
-    - k8up:
-        enable: true
-      namespace: vynil-backup
-    properties:
-      k8up:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      namespace:
-        default: vynil-backup
-        type: string
     type: object
   traefik:
     default:
