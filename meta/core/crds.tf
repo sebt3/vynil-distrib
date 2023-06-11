@@ -20,7 +20,7 @@ locals {
 }
 
 resource "kubernetes_manifest" "crd-prometheus" {
-  count = (var.crds.prometheus.enable || var.databases.mariadb.enable) ? 1 : 0
+  count = (var.crds.prometheus.enable || var.databases.mariadb.enable || var.crds.secret-generator.enable) ? 1 : 0
   manifest = {
     "apiVersion" = "vynil.solidite.fr/v1"
     "kind"       = "Install"
