@@ -11,5 +11,10 @@ options:
     examples:
     - 0.65.1
     type: string
+  apply:
+    default: true
+    examples:
+    - true
+    type: boolean
 dependencies: []
 providers: null

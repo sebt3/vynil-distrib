@@ -6,12 +6,6 @@ metadata:
   name: rabbitmq
   description: RabbitMQ Operator
 options:
-  release:
-    default: 2.2.0
-    description: RabbitMQ Operator version to use
-    examples:
-    - 2.2.0
-    type: string
   image:
     default:
       registry: quay.io
@@ -32,5 +26,14 @@ options:
         default: 2.2.0
         type: string
     type: object
-dependencies: []
+  release:
+    default: 2.2.0
+    description: RabbitMQ Operator version to use
+    examples:
+    - 2.2.0
+    type: string
+dependencies:
+- dist: null
+  category: crd
+  component: rabbitmq
 providers: null

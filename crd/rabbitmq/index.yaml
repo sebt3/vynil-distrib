@@ -3,18 +3,18 @@ apiVersion: vinyl.solidite.fr/v1beta1
 kind: Component
 category: crd
 metadata:
-  name: traefik
-  description: CRD for Traefik
+  name: rabbitmq
+  description: CRD for Rabbit MQ
 options:
-  release:
-    default: 23.0.1
-    examples:
-    - 23.0.1
-    type: string
   apply:
     default: true
     examples:
     - true
     type: boolean
+  release:
+    default: 2.2.0
+    examples:
+    - 2.2.0
+    type: string
 dependencies: []
 providers: null

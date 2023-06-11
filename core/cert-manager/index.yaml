@@ -115,5 +115,8 @@ options:
     examples:
     - 1.12.1
     type: string
-dependencies: []
+dependencies:
+- dist: null
+  category: crd
+  component: cert-manager
 providers: null

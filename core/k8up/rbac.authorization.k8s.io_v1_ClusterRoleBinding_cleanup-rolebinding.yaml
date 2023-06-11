@@ -1,8 +1,12 @@
-# Source: k8up/templates/clusterrolebinding.yaml
+# Source: k8up/templates/cleanup-hook.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: k8up
+  name: cleanup-rolebinding
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade,post-delete
+    "helm.sh/hook-weight": "3"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
   labels:
     helm.sh/chart: k8up-4.3.0
     app.kubernetes.io/name: k8up
@@ -11,8 +15,8 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: k8up-manager
+  name: k8up-cleanup-roles
 subjects:
 - kind: ServiceAccount
-  name: k8up
+  name: cleanup-service-account
   namespace: k8up

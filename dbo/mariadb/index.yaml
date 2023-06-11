@@ -13,4 +13,7 @@ dependencies:
 - dist: null
   category: crd
   component: prometheus
+- dist: null
+  category: crd
+  component: mariadb
 providers: null

@@ -5,9 +5,6 @@ data "kustomization_overlay" "data" {
     "https://raw.githubusercontent.com/mittwald/kubernetes-secret-generator/v${var.release}/deploy/role.yaml",
     "https://raw.githubusercontent.com/mittwald/kubernetes-secret-generator/v${var.release}/deploy/role_binding.yaml",
     "https://raw.githubusercontent.com/mittwald/kubernetes-secret-generator/v${var.release}/deploy/service_account.yaml",
-    "https://raw.githubusercontent.com/mittwald/kubernetes-secret-generator/v${var.release}/deploy/crds/secretgenerator.mittwald.de_basicauths_crd.yaml",
-    "https://raw.githubusercontent.com/mittwald/kubernetes-secret-generator/v${var.release}/deploy/crds/secretgenerator.mittwald.de_sshkeypairs_crd.yaml",
-    "https://raw.githubusercontent.com/mittwald/kubernetes-secret-generator/v${var.release}/deploy/crds/secretgenerator.mittwald.de_stringsecrets_crd.yaml",
     "https://raw.githubusercontent.com/mittwald/kubernetes-secret-generator/v${var.release}/deploy/operator.yaml",
   ]
   images {

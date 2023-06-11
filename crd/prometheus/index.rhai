@@ -1,5 +1,9 @@
 const VERSION=config.release;
+const DOIT=config.apply;
 fn pre_install() {
+    if ! global::DOIT {
+        return;
+    }
     for file in [
         "monitoring.coreos.com_alertmanagerconfigs.yaml",
         "monitoring.coreos.com_alertmanagers.yaml",
@@ -20,6 +24,9 @@ fn pre_install() {
 }
 
 fn post_destroy() {
+    if ! global::DOIT {
+        return;
+    }
     for file in [
         "monitoring.coreos.com_alertmanagerconfigs.yaml",
         "monitoring.coreos.com_alertmanagers.yaml",

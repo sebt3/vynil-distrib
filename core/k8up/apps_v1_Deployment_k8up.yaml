@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: k8up
   labels:
-    helm.sh/chart: k8up-4.2.2
+    helm.sh/chart: k8up-4.3.0
     app.kubernetes.io/name: k8up
     app.kubernetes.io/instance: k8up
     app.kubernetes.io/managed-by: Helm

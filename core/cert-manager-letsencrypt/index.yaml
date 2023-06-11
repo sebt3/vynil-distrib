@@ -18,6 +18,6 @@ options:
     type: string
 dependencies:
 - dist: null
-  category: core
+  category: crd
   component: cert-manager
 providers: null

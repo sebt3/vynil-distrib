@@ -15,4 +15,7 @@ dependencies:
 - dist: null
   category: core
   component: cert-manager
+- dist: null
+  category: crd
+  component: cert-manager
 providers: null

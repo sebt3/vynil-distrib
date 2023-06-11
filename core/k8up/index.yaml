@@ -11,6 +11,47 @@ options:
     examples:
     - Europe/Paris
     type: string
+  resources:
+    default:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 20m
+        memory: 128Mi
+    examples:
+    - limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 20m
+        memory: 128Mi
+    properties:
+      limits:
+        default:
+          cpu: 500m
+          memory: 256Mi
+        properties:
+          cpu:
+            default: 500m
+            type: string
+          memory:
+            default: 256Mi
+            type: string
+        type: object
+      requests:
+        default:
+          cpu: 20m
+          memory: 128Mi
+        properties:
+          cpu:
+            default: 20m
+            type: string
+          memory:
+            default: 128Mi
+            type: string
+        type: object
+    type: object
   images:
     default:
       backup:
@@ -58,10 +99,6 @@ options:
         properties:
           pullPolicy:
             default: IfNotPresent
-            enum:
-            - Always
-            - Never
-            - IfNotPresent
             type: string
           registry:
             default: ghcr.io
@@ -74,49 +111,11 @@ options:
             type: string
         type: object
     type: object
-  resources:
-    default:
-      limits:
-        cpu: 500m
-        memory: 256Mi
-      requests:
-        cpu: 20m
-        memory: 128Mi
-    examples:
-    - limits:
-        cpu: 500m
-        memory: 256Mi
-      requests:
-        cpu: 20m
-        memory: 128Mi
-    properties:
-      limits:
-        default:
-          cpu: 500m
-          memory: 256Mi
-        properties:
-          cpu:
-            default: 500m
-            type: string
-          memory:
-            default: 256Mi
-            type: string
-        type: object
-      requests:
-        default:
-          cpu: 20m
-          memory: 128Mi
-        properties:
-          cpu:
-            default: 20m
-            type: string
-          memory:
-            default: 128Mi
-            type: string
-        type: object
-    type: object
 dependencies:
 - dist: null
-  category: core
-  component: crd-prometheus
+  category: crd
+  component: prometheus
+- dist: null
+  category: crd
+  component: k8up
 providers: null
