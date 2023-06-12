@@ -1,6 +1,9 @@
 locals {
     global = {
+        "domain" = var.namespace
         "domain-name" = var.domain-name
+        "issuer" = var.issuer
+        "ingress-class" = var.ingress-class
     }
 }
 resource "kubernetes_manifest" "installs" {
@@ -11,6 +14,7 @@ resource "kubernetes_manifest" "installs" {
     "metadata" = {
       "name"      = try(var.metas[count.index].component, "auth")
       "namespace" = var.namespace
+      "labels"    = local.common-labels
     }
     "spec" = {
       "distrib" = try(var.metas[count.index].distrib, var.default-dist)

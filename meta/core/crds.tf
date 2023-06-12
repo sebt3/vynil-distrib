@@ -1,10 +1,4 @@
 locals {
-    labels = {
-      "vynil.solidite.fr/owner-namespace" = var.namespace
-      "vynil.solidite.fr/owner-category" = "meta"
-      "vynil.solidite.fr/owner-component" = "core"
-      "app.kubernetes.io/managed-by" = "vynil"
-    }
     annotations = {
       "vynil.solidite.fr/meta" = "core"
       "vynil.solidite.fr/name" = var.namespace
@@ -27,7 +21,7 @@ resource "kubernetes_manifest" "crd-prometheus" {
     "metadata" = {
       "name"      = "crd-prometheus"
       "namespace" = var.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"
@@ -46,7 +40,7 @@ resource "kubernetes_manifest" "crd-cert-manager" {
     "metadata" = {
       "name"      = "crd-cert-manager"
       "namespace" = var.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"
@@ -65,7 +59,7 @@ resource "kubernetes_manifest" "crd-secret-generator" {
     "metadata" = {
       "name"      = "crd-secret-generator"
       "namespace" = var.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"
@@ -84,7 +78,7 @@ resource "kubernetes_manifest" "crd-k8up" {
     "metadata" = {
       "name"      = "crd-k8up"
       "namespace" = var.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"
@@ -103,7 +97,7 @@ resource "kubernetes_manifest" "crd-traefik" {
     "metadata" = {
       "name"      = "crd-traefik"
       "namespace" = var.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"
@@ -122,7 +116,7 @@ resource "kubernetes_manifest" "crd-redis" {
     "metadata" = {
       "name"      = "crd-redis"
       "namespace" = var.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"
@@ -141,7 +135,7 @@ resource "kubernetes_manifest" "crd-mariadb" {
     "metadata" = {
       "name"      = "crd-mariadb"
       "namespace" = var.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"
@@ -160,7 +154,7 @@ resource "kubernetes_manifest" "crd-rabbitmq" {
     "metadata" = {
       "name"      = "crd-rabbitmq"
       "namespace" = var.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"

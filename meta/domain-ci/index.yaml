@@ -3,29 +3,9 @@ apiVersion: vinyl.solidite.fr/v1beta1
 kind: Component
 category: meta
 metadata:
-  name: domain-auth
+  name: domain-ci
   description: null
 options:
-  authentik:
-    default:
-      enable: true
-    examples:
-    - enable: true
-    properties:
-      enable:
-        default: true
-        type: boolean
-    type: object
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
   issuer:
     default: letsencrypt-prod
     examples:
@@ -36,10 +16,25 @@ options:
     examples:
     - traefik
     type: string
+  gitea:
+    default:
+      enable: true
+    examples:
+    - enable: true
+    properties:
+      enable:
+        default: true
+        type: boolean
+    type: object
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
 dependencies: []
-providers:
-  kubernetes: true
-  authentik: null
-  kubectl: null
-  postgresql: null
-  restapi: null
+providers: null

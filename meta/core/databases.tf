@@ -9,7 +9,7 @@ resource "kubernetes_namespace_v1" "databases-ns" {
   count = ( var.databases.postgresql.enable || var.databases.redis.enable || var.databases.rabbitmq.enable || var.databases.mariadb.enable )? 1 : 0
   metadata {
     annotations = local.annotations
-    labels = local.labels
+    labels = local.common-labels
     name = var.databases.namespace
   }
 }
@@ -23,7 +23,7 @@ resource "kubernetes_manifest" "dbo-postgresql" {
     "metadata" = {
       "name"      = "dbo-pg"
       "namespace" = var.databases.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"
@@ -43,7 +43,7 @@ resource "kubernetes_manifest" "dbo-redis" {
     "metadata" = {
       "name"      = "dbo-redis"
       "namespace" = var.databases.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"
@@ -63,7 +63,7 @@ resource "kubernetes_manifest" "rabbitmq" {
     "metadata" = {
       "name"      = "dbo-rabbitmq"
       "namespace" = var.databases.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"
@@ -83,7 +83,7 @@ resource "kubernetes_manifest" "mariadb" {
     "metadata" = {
       "name"      = "dbo-mariadb"
       "namespace" = var.databases.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"

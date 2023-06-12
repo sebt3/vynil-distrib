@@ -9,7 +9,7 @@ resource "kubernetes_namespace_v1" "security-ns" {
   count = ( (var.databases.mariadb.enable || var.security.cert-manager.enable) || var.security.secret-generator.enable )? 1 : 0
   metadata {
     annotations = local.annotations
-    labels = local.labels
+    labels = local.common-labels
     name = var.security.namespace
   }
 }
@@ -23,7 +23,7 @@ resource "kubernetes_manifest" "secret-generator" {
     "metadata" = {
       "name"      = "secret-generator"
       "namespace" = var.security.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"
@@ -43,7 +43,7 @@ resource "kubernetes_manifest" "cert-manager" {
     "metadata" = {
       "name"      = "cert-manager"
       "namespace" = var.security.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"
@@ -63,7 +63,7 @@ resource "kubernetes_manifest" "letsencrypt" {
     "metadata" = {
       "name"      = "cert-manager-letsencrypt"
       "namespace" = var.security.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"
@@ -83,7 +83,7 @@ resource "kubernetes_manifest" "self-sign" {
     "metadata" = {
       "name"      = "cert-manager-self-sign"
       "namespace" = var.security.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"

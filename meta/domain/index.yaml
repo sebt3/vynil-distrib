@@ -6,6 +6,16 @@ metadata:
   name: domain
   description: null
 options:
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  default-dist:
+    default: core
+    examples:
+    - core
+    type: string
   metas:
     default: []
     items:
@@ -16,10 +26,10 @@ options:
     examples:
     - your_company.com
     type: string
-  default-dist:
-    default: core
+  issuer:
+    default: letsencrypt-prod
     examples:
-    - core
+    - letsencrypt-prod
     type: string
 dependencies: []
 providers:
@@ -27,3 +37,4 @@ providers:
   authentik: null
   kubectl: null
   postgresql: null
+  restapi: null

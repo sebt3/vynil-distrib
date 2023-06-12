@@ -6,7 +6,7 @@ resource "kubernetes_namespace_v1" "traefik-ns" {
   count = var.traefik.enable? 1 : 0
   metadata {
     annotations = local.annotations
-    labels = local.labels
+    labels = local.common-labels
     name = var.traefik.namespace
   }
 }
@@ -20,7 +20,7 @@ resource "kubernetes_manifest" "traefik" {
     "metadata" = {
       "name"      = "traefik"
       "namespace" = var.traefik.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"
