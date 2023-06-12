@@ -63,9 +63,10 @@ resource "kubernetes_manifest" "authentik_ingress" {
       name      = "${var.instance}"
       namespace = var.namespace
       labels    = local.common-labels
-      annotations = {
-        "kubernetes.io/ingress.class" = var.ingress-class
-      }
+      # Failing
+      # annotations = {
+      #   "kubernetes.io/ingress.class" = var.ingress-class
+      # }
     }
     spec = {
       entryPoints = ["web","websecure"]

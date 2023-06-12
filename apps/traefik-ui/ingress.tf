@@ -61,9 +61,9 @@ resource "kubernetes_manifest" "prj_ingress" {
       name      = "${var.instance}"
       namespace = var.namespace
       labels    = local.common-labels
-      annotations = {
-        "kubernetes.io/ingress.class" = var.ingress-class
-      }
+      # annotations = {
+      #   "kubernetes.io/ingress.class" = var.ingress-class
+      # }
     }
     spec = {
       entryPoints = ["web","websecure"]
