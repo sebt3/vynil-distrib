@@ -1,6 +1,19 @@
 
+locals {
+  common-labels = {
+    "vynil.solidite.fr/owner-name" = var.instance
+    "vynil.solidite.fr/owner-namespace" = var.namespace
+    "vynil.solidite.fr/owner-category" = var.category
+    "vynil.solidite.fr/owner-component" = var.component
+    "app.kubernetes.io/managed-by" = "vynil"
+    "app.kubernetes.io/name" = var.component
+    "app.kubernetes.io/instance" = var.instance
+  }
+}
 data "kustomization_overlay" "data" {
-  resources = [ for file in fileset(path.module, "*.yaml"): file if file != "index.yaml"]
+  common_labels = local.common-labels
+  namespace = var.namespace
+  resources = [for file in fileset(path.module, "*.yaml"): file if file != "index.yaml" && length(regexall("ClusterRole",file))<1]
   images {
     name = "ghcr.io/k8up-io/k8up"
     new_name = "${var.images.operator.registry}/${var.images.operator.repository}"
@@ -38,58 +51,9 @@ data "kustomization_overlay" "data" {
                   memory: "${var.resources.requests.memory}"
     EOF
   }
-  patches {
-    target {
-      kind = "PrometheusRule"
-      name = "k8up-rule"
-      namespace = "k8up"
-    }
-    patch = <<-EOF
-      apiVersion: monitoring.coreos.com/v1
-      kind: PrometheusRule
-      metadata:
-        name: k8up-rule
-        namespace: "${var.namespace}"
-    EOF
-  }
-  patches {
-    target {
-      kind = "ServiceMonitor"
-      name = "k8up-monitor"
-      namespace = "k8up"
-    }
-    patch = <<-EOF
-      apiVersion: monitoring.coreos.com/v1
-      kind: ServiceMonitor
-      metadata:
-        name: k8up-monitor
-        namespace: "${var.namespace}"
-    EOF
-  }
-  patches {
-    target {
-      kind = "Service"
-      name = "k8up-metrics"
-    }
-    patch = <<-EOF
-      apiVersion: v1
-      kind: Service
-      metadata:
-        name: k8up-metrics
-        namespace: "${var.namespace}"
-    EOF
-  }
-  patches {
-    target {
-      kind = "ServiceAccount"
-      name = "k8up"
-    }
-    patch = <<-EOF
-      apiVersion: v1
-      kind: ServiceAccount
-      metadata:
-        name: k8up
-        namespace: "${var.namespace}"
-    EOF
-  }
+}
+
+data "kustomization_overlay" "data_no_ns" {
+  common_labels = local.common-labels
+  resources = [for file in fileset(path.module, "*.yaml"): file if file != "index.yaml" && length(regexall("ClusterRole",file))>0]
 }
