@@ -47,6 +47,11 @@ options:
             type: string
         type: object
     type: object
+  timezone:
+    default: Europe/Paris
+    examples:
+    - Europe/Paris
+    type: string
   images:
     default:
       backup:
@@ -106,11 +111,6 @@ options:
             type: string
         type: object
     type: object
-  timezone:
-    default: Europe/Paris
-    examples:
-    - Europe/Paris
-    type: string
 dependencies:
 - dist: null
   category: crd
