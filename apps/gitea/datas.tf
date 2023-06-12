@@ -114,8 +114,8 @@ spec:
   loadBalancerIP: 1.2.3.4
   ports:
   - name: ssh
-    port: "${var.ssh-port}"
-    targetPort: "2222"
+    port: ${var.ssh-port}
+    targetPort: 2222
     protocol: TCP
     EOF
   }
