@@ -46,6 +46,6 @@ data "authentik_user" "akadmin" {
 resource "authentik_group" "group" {
   depends_on = [kustomization_resource.post]
   name         = "vynil-admins"
-  users        = [authentik_user.akadmin.id]
+  users        = [data.authentik_user.akadmin.id]
   is_superuser = true
 }

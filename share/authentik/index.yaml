@@ -6,36 +6,91 @@ metadata:
   name: authentik
   description: authentik is an open-source Identity Provider focused on flexibility and versatility
 options:
-  email:
+  error_reporting:
     default:
-      port: 587
-      timeout: 30
-      use_ssl: false
-      use_tls: false
+      enabled: false
+      environment: k8s
+      send_pii: false
     examples:
-    - port: 587
-      timeout: 30
-      use_ssl: false
-      use_tls: false
+    - enabled: false
+      environment: k8s
+      send_pii: false
     properties:
-      port:
-        default: 587
-        type: integer
-      timeout:
-        default: 30
-        type: integer
-      use_ssl:
+      enabled:
         default: false
         type: boolean
-      use_tls:
+      environment:
+        default: k8s
+        type: string
+      send_pii:
         default: false
         type: boolean
     type: object
+  admin:
+    default:
+      email: auth-admin
+    examples:
+    - email: auth-admin
+    properties:
+      email:
+        default: auth-admin
+        type: string
+    type: object
+  geoip:
+    default: /geoip/GeoLite2-City.mmdb
+    examples:
+    - /geoip/GeoLite2-City.mmdb
+    type: string
   sub-domain:
     default: auth
     examples:
     - auth
     type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  loglevel:
+    default: info
+    examples:
+    - info
+    type: string
+  outposts:
+    default:
+      forward: true
+      ldap: true
+    examples:
+    - forward: true
+      ldap: true
+    properties:
+      forward:
+        default: true
+        type: boolean
+      ldap:
+        default: true
+        type: boolean
+    type: object
+  postgres:
+    default:
+      replicas: 1
+      storage: 8Gi
+      version: '14'
+    examples:
+    - replicas: 1
+      storage: 8Gi
+      version: '14'
+    properties:
+      replicas:
+        default: 1
+        type: integer
+      storage:
+        default: 8Gi
+        type: string
+      version:
+        default: '14'
+        type: string
+    type: object
   redis:
     default:
       exporter:
@@ -69,45 +124,45 @@ options:
         default: 8Gi
         type: string
     type: object
-  geoip:
-    default: /geoip/GeoLite2-City.mmdb
+  domain:
+    default: your-company
     examples:
-    - /geoip/GeoLite2-City.mmdb
+    - your-company
     type: string
-  ingress-class:
-    default: traefik
+  email:
+    default:
+      port: 587
+      timeout: 30
+      use_ssl: false
+      use_tls: false
     examples:
-    - traefik
-    type: string
+    - port: 587
+      timeout: 30
+      use_ssl: false
+      use_tls: false
+    properties:
+      port:
+        default: 587
+        type: integer
+      timeout:
+        default: 30
+        type: integer
+      use_ssl:
+        default: false
+        type: boolean
+      use_tls:
+        default: false
+        type: boolean
+    type: object
   domain-name:
     default: your_company.com
     examples:
     - your_company.com
     type: string
-  loglevel:
-    default: info
+  issuer:
+    default: letsencrypt-prod
     examples:
-    - info
-    type: string
-  outposts:
-    default:
-      forward: true
-      ldap: true
-    examples:
-    - forward: true
-      ldap: true
-    properties:
-      forward:
-        default: true
-        type: boolean
-      ldap:
-        default: true
-        type: boolean
-    type: object
-  domain:
-    default: your-company
-    examples:
-    - your-company
+    - letsencrypt-prod
     type: string
   image:
     default:
@@ -137,61 +192,6 @@ options:
         type: string
       tag:
         default: 2023.5.3
-        type: string
-    type: object
-  admin:
-    default:
-      email: auth-admin
-    examples:
-    - email: auth-admin
-    properties:
-      email:
-        default: auth-admin
-        type: string
-    type: object
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
-  error_reporting:
-    default:
-      enabled: false
-      environment: k8s
-      send_pii: false
-    examples:
-    - enabled: false
-      environment: k8s
-      send_pii: false
-    properties:
-      enabled:
-        default: false
-        type: boolean
-      environment:
-        default: k8s
-        type: string
-      send_pii:
-        default: false
-        type: boolean
-    type: object
-  postgres:
-    default:
-      replicas: 1
-      storage: 8Gi
-      version: '14'
-    examples:
-    - replicas: 1
-      storage: 8Gi
-      version: '14'
-    properties:
-      replicas:
-        default: 1
-        type: integer
-      storage:
-        default: 8Gi
-        type: string
-      version:
-        default: '14'
         type: string
     type: object
 dependencies:
