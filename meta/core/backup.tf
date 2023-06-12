@@ -11,15 +11,15 @@ resource "kubernetes_namespace_v1" "backup-ns" {
   }
 }
 
-resource "kubernetes_manifest" "backup" {
+resource "kubernetes_manifest" "k8up" {
   count = var.backup.k8up.enable ? 1 : 0
   depends_on = [kubernetes_namespace_v1.backup-ns]
   manifest = {
     "apiVersion" = "vynil.solidite.fr/v1"
     "kind"       = "Install"
     "metadata" = {
-      "name"      = "backup"
-      "namespace" = var.security.namespace
+      "name"      = "k8up"
+      "namespace" = var.backup.namespace
       "labels" = local.labels
     }
     "spec" = {

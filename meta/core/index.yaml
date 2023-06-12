@@ -86,6 +86,79 @@ options:
         default: vynil-backup
         type: string
     type: object
+  security:
+    default:
+      cert-manager:
+        enable: true
+      letsencrypt:
+        enable: false
+      namespace: vynil-security
+      secret-generator:
+        enable: true
+      self-sign:
+        enable: false
+    examples:
+    - cert-manager:
+        enable: true
+      letsencrypt:
+        enable: false
+      namespace: vynil-security
+      secret-generator:
+        enable: true
+      self-sign:
+        enable: false
+    properties:
+      cert-manager:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      letsencrypt:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      namespace:
+        default: vynil-security
+        type: string
+      secret-generator:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      self-sign:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+    type: object
+  traefik:
+    default:
+      enable: true
+      namespace: traefik
+    examples:
+    - enable: true
+      namespace: traefik
+    properties:
+      enable:
+        default: true
+        type: boolean
+      namespace:
+        default: traefik
+        type: string
+    type: object
   crds:
     default:
       cert-manager:
@@ -179,79 +252,6 @@ options:
             type: boolean
         type: object
       traefik:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-    type: object
-  traefik:
-    default:
-      enable: true
-      namespace: traefik
-    examples:
-    - enable: true
-      namespace: traefik
-    properties:
-      enable:
-        default: true
-        type: boolean
-      namespace:
-        default: traefik
-        type: string
-    type: object
-  security:
-    default:
-      cert-manager:
-        enable: true
-      letsencrypt:
-        enable: false
-      namespace: vynil-security
-      secret-generator:
-        enable: true
-      self-sign:
-        enable: false
-    examples:
-    - cert-manager:
-        enable: true
-      letsencrypt:
-        enable: false
-      namespace: vynil-security
-      secret-generator:
-        enable: true
-      self-sign:
-        enable: false
-    properties:
-      cert-manager:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      letsencrypt:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      namespace:
-        default: vynil-security
-        type: string
-      secret-generator:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      self-sign:
         default:
           enable: false
         properties:
