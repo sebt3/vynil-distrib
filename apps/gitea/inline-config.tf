@@ -21,6 +21,7 @@ HOST=${var.instance}-${var.component}.${var.namespace}.svc:5432
 NAME=${var.component}
 PASSWD=${data.kubernetes_secret_v1.postgresql_password.data["password"]}
 USER=${data.kubernetes_secret_v1.postgresql_password.data["username"]}
+SSL_MODE=allow
     EOF
     repository = <<-EOF
 DEFAULT_BRANCH=${var.default-branch}

@@ -9,21 +9,6 @@ metadata:
     A painless self-hosted Git service.
     Gitea is a community managed lightweight code hosting solution written in Go. It is published under the MIT license.
 options:
-  sub-domain:
-    default: git
-    examples:
-    - git
-    type: string
-  release:
-    default: 8.3.0
-    examples:
-    - 8.3.0
-    type: string
-  theme:
-    default: gitea-modern
-    examples:
-    - gitea-modern
-    type: string
   admin:
     default:
       email: git-admin@git.your_company.com
@@ -39,51 +24,16 @@ options:
         default: gitea_admin
         type: string
     type: object
-  domain-name:
-    default: your_company.com
+  release:
+    default: 8.3.0
     examples:
-    - your_company.com
+    - 8.3.0
     type: string
-  load-balancer:
-    default:
-      ip: ''
+  default-branch:
+    default: main
     examples:
-    - ip: ''
-    properties:
-      ip:
-        default: ''
-        type: string
-    type: object
-  disable-registration:
-    default: true
-    examples:
-    - true
-    type: boolean
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
+    - main
     type: string
-  push-create:
-    default:
-      org: 'true'
-      private: 'false'
-      user: 'true'
-    examples:
-    - org: 'true'
-      private: 'false'
-      user: 'true'
-    properties:
-      org:
-        default: 'true'
-        type: string
-      private:
-        default: 'false'
-        type: string
-      user:
-        default: 'true'
-        type: string
-    type: object
   images:
     default:
       gitea:
@@ -167,16 +117,26 @@ options:
         default: '14'
         type: string
     type: object
-  replicas:
-    default: 1
+  sub-domain:
+    default: git
     examples:
-    - 1
-    type: integer
-  timezone:
-    default: Europe/Paris
-    examples:
-    - Europe/Paris
+    - git
     type: string
+  ssh-port:
+    default: 2222
+    examples:
+    - 2222
+    type: integer
+  load-balancer:
+    default:
+      ip: ''
+    examples:
+    - ip: ''
+    properties:
+      ip:
+        default: ''
+        type: string
+    type: object
   webhook:
     default:
       allowed-hosts: private
@@ -197,16 +157,11 @@ options:
     examples:
     - letsencrypt-prod
     type: string
-  domain:
-    default: your-company
+  disable-registration:
+    default: true
     examples:
-    - your-company
-    type: string
-  ssh-port:
-    default: 2222
-    examples:
-    - 2222
-    type: integer
+    - true
+    type: boolean
   volume:
     default:
       size: 10Gi
@@ -217,11 +172,56 @@ options:
         default: 10Gi
         type: string
     type: object
-  default-branch:
-    default: main
+  timezone:
+    default: Europe/Paris
     examples:
-    - main
+    - Europe/Paris
     type: string
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  push-create:
+    default:
+      org: 'true'
+      private: 'false'
+      user: 'true'
+    examples:
+    - org: 'true'
+      private: 'false'
+      user: 'true'
+    properties:
+      org:
+        default: 'true'
+        type: string
+      private:
+        default: 'false'
+        type: string
+      user:
+        default: 'true'
+        type: string
+    type: object
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  theme:
+    default: gitea-modern
+    examples:
+    - gitea-modern
+    type: string
+  replicas:
+    default: 1
+    examples:
+    - 1
+    type: integer
 dependencies:
 - dist: null
   category: share
