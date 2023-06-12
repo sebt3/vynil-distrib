@@ -20,7 +20,8 @@ resource "kubernetes_manifest" "gitea_ldap" {
         bindDn = "cn=ldapsearch,${local.base-user-dn}"
         user-search-base = local.base-user-dn
         user-filter = "(&(|(memberof=cn=gitea_admin,${local.base-group-dn})(memberof=cn=gitea_users,${local.base-group-dn}))(|(uid=%[1]s)(mail=%[1]s)))"
-        admin-filter = "(memberof=cn=gitea_admin,{{ lldap_token.ldap_groups }})"
+        admin-filter = "(memberof=cn=gitea_admin,${local.base-group-dn})"
+        endpoint = "http://ak-outpost-ldap.${var.domain}-auth.svc"
       }
       fields = [
         {

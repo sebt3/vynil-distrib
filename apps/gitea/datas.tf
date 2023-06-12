@@ -82,6 +82,11 @@ data "kustomization_overlay" "data" {
                   secretKeyRef:
                     key:  admin-filter
                     name: gitea-ldap
+              - name: LDAP_HOST
+                valueFrom:
+                  secretKeyRef:
+                    key:  endpoint
+                    name: gitea-ldap
               - name: TZ
                 value: ${var.timezone}
             containers:
