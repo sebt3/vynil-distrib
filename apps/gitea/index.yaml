@@ -9,10 +9,90 @@ metadata:
     A painless self-hosted Git service.
     Gitea is a community managed lightweight code hosting solution written in Go. It is published under the MIT license.
 options:
-  ingress-class:
-    default: traefik
+  domain:
+    default: your-company
     examples:
-    - traefik
+    - your-company
+    type: string
+  timezone:
+    default: Europe/Paris
+    examples:
+    - Europe/Paris
+    type: string
+  webhook:
+    default:
+      allowed-hosts: private
+      skip-tls-verify: false
+    examples:
+    - allowed-hosts: private
+      skip-tls-verify: false
+    properties:
+      allowed-hosts:
+        default: private
+        type: string
+      skip-tls-verify:
+        default: false
+        type: boolean
+    type: object
+  postgres:
+    default:
+      replicas: 1
+      storage: 10Gi
+      version: '14'
+    examples:
+    - replicas: 1
+      storage: 10Gi
+      version: '14'
+    properties:
+      replicas:
+        default: 1
+        type: integer
+      storage:
+        default: 10Gi
+        type: string
+      version:
+        default: '14'
+        type: string
+    type: object
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  ssh-port:
+    default: 2222
+    examples:
+    - 2222
+    type: integer
+  admin:
+    default:
+      email: git-admin@git.your_company.com
+      name: gitea_admin
+    examples:
+    - email: git-admin@git.your_company.com
+      name: gitea_admin
+    properties:
+      email:
+        default: git-admin@git.your_company.com
+        type: string
+      name:
+        default: gitea_admin
+        type: string
+    type: object
+  replicas:
+    default: 1
+    examples:
+    - 1
+    type: integer
+  default-branch:
+    default: main
+    examples:
+    - main
+    type: string
+  theme:
+    default: gitea-modern
+    examples:
+    - gitea-modern
     type: string
   push-create:
     default:
@@ -34,21 +114,6 @@ options:
         default: 'true'
         type: string
     type: object
-  webhook:
-    default:
-      allowed-hosts: private
-      skip-tls-verify: false
-    examples:
-    - allowed-hosts: private
-      skip-tls-verify: false
-    properties:
-      allowed-hosts:
-        default: private
-        type: string
-      skip-tls-verify:
-        default: false
-        type: boolean
-    type: object
   volume:
     default:
       size: 10Gi
@@ -59,56 +124,11 @@ options:
         default: 10Gi
         type: string
     type: object
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
   release:
     default: 8.3.0
     examples:
     - 8.3.0
     type: string
-  load-balancer:
-    default:
-      ip: ''
-    examples:
-    - ip: ''
-    properties:
-      ip:
-        default: ''
-        type: string
-    type: object
-  admin:
-    default:
-      email: git-admin@git.your_company.com
-      name: gitea_admin
-    examples:
-    - email: git-admin@git.your_company.com
-      name: gitea_admin
-    properties:
-      email:
-        default: git-admin@git.your_company.com
-        type: string
-      name:
-        default: gitea_admin
-        type: string
-    type: object
-  sub-domain:
-    default: git
-    examples:
-    - git
-    type: string
-  theme:
-    default: gitea-modern
-    examples:
-    - gitea-modern
-    type: string
-  disable-registration:
-    default: true
-    examples:
-    - true
-    type: boolean
   images:
     default:
       gitea:
@@ -172,50 +192,30 @@ options:
             type: string
         type: object
     type: object
-  replicas:
-    default: 1
-    examples:
-    - 1
-    type: integer
-  postgres:
+  load-balancer:
     default:
-      replicas: 1
-      storage: 10Gi
-      version: '14'
+      ip: ''
     examples:
-    - replicas: 1
-      storage: 10Gi
-      version: '14'
+    - ip: ''
     properties:
-      replicas:
-        default: 1
-        type: integer
-      storage:
-        default: 10Gi
-        type: string
-      version:
-        default: '14'
+      ip:
+        default: ''
         type: string
     type: object
-  timezone:
-    default: Europe/Paris
+  sub-domain:
+    default: git
     examples:
-    - Europe/Paris
+    - git
     type: string
-  ssh-port:
-    default: 2222
+  disable-registration:
+    default: true
     examples:
-    - 2222
-    type: integer
-  default-branch:
-    default: main
+    - true
+    type: boolean
+  ingress-class:
+    default: traefik
     examples:
-    - main
-    type: string
-  domain:
-    default: your-company
-    examples:
-    - your-company
+    - traefik
     type: string
   issuer:
     default: letsencrypt-prod

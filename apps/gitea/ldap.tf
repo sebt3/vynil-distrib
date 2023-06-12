@@ -140,6 +140,7 @@ provider "restapi" {
   create_method = "PATCH"
   update_method = "PATCH"
   destroy_method = "PATCH"
+  write_returns_object = true
 }
 
 resource "restapi_object" "ldap_outpost_binding" {
