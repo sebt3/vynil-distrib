@@ -10,6 +10,7 @@ resource "authentik_stage_password" "ldap-password-stage" {
 
 resource "authentik_stage_identification" "ldap-identification-stage" {
   name           = "ldap-identification-stage"
+  user_fields    = ["username","email"]
   password_stage = authentik_stage_password.ldap-password-stage.id
 }
 

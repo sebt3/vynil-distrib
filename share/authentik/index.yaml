@@ -6,75 +6,25 @@ metadata:
   name: authentik
   description: authentik is an open-source Identity Provider focused on flexibility and versatility
 options:
-  admin:
-    default:
-      email: auth-admin
+  issuer:
+    default: letsencrypt-prod
     examples:
-    - email: auth-admin
-    properties:
-      email:
-        default: auth-admin
-        type: string
-    type: object
-  image:
-    default:
-      project: goauthentik
-      pullPolicy: IfNotPresent
-      registry: ghcr.io
-      repository: goauthentik/server
-      tag: 2023.5.3
+    - letsencrypt-prod
+    type: string
+  geoip:
+    default: /geoip/GeoLite2-City.mmdb
     examples:
-    - project: goauthentik
-      pullPolicy: IfNotPresent
-      registry: ghcr.io
-      repository: goauthentik/server
-      tag: 2023.5.3
-    properties:
-      project:
-        default: goauthentik
-        type: string
-      pullPolicy:
-        default: IfNotPresent
-        type: string
-      registry:
-        default: ghcr.io
-        type: string
-      repository:
-        default: goauthentik/server
-        type: string
-      tag:
-        default: 2023.5.3
-        type: string
-    type: object
+    - /geoip/GeoLite2-City.mmdb
+    type: string
   domain-name:
     default: your_company.com
     examples:
     - your_company.com
     type: string
-  postgres:
-    default:
-      replicas: 1
-      storage: 8Gi
-      version: '14'
+  domain:
+    default: your-company
     examples:
-    - replicas: 1
-      storage: 8Gi
-      version: '14'
-    properties:
-      replicas:
-        default: 1
-        type: integer
-      storage:
-        default: 8Gi
-        type: string
-      version:
-        default: '14'
-        type: string
-    type: object
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
+    - your-company
     type: string
   email:
     default:
@@ -101,6 +51,41 @@ options:
         default: false
         type: boolean
     type: object
+  postgres:
+    default:
+      replicas: 1
+      storage: 8Gi
+      version: '14'
+    examples:
+    - replicas: 1
+      storage: 8Gi
+      version: '14'
+    properties:
+      replicas:
+        default: 1
+        type: integer
+      storage:
+        default: 8Gi
+        type: string
+      version:
+        default: '14'
+        type: string
+    type: object
+  admin:
+    default:
+      email: auth-admin
+    examples:
+    - email: auth-admin
+    properties:
+      email:
+        default: auth-admin
+        type: string
+    type: object
+  sub-domain:
+    default: auth
+    examples:
+    - auth
+    type: string
   error_reporting:
     default:
       enabled: false
@@ -136,11 +121,6 @@ options:
         default: true
         type: boolean
     type: object
-  geoip:
-    default: /geoip/GeoLite2-City.mmdb
-    examples:
-    - /geoip/GeoLite2-City.mmdb
-    type: string
   redis:
     default:
       exporter:
@@ -174,25 +154,45 @@ options:
         default: 8Gi
         type: string
     type: object
-  sub-domain:
-    default: auth
+  image:
+    default:
+      project: goauthentik
+      pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: goauthentik/server
+      tag: 2023.5.3
     examples:
-    - auth
-    type: string
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
+    - project: goauthentik
+      pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: goauthentik/server
+      tag: 2023.5.3
+    properties:
+      project:
+        default: goauthentik
+        type: string
+      pullPolicy:
+        default: IfNotPresent
+        type: string
+      registry:
+        default: ghcr.io
+        type: string
+      repository:
+        default: goauthentik/server
+        type: string
+      tag:
+        default: 2023.5.3
+        type: string
+    type: object
   loglevel:
     default: info
     examples:
     - info
+    type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
     type: string
 dependencies:
 - dist: null
