@@ -20,7 +20,7 @@ resource "kubernetes_manifest" "k8up" {
     "metadata" = {
       "name"      = "k8up"
       "namespace" = var.backup.namespace
-      "labels" = local.labels
+      "labels" = local.common-labels
     }
     "spec" = {
       "distrib" = "core"
