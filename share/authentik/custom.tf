@@ -49,3 +49,56 @@ resource "authentik_group" "group" {
   users        = [data.authentik_user.akadmin.id]
   is_superuser = true
 }
+
+resource "authentik_service_connection_kubernetes" "local" {
+  count = (var.outpost.ldap || var.outpost.forward) ? 1 : 0
+  name  = "local"
+  local = true
+}
+
+resource "authentik_outpost" "outpost-ldap" {
+  count = var.outpost.ldap ? 1 : 0
+  name = "ldap"
+  type = "ldap"
+  service_connection = authentik_service_connection_kubernetes.local.id
+  config = jsonencode({
+    "log_level": "info",
+    "authentik_host": "authentik",
+    "docker_map_ports": true,
+    "kubernetes_replicas": 1,
+    "kubernetes_namespace": var.namespace,
+    "authentik_host_browser": "",
+    "object_naming_template": "ak-outpost-%(name)s",
+    "authentik_host_insecure": false,
+    "kubernetes_service_type": "ClusterIP",
+    "kubernetes_image_pull_secrets": [],
+    "kubernetes_disabled_components": [],
+    "kubernetes_ingress_annotations": {},
+    "kubernetes_ingress_secret_name": "authentik-outpost-tls"
+  })
+  protocol_providers = []
+}
+
+resource "authentik_outpost" "outpost-forward" {
+  count = var.outpost.forward ? 1 : 0
+  name = "forward"
+  type = "proxy"
+  service_connection = authentik_service_connection_kubernetes.local.id
+  config = jsonencode({
+    "log_level": "info",
+    "authentik_host": "authentik",
+    "docker_map_ports": true,
+    "kubernetes_replicas": 1,
+    "kubernetes_namespace": var.namespace,
+    "authentik_host_browser": "",
+    "object_naming_template": "ak-outpost-%(name)s",
+    "authentik_host_insecure": false,
+    "kubernetes_service_type": "ClusterIP",
+    "kubernetes_image_pull_secrets": [],
+    "kubernetes_disabled_components": [],
+    "kubernetes_ingress_annotations": {},
+    "kubernetes_ingress_secret_name": "authentik-outpost-tls"
+  })
+  protocol_providers = []
+}
+
