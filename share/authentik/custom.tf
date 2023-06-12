@@ -59,9 +59,9 @@ resource "authentik_service_connection_kubernetes" "local" {
 resource "authentik_provider_ldap" "provider_ldap" {
   count = var.outposts.ldap ? 1 : 0
   name         = "authentik-ldap-provider"
+  base_dn      = "dc=${var.namespace},dc=namespace"
   bind_flow    = authentik_flow.ldap-authentication-flow.id
 }
-
 
 resource "authentik_outpost" "outpost-ldap" {
   count = var.outposts.ldap ? 1 : 0
