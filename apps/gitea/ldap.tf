@@ -144,9 +144,9 @@ provider "restapi" {
 
 resource "restapi_object" "ldap_outpost_binding" {
   path = "/outposts/instances/${local.ldap-outpost-pk}/"
-  data = {
+  data = jsonencode({
     name = "ldap"
     providers = contains(local.ldap-outpost-prividers, authentik_provider_ldap.gitea_provider_ldap.id) ? local.ldap-outpost-prividers : concat(local.ldap-outpost-prividers, [authentik_provider_ldap.gitea_provider_ldap.id])
-  }
+  })
 }
 

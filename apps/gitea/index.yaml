@@ -9,26 +9,31 @@ metadata:
     A painless self-hosted Git service.
     Gitea is a community managed lightweight code hosting solution written in Go. It is published under the MIT license.
 options:
-  sub-domain:
-    default: git
+  ingress-class:
+    default: traefik
     examples:
-    - git
+    - traefik
     type: string
-  load-balancer:
+  push-create:
     default:
-      ip: ''
+      org: 'true'
+      private: 'false'
+      user: 'true'
     examples:
-    - ip: ''
+    - org: 'true'
+      private: 'false'
+      user: 'true'
     properties:
-      ip:
-        default: ''
+      org:
+        default: 'true'
+        type: string
+      private:
+        default: 'false'
+        type: string
+      user:
+        default: 'true'
         type: string
     type: object
-  replicas:
-    default: 1
-    examples:
-    - 1
-    type: integer
   webhook:
     default:
       allowed-hosts: private
@@ -54,29 +59,24 @@ options:
         default: 10Gi
         type: string
     type: object
-  ssh-port:
-    default: 2222
+  domain-name:
+    default: your_company.com
     examples:
-    - 2222
-    type: integer
-  postgres:
+    - your_company.com
+    type: string
+  release:
+    default: 8.3.0
+    examples:
+    - 8.3.0
+    type: string
+  load-balancer:
     default:
-      replicas: 1
-      storage: 10Gi
-      version: '14'
+      ip: ''
     examples:
-    - replicas: 1
-      storage: 10Gi
-      version: '14'
+    - ip: ''
     properties:
-      replicas:
-        default: 1
-        type: integer
-      storage:
-        default: 10Gi
-        type: string
-      version:
-        default: '14'
+      ip:
+        default: ''
         type: string
     type: object
   admin:
@@ -94,10 +94,15 @@ options:
         default: gitea_admin
         type: string
     type: object
-  default-branch:
-    default: main
+  sub-domain:
+    default: git
     examples:
-    - main
+    - git
+    type: string
+  theme:
+    default: gitea-modern
+    examples:
+    - gitea-modern
     type: string
   disable-registration:
     default: true
@@ -167,60 +172,55 @@ options:
             type: string
         type: object
     type: object
-  release:
-    default: 8.3.0
+  replicas:
+    default: 1
     examples:
-    - 8.3.0
+    - 1
+    type: integer
+  postgres:
+    default:
+      replicas: 1
+      storage: 10Gi
+      version: '14'
+    examples:
+    - replicas: 1
+      storage: 10Gi
+      version: '14'
+    properties:
+      replicas:
+        default: 1
+        type: integer
+      storage:
+        default: 10Gi
+        type: string
+      version:
+        default: '14'
+        type: string
+    type: object
+  timezone:
+    default: Europe/Paris
+    examples:
+    - Europe/Paris
+    type: string
+  ssh-port:
+    default: 2222
+    examples:
+    - 2222
+    type: integer
+  default-branch:
+    default: main
+    examples:
+    - main
     type: string
   domain:
     default: your-company
     examples:
     - your-company
     type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
   issuer:
     default: letsencrypt-prod
     examples:
     - letsencrypt-prod
-    type: string
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  timezone:
-    default: Europe/Paris
-    examples:
-    - Europe/Paris
-    type: string
-  push-create:
-    default:
-      org: 'true'
-      private: 'false'
-      user: 'true'
-    examples:
-    - org: 'true'
-      private: 'false'
-      user: 'true'
-    properties:
-      org:
-        default: 'true'
-        type: string
-      private:
-        default: 'false'
-        type: string
-      user:
-        default: 'true'
-        type: string
-    type: object
-  theme:
-    default: gitea-modern
-    examples:
-    - gitea-modern
     type: string
 dependencies:
 - dist: null
