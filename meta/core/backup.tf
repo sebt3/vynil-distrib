@@ -6,7 +6,7 @@ resource "kubernetes_namespace_v1" "backup-ns" {
   count = var.backup.k8up.enable? 1 : 0
   metadata {
     annotations = local.annotations
-    labels = local.labels
+    labels = local.common-labels
     name = var.backup.namespace
   }
 }

@@ -102,17 +102,17 @@ resource "authentik_group" "gitea_admin" {
 
 resource "authentik_policy_binding" "gitea_access_users" {
   target = authentik_application.gitea_application.uuid
-  group  = authentik_group.gitea_users.uuid
+  group  = authentik_group.gitea_users.id
   order  = 0
 }
 resource "authentik_policy_binding" "gitea_access_vynil" {
   target = authentik_application.gitea_application.uuid
-  group  = data.authentik_group.vynil-admin.uuid
+  group  = data.authentik_group.vynil-admin.id
   order  = 1
 }
 resource "authentik_policy_binding" "gitea_access_ldap" {
   target = authentik_application.gitea_application.uuid
-  group  = authentik_group.gitea_ldapsearch.uuid
+  group  = authentik_group.gitea_ldapsearch.id
   order  = 2
 }
 
