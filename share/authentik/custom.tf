@@ -39,7 +39,7 @@ resource "authentik_flow_stage_binding" "ldap-authentication-flow-30" {
 }
 
 data "authentik_user" "akadmin" {
-  depends_on = [kustomization_resource.post]
+  depends_on = [kustomization_resource.post,data.kubernetes_secret_v1.authentik]
   username = "akadmin"
 }
 
