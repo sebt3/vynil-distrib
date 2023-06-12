@@ -3,10 +3,8 @@ locals {
     dns-names = ["${var.sub-domain}.${var.domain-name}"]
     middlewares = [{"name" = "${var.instance}-https"}]
     services = [{
-      "kind" = "Service"
-      "name" = "${var.instance}"
-      "namespace" = var.namespace
-      "port" = 80
+      "kind" = "TraefikService"
+      "name" = "api@internal"
     }]
     routes = [ for v in local.dns-names : {
       "kind" = "Rule"
@@ -16,7 +14,7 @@ locals {
     }]
 }
 
-resource "kubernetes_manifest" "authentik_certificate" {
+resource "kubernetes_manifest" "prj_certificate" {
   manifest = {
     apiVersion = "cert-manager.io/v1"
     kind       = "Certificate"
@@ -37,7 +35,7 @@ resource "kubernetes_manifest" "authentik_certificate" {
   }
 }
 
-resource "kubernetes_manifest" "authentik_https_redirect" {
+resource "kubernetes_manifest" "prj_https_redirect" {
   manifest = {
     apiVersion = "traefik.containo.us/v1alpha1"
     kind       = "Middleware"
@@ -55,7 +53,7 @@ resource "kubernetes_manifest" "authentik_https_redirect" {
   }
 }
 
-resource "kubernetes_manifest" "authentik_ingress" {
+resource "kubernetes_manifest" "prj_ingress" {
   manifest = {
     apiVersion = "traefik.containo.us/v1alpha1"
     kind       = "IngressRoute"

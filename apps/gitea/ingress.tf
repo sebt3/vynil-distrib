@@ -60,7 +60,7 @@ resource "kubernetes_manifest" "gitea_ingress" {
     apiVersion = "traefik.containo.us/v1alpha1"
     kind       = "IngressRoute"
     metadata = {
-      name      = "${var.instance}-cert"
+      name      = "${var.instance}"
       namespace = var.namespace
       labels    = local.common-labels
       annotations = {
