@@ -6,71 +6,6 @@ metadata:
   name: authentik
   description: authentik is an open-source Identity Provider focused on flexibility and versatility
 options:
-  error_reporting:
-    default:
-      enabled: false
-      environment: k8s
-      send_pii: false
-    examples:
-    - enabled: false
-      environment: k8s
-      send_pii: false
-    properties:
-      enabled:
-        default: false
-        type: boolean
-      environment:
-        default: k8s
-        type: string
-      send_pii:
-        default: false
-        type: boolean
-    type: object
-  admin:
-    default:
-      email: auth-admin
-    examples:
-    - email: auth-admin
-    properties:
-      email:
-        default: auth-admin
-        type: string
-    type: object
-  geoip:
-    default: /geoip/GeoLite2-City.mmdb
-    examples:
-    - /geoip/GeoLite2-City.mmdb
-    type: string
-  sub-domain:
-    default: auth
-    examples:
-    - auth
-    type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
-  loglevel:
-    default: info
-    examples:
-    - info
-    type: string
-  outposts:
-    default:
-      forward: true
-      ldap: true
-    examples:
-    - forward: true
-      ldap: true
-    properties:
-      forward:
-        default: true
-        type: boolean
-      ldap:
-        default: true
-        type: boolean
-    type: object
   postgres:
     default:
       replicas: 1
@@ -91,43 +26,70 @@ options:
         default: '14'
         type: string
     type: object
-  redis:
+  admin:
     default:
-      exporter:
-        enabled: true
-        image: quay.io/opstree/redis-exporter:v1.44.0
-      image: quay.io/opstree/redis:v7.0.5
-      storage: 8Gi
+      email: auth-admin
     examples:
-    - exporter:
-        enabled: true
-        image: quay.io/opstree/redis-exporter:v1.44.0
-      image: quay.io/opstree/redis:v7.0.5
-      storage: 8Gi
+    - email: auth-admin
     properties:
-      exporter:
-        default:
-          enabled: true
-          image: quay.io/opstree/redis-exporter:v1.44.0
-        properties:
-          enabled:
-            default: true
-            type: boolean
-          image:
-            default: quay.io/opstree/redis-exporter:v1.44.0
-            type: string
-        type: object
-      image:
-        default: quay.io/opstree/redis:v7.0.5
-        type: string
-      storage:
-        default: 8Gi
+      email:
+        default: auth-admin
         type: string
     type: object
-  domain:
-    default: your-company
+  sub-domain:
+    default: auth
     examples:
-    - your-company
+    - auth
+    type: string
+  image:
+    default:
+      project: goauthentik
+      pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: goauthentik/server
+      tag: 2023.5.3
+    examples:
+    - project: goauthentik
+      pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: goauthentik/server
+      tag: 2023.5.3
+    properties:
+      project:
+        default: goauthentik
+        type: string
+      pullPolicy:
+        default: IfNotPresent
+        type: string
+      registry:
+        default: ghcr.io
+        type: string
+      repository:
+        default: goauthentik/server
+        type: string
+      tag:
+        default: 2023.5.3
+        type: string
+    type: object
+  geoip:
+    default: /geoip/GeoLite2-City.mmdb
+    examples:
+    - /geoip/GeoLite2-City.mmdb
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  loglevel:
+    default: info
+    examples:
+    - info
     type: string
   email:
     default:
@@ -159,39 +121,77 @@ options:
     examples:
     - your_company.com
     type: string
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
-  image:
+  error_reporting:
     default:
-      project: goauthentik
-      pullPolicy: IfNotPresent
-      registry: ghcr.io
-      repository: goauthentik/server
-      tag: 2023.5.3
+      enabled: false
+      environment: k8s
+      send_pii: false
     examples:
-    - project: goauthentik
-      pullPolicy: IfNotPresent
-      registry: ghcr.io
-      repository: goauthentik/server
-      tag: 2023.5.3
+    - enabled: false
+      environment: k8s
+      send_pii: false
     properties:
-      project:
-        default: goauthentik
+      enabled:
+        default: false
+        type: boolean
+      environment:
+        default: k8s
         type: string
-      pullPolicy:
-        default: IfNotPresent
+      send_pii:
+        default: false
+        type: boolean
+    type: object
+  outposts:
+    default:
+      forward: true
+      ldap: true
+    examples:
+    - forward: true
+      ldap: true
+    properties:
+      forward:
+        default: true
+        type: boolean
+      ldap:
+        default: true
+        type: boolean
+    type: object
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  redis:
+    default:
+      exporter:
+        enabled: true
+        image: quay.io/opstree/redis-exporter:v1.44.0
+      image: quay.io/opstree/redis:v7.0.5
+      storage: 8Gi
+    examples:
+    - exporter:
+        enabled: true
+        image: quay.io/opstree/redis-exporter:v1.44.0
+      image: quay.io/opstree/redis:v7.0.5
+      storage: 8Gi
+    properties:
+      exporter:
+        default:
+          enabled: true
+          image: quay.io/opstree/redis-exporter:v1.44.0
+        properties:
+          enabled:
+            default: true
+            type: boolean
+          image:
+            default: quay.io/opstree/redis-exporter:v1.44.0
+            type: string
+        type: object
+      image:
+        default: quay.io/opstree/redis:v7.0.5
         type: string
-      registry:
-        default: ghcr.io
-        type: string
-      repository:
-        default: goauthentik/server
-        type: string
-      tag:
-        default: 2023.5.3
+      storage:
+        default: 8Gi
         type: string
     type: object
 dependencies:

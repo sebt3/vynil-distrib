@@ -19,7 +19,6 @@ data "kubernetes_secret_v1" "authentik" {
 }
 
 data "kustomization_overlay" "data" {
-  depends_on = [kubernetes_manifest.authentik_secret]
   namespace = var.namespace
   common_labels = local.common-labels
   resources = [for file in fileset(path.module, "*.yaml"): file if file != "index.yaml"]
