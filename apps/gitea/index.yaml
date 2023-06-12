@@ -9,56 +9,11 @@ metadata:
     A painless self-hosted Git service.
     Gitea is a community managed lightweight code hosting solution written in Go. It is published under the MIT license.
 options:
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
-  push-create:
-    default:
-      org: 'true'
-      private: 'false'
-      user: 'true'
-    examples:
-    - org: 'true'
-      private: 'false'
-      user: 'true'
-    properties:
-      org:
-        default: 'true'
-        type: string
-      private:
-        default: 'false'
-        type: string
-      user:
-        default: 'true'
-        type: string
-    type: object
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
   sub-domain:
     default: git
     examples:
     - git
     type: string
-  timezone:
-    default: Europe/Paris
-    examples:
-    - Europe/Paris
-    type: string
-  release:
-    default: 8.3.0
-    examples:
-    - 8.3.0
-    type: string
-  disable-registration:
-    default: true
-    examples:
-    - true
-    type: boolean
   load-balancer:
     default:
       ip: ''
@@ -69,31 +24,26 @@ options:
         default: ''
         type: string
     type: object
-  admin:
-    default:
-      email: git-admin@git.your_company.com
-      name: gitea_admin
-    examples:
-    - email: git-admin@git.your_company.com
-      name: gitea_admin
-    properties:
-      email:
-        default: git-admin@git.your_company.com
-        type: string
-      name:
-        default: gitea_admin
-        type: string
-    type: object
   replicas:
     default: 1
     examples:
     - 1
     type: integer
-  ingress-class:
-    default: traefik
+  webhook:
+    default:
+      allowed-hosts: private
+      skip-tls-verify: false
     examples:
-    - traefik
-    type: string
+    - allowed-hosts: private
+      skip-tls-verify: false
+    properties:
+      allowed-hosts:
+        default: private
+        type: string
+      skip-tls-verify:
+        default: false
+        type: boolean
+    type: object
   volume:
     default:
       size: 10Gi
@@ -104,6 +54,11 @@ options:
         default: 10Gi
         type: string
     type: object
+  ssh-port:
+    default: 2222
+    examples:
+    - 2222
+    type: integer
   postgres:
     default:
       replicas: 1
@@ -124,26 +79,31 @@ options:
         default: '14'
         type: string
     type: object
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  webhook:
+  admin:
     default:
-      allowed-hosts: private
-      skip-tls-verify: false
+      email: git-admin@git.your_company.com
+      name: gitea_admin
     examples:
-    - allowed-hosts: private
-      skip-tls-verify: false
+    - email: git-admin@git.your_company.com
+      name: gitea_admin
     properties:
-      allowed-hosts:
-        default: private
+      email:
+        default: git-admin@git.your_company.com
         type: string
-      skip-tls-verify:
-        default: false
-        type: boolean
+      name:
+        default: gitea_admin
+        type: string
     type: object
+  default-branch:
+    default: main
+    examples:
+    - main
+    type: string
+  disable-registration:
+    default: true
+    examples:
+    - true
+    type: boolean
   images:
     default:
       gitea:
@@ -207,16 +167,56 @@ options:
             type: string
         type: object
     type: object
-  default-branch:
-    default: main
+  release:
+    default: 8.3.0
     examples:
-    - main
+    - 8.3.0
     type: string
-  ssh-port:
-    default: 2222
+  domain:
+    default: your-company
     examples:
-    - 2222
-    type: integer
+    - your-company
+    type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  timezone:
+    default: Europe/Paris
+    examples:
+    - Europe/Paris
+    type: string
+  push-create:
+    default:
+      org: 'true'
+      private: 'false'
+      user: 'true'
+    examples:
+    - org: 'true'
+      private: 'false'
+      user: 'true'
+    properties:
+      org:
+        default: 'true'
+        type: string
+      private:
+        default: 'false'
+        type: string
+      user:
+        default: 'true'
+        type: string
+    type: object
   theme:
     default: gitea-modern
     examples:
@@ -231,5 +231,5 @@ providers:
   authentik: true
   kubectl: null
   postgresql: null
-  restapi: null
+  restapi: true
   http: true

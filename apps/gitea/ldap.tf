@@ -4,6 +4,12 @@ locals {
   base-group-dn = format("ou=groups,%s", local.base-dn)
   base-user-dn = format("ou=users,%s", local.base-dn)
   authentik-token = data.kubernetes_secret_v1.authentik.data["AUTHENTIK_BOOTSTRAP_TOKEN"]
+  request_headers = {
+    "Content-Type" = "application/json"
+    Authorization  = "Bearer ${local.authentik-token}"
+  }
+  ldap-outpost-prividers = jsondecode(data.http.get_ldap_outpost.response_body).results[0].providers
+  ldap-outpost-pk = jsondecode(data.http.get_ldap_outpost.response_body).results[0].pk
 }
 resource "kubernetes_manifest" "gitea_ldap" {
   manifest = {
@@ -55,13 +61,8 @@ resource "authentik_group" "gitea_ldapsearch" {
 data "http" "gitea_ldapsearch_password" {
   url    = "http://authentik.${var.domain}-auth.svc/api/v3/core/users/${authentik_user.gitea_ldapsearch.id}/set_password/"
   method = "POST"
-  request_headers = {
-    "Content-Type" = "application/json"
-    Authorization  = "Bearer ${local.authentik-token}"
-  }
-  request_body = jsonencode({
-    password=data.kubernetes_secret_v1.gitea_ldap_password.data["bindPassword"]
-  })
+  request_headers = local.request_headers
+  request_body = jsonencode({password=data.kubernetes_secret_v1.gitea_ldap_password.data["bindPassword"]})
   lifecycle {
     postcondition {
       condition     = contains([201, 204], self.status_code)
@@ -118,5 +119,34 @@ resource "authentik_policy_binding" "gitea_access_ldap" {
   target = authentik_application.gitea_application.uuid
   group  = authentik_group.gitea_ldapsearch.id
   order  = 2
+}
+
+data "http" "get_ldap_outpost" {
+  depends_on = [authentik_group.gitea_users] # fake dependency so it is not evaluated at plan stage
+  url    = "http://authentik.${var.domain}-auth.svc/api/v3/outposts/instances/?name__iexact=ldap"
+  method = "GET"
+  request_headers = local.request_headers
+  lifecycle {
+    postcondition {
+      condition     = contains([200], self.status_code)
+      error_message = "Status code invalid"
+    }
+  }
+}
+
+provider "restapi" {
+  uri = "http://authentik.${var.domain}-auth.svc/api/v3/"
+  headers = local.request_headers
+  create_method = "PATCH"
+  update_method = "PATCH"
+  destroy_method = "PATCH"
+}
+
+resource "restapi_object" "ldap_outpost_binding" {
+  path = "/outposts/instances/${local.ldap-outpost-pk}/"
+  data = {
+    name = "ldap"
+    providers = contains(local.ldap-outpost-prividers, authentik_provider_ldap.gitea_provider_ldap.id) ? local.ldap-outpost-prividers : concat(local.ldap-outpost-prividers, [authentik_provider_ldap.gitea_provider_ldap.id])
+  }
 }
 
