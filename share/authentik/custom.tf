@@ -51,7 +51,6 @@ resource "authentik_group" "group" {
 }
 
 resource "authentik_service_connection_kubernetes" "local" {
-  count = (var.outposts.ldap || var.outposts.forward) ? 1 : 0
   name  = "local"
   local = true
 }
