@@ -39,14 +39,14 @@ resource "authentik_flow_stage_binding" "ldap-authentication-flow-30" {
   order  = 30
 }
 
-# data "authentik_user" "akadmin" {
-#   depends_on = [kustomization_resource.post,data.kubernetes_secret_v1.authentik]
-#   username = "akadmin"
-# }
+resource "authentik_user" "akadmin" {
+  depends_on = [kustomization_resource.post]
+  username = "akadmin"
+}
 
-# resource "authentik_group" "group" {
-#   depends_on = [kustomization_resource.post]
-#   name         = "vynil-admins"
-#   users        = [data.authentik_user.akadmin.id]
-#   is_superuser = true
-# }
+resource "authentik_group" "group" {
+  depends_on = [kustomization_resource.post]
+  name         = "vynil-admins"
+  users        = [authentik_user.akadmin.id]
+  is_superuser = true
+}

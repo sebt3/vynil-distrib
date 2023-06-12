@@ -6,71 +6,6 @@ metadata:
   name: authentik
   description: authentik is an open-source Identity Provider focused on flexibility and versatility
 options:
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
-  geoip:
-    default: /geoip/GeoLite2-City.mmdb
-    examples:
-    - /geoip/GeoLite2-City.mmdb
-    type: string
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
-  email:
-    default:
-      port: 587
-      timeout: 30
-      use_ssl: false
-      use_tls: false
-    examples:
-    - port: 587
-      timeout: 30
-      use_ssl: false
-      use_tls: false
-    properties:
-      port:
-        default: 587
-        type: integer
-      timeout:
-        default: 30
-        type: integer
-      use_ssl:
-        default: false
-        type: boolean
-      use_tls:
-        default: false
-        type: boolean
-    type: object
-  postgres:
-    default:
-      replicas: 1
-      storage: 8Gi
-      version: '14'
-    examples:
-    - replicas: 1
-      storage: 8Gi
-      version: '14'
-    properties:
-      replicas:
-        default: 1
-        type: integer
-      storage:
-        default: 8Gi
-        type: string
-      version:
-        default: '14'
-        type: string
-    type: object
   admin:
     default:
       email: auth-admin
@@ -86,26 +21,6 @@ options:
     examples:
     - auth
     type: string
-  error_reporting:
-    default:
-      enabled: false
-      environment: k8s
-      send_pii: false
-    examples:
-    - enabled: false
-      environment: k8s
-      send_pii: false
-    properties:
-      enabled:
-        default: false
-        type: boolean
-      environment:
-        default: k8s
-        type: string
-      send_pii:
-        default: false
-        type: boolean
-    type: object
   outposts:
     default:
       forward: true
@@ -154,6 +69,96 @@ options:
         default: 8Gi
         type: string
     type: object
+  postgres:
+    default:
+      replicas: 1
+      storage: 8Gi
+      version: '14'
+    examples:
+    - replicas: 1
+      storage: 8Gi
+      version: '14'
+    properties:
+      replicas:
+        default: 1
+        type: integer
+      storage:
+        default: 8Gi
+        type: string
+      version:
+        default: '14'
+        type: string
+    type: object
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  geoip:
+    default: /geoip/GeoLite2-City.mmdb
+    examples:
+    - /geoip/GeoLite2-City.mmdb
+    type: string
+  error_reporting:
+    default:
+      enabled: false
+      environment: k8s
+      send_pii: false
+    examples:
+    - enabled: false
+      environment: k8s
+      send_pii: false
+    properties:
+      enabled:
+        default: false
+        type: boolean
+      environment:
+        default: k8s
+        type: string
+      send_pii:
+        default: false
+        type: boolean
+    type: object
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  loglevel:
+    default: info
+    examples:
+    - info
+    type: string
+  email:
+    default:
+      port: 587
+      timeout: 30
+      use_ssl: false
+      use_tls: false
+    examples:
+    - port: 587
+      timeout: 30
+      use_ssl: false
+      use_tls: false
+    properties:
+      port:
+        default: 587
+        type: integer
+      timeout:
+        default: 30
+        type: integer
+      use_ssl:
+        default: false
+        type: boolean
+      use_tls:
+        default: false
+        type: boolean
+    type: object
   image:
     default:
       project: goauthentik
@@ -184,15 +189,10 @@ options:
         default: 2023.5.3
         type: string
     type: object
-  loglevel:
-    default: info
+  issuer:
+    default: letsencrypt-prod
     examples:
-    - info
-    type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
+    - letsencrypt-prod
     type: string
 dependencies:
 - dist: null
