@@ -29,7 +29,7 @@ data "kustomization_overlay" "data" {
     new_tag  = "${var.image.tag}"
   }
   config_map_generator {
-    name = local.app-name
+    name = var.component
     behavior = "create"
     literals = [
       "AUTHENTIK_EMAIL__PORT=${var.email.port}",
@@ -42,11 +42,11 @@ data "kustomization_overlay" "data" {
       "AUTHENTIK_GEOIP=${var.geoip}",
       "AUTHENTIK_LOG_LEVEL=${var.loglevel}",
       "AUTHENTIK_OUTPOSTS__CONTAINER_IMAGE_BASE=${var.image.registry}/${var.image.project}/%(type)s:%(version)s",
-      "AUTHENTIK_POSTGRESQL__HOST=${var.name}-${local.app-name}.${var.namespace}.svc",
-      "AUTHENTIK_POSTGRESQL__NAME=${local.app-name}",
+      "AUTHENTIK_POSTGRESQL__HOST=${var.name}-${var.component}.${var.namespace}.svc",
+      "AUTHENTIK_POSTGRESQL__NAME=${var.component}",
       "AUTHENTIK_POSTGRESQL__PORT=5432",
-      "AUTHENTIK_POSTGRESQL__USER=${local.app-name}",
-      "AUTHENTIK_REDIS__HOST=${var.name}-${local.app-name}-redis",
+      "AUTHENTIK_POSTGRESQL__USER=${var.component}",
+      "AUTHENTIK_REDIS__HOST=${var.name}-${var.component}-redis",
       "AUTHENTIK_BOOTSTRAP_EMAIL=${var.admin.email}@${var.domain-name}",
     ]
   }
@@ -71,13 +71,13 @@ data "kustomization_overlay" "data" {
                 - name: AUTHENTIK_POSTGRESQL__PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: ${local.app-name}.${var.name}-${local.app-name}.credentials.postgresql.acid.zalan.do
+                      name: ${var.component}.${var.name}-${var.component}.credentials.postgresql.acid.zalan.do
                       key: password
                 envFrom:
                 - secretRef:
-                    name: ${local.app-name}
+                    name: ${var.component}
                 - configMapRef:
-                    name: ${local.app-name}
+                    name: ${var.component}
     EOF
   }
   patches {
@@ -101,13 +101,13 @@ data "kustomization_overlay" "data" {
                 - name: AUTHENTIK_POSTGRESQL__PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: ${local.app-name}.${var.name}-${local.app-name}.credentials.postgresql.acid.zalan.do
+                      name: ${var.component}.${var.name}-${var.component}.credentials.postgresql.acid.zalan.do
                       key: password
                 envFrom:
                 - secretRef:
-                    name: ${local.app-name}
+                    name: ${var.component}
                 - configMapRef:
-                    name: ${local.app-name}
+                    name: ${var.component}
     EOF
   }
 }
