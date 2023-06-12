@@ -50,19 +50,23 @@ resource "authentik_group" "gitea_ldapsearch" {
   is_superuser = true
 }
 
-provider "restapi" {
-  uri              = "http://authentik.${var.domain}-auth.svc"
-  headers = {
+
+data "http" "gitea_ldapsearch_password" {
+  url    = "http://authentik.${var.domain}-auth.svc/api/v3/core/users/${authentik_user.gitea_ldapsearch.id}/set_password/"
+  method = "POST"
+  request_headers = {
     "Content-Type" = "application/json"
     Authorization  = "Bearer ${local.authentik-token}"
   }
-}
-
-resource "restapi_object" "gitea_ldapsearch_password" {
-  path = "/api/v3//core/users/${authentik_user.gitea_ldapsearch.id}/set_password/"
-  data = jsonencode({
+  request_body = jsonencode({
     password=data.kubernetes_secret_v1.gitea_ldap_password.data["bindPassword"]
   })
+  lifecycle {
+    postcondition {
+      condition     = contains([201, 204], self.status_code)
+      error_message = "Status code invalid"
+    }
+  }
 }
 
 data "authentik_flow" "ldap-authentication-flow" {
@@ -95,9 +99,8 @@ data "authentik_group" "vynil-admin" {
 }
 
 resource "authentik_group" "gitea_admin" {
-  depends_on = [authentik_group.gitea_users]
   name         = "gitea_admin"
-  parent       = "gitea_users"
+  parent       = authentik_group.gitea_users.id
 }
 
 resource "authentik_policy_binding" "gitea_access_users" {
