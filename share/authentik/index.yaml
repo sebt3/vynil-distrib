@@ -6,81 +6,16 @@ metadata:
   name: authentik
   description: authentik is an open-source Identity Provider focused on flexibility and versatility
 options:
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
-  sub-domain:
-    default: auth
-    examples:
-    - auth
-    type: string
   geoip:
     default: /geoip/GeoLite2-City.mmdb
     examples:
     - /geoip/GeoLite2-City.mmdb
     type: string
-  image:
-    default:
-      project: goauthentik
-      pullPolicy: IfNotPresent
-      registry: ghcr.io
-      repository: goauthentik/server
-      tag: 2023.5.3
+  loglevel:
+    default: info
     examples:
-    - project: goauthentik
-      pullPolicy: IfNotPresent
-      registry: ghcr.io
-      repository: goauthentik/server
-      tag: 2023.5.3
-    properties:
-      project:
-        default: goauthentik
-        type: string
-      pullPolicy:
-        default: IfNotPresent
-        type: string
-      registry:
-        default: ghcr.io
-        type: string
-      repository:
-        default: goauthentik/server
-        type: string
-      tag:
-        default: 2023.5.3
-        type: string
-    type: object
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
+    - info
     type: string
-  postgres:
-    default:
-      replicas: 1
-      storage: 8Gi
-      version: '14'
-    examples:
-    - replicas: 1
-      storage: 8Gi
-      version: '14'
-    properties:
-      replicas:
-        default: 1
-        type: integer
-      storage:
-        default: 8Gi
-        type: string
-      version:
-        default: '14'
-        type: string
-    type: object
   redis:
     default:
       exporter:
@@ -114,40 +49,80 @@ options:
         default: 8Gi
         type: string
     type: object
-  error_reporting:
+  image:
     default:
-      enabled: false
-      environment: k8s
-      send_pii: false
+      project: goauthentik
+      pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: goauthentik/server
+      tag: 2023.5.3
     examples:
-    - enabled: false
-      environment: k8s
-      send_pii: false
+    - project: goauthentik
+      pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: goauthentik/server
+      tag: 2023.5.3
     properties:
-      enabled:
-        default: false
-        type: boolean
-      environment:
-        default: k8s
+      project:
+        default: goauthentik
         type: string
-      send_pii:
-        default: false
-        type: boolean
+      pullPolicy:
+        default: IfNotPresent
+        type: string
+      registry:
+        default: ghcr.io
+        type: string
+      repository:
+        default: goauthentik/server
+        type: string
+      tag:
+        default: 2023.5.3
+        type: string
     type: object
-  admin:
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  postgres:
     default:
-      email: auth-admin
+      replicas: 1
+      storage: 8Gi
+      version: '14'
     examples:
-    - email: auth-admin
+    - replicas: 1
+      storage: 8Gi
+      version: '14'
     properties:
-      email:
-        default: auth-admin
+      replicas:
+        default: 1
+        type: integer
+      storage:
+        default: 8Gi
+        type: string
+      version:
+        default: '14'
         type: string
     type: object
-  loglevel:
-    default: info
+  sub-domain:
+    default: auth
     examples:
-    - info
+    - auth
+    type: string
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
     type: string
   email:
     default:
@@ -174,11 +149,6 @@ options:
         default: false
         type: boolean
     type: object
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
   outposts:
     default:
       forward: true
@@ -192,6 +162,36 @@ options:
         type: boolean
       ldap:
         default: true
+        type: boolean
+    type: object
+  admin:
+    default:
+      email: auth-admin
+    examples:
+    - email: auth-admin
+    properties:
+      email:
+        default: auth-admin
+        type: string
+    type: object
+  error_reporting:
+    default:
+      enabled: false
+      environment: k8s
+      send_pii: false
+    examples:
+    - enabled: false
+      environment: k8s
+      send_pii: false
+    properties:
+      enabled:
+        default: false
+        type: boolean
+      environment:
+        default: k8s
+        type: string
+      send_pii:
+        default: false
         type: boolean
     type: object
 dependencies:

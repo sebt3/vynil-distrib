@@ -60,7 +60,7 @@ resource "authentik_provider_ldap" "provider_ldap" {
   count = var.outposts.ldap ? 1 : 0
   name         = "authentik-ldap-provider"
   base_dn      = "dc=${var.namespace},dc=namespace"
-  bind_flow    = authentik_flow.ldap-authentication-flow.id
+  bind_flow    = authentik_flow.ldap-authentication-flow.uuid
 }
 
 resource "authentik_outpost" "outpost-ldap" {
@@ -93,6 +93,7 @@ data "authentik_flow" "default-authorization-flow" {
 resource "authentik_provider_proxy" "provider_forward" {
   count = var.outposts.forward ? 1 : 0
   name               = "authentik-forward-provider"
+  internal_host      = "http://authentik"
   external_host      = "http://authentik"
   authorization_flow = data.authentik_flow.default-authorization-flow.id
 }
