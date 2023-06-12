@@ -39,14 +39,9 @@ resource "authentik_flow_stage_binding" "ldap-authentication-flow-30" {
   order  = 30
 }
 
-resource "authentik_user" "akadmin" {
-  depends_on = [kustomization_resource.post]
-  username = "akadmin"
-}
-
 resource "authentik_group" "group" {
   depends_on = [kustomization_resource.post]
   name         = "vynil-admins"
-  users        = [authentik_user.akadmin.id]
+  users        = [1]
   is_superuser = true
 }
