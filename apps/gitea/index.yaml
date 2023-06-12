@@ -9,15 +9,40 @@ metadata:
     A painless self-hosted Git service.
     Gitea is a community managed lightweight code hosting solution written in Go. It is published under the MIT license.
 options:
-  domain:
-    default: your-company
+  replicas:
+    default: 1
     examples:
-    - your-company
-    type: string
+    - 1
+    type: integer
+  volume:
+    default:
+      size: 10Gi
+    examples:
+    - size: 10Gi
+    properties:
+      size:
+        default: 10Gi
+        type: string
+    type: object
+  ssh-port:
+    default: 2222
+    examples:
+    - 2222
+    type: integer
   timezone:
     default: Europe/Paris
     examples:
     - Europe/Paris
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  domain:
+    default: your-company
+    examples:
+    - your-company
     type: string
   webhook:
     default:
@@ -34,36 +59,6 @@ options:
         default: false
         type: boolean
     type: object
-  postgres:
-    default:
-      replicas: 1
-      storage: 10Gi
-      version: '14'
-    examples:
-    - replicas: 1
-      storage: 10Gi
-      version: '14'
-    properties:
-      replicas:
-        default: 1
-        type: integer
-      storage:
-        default: 10Gi
-        type: string
-      version:
-        default: '14'
-        type: string
-    type: object
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  ssh-port:
-    default: 2222
-    examples:
-    - 2222
-    type: integer
   admin:
     default:
       email: git-admin@git.your_company.com
@@ -79,55 +74,30 @@ options:
         default: gitea_admin
         type: string
     type: object
-  replicas:
-    default: 1
-    examples:
-    - 1
-    type: integer
-  default-branch:
-    default: main
-    examples:
-    - main
-    type: string
   theme:
     default: gitea-modern
     examples:
     - gitea-modern
     type: string
-  push-create:
-    default:
-      org: 'true'
-      private: 'false'
-      user: 'true'
+  disable-registration:
+    default: true
     examples:
-    - org: 'true'
-      private: 'false'
-      user: 'true'
-    properties:
-      org:
-        default: 'true'
-        type: string
-      private:
-        default: 'false'
-        type: string
-      user:
-        default: 'true'
-        type: string
-    type: object
-  volume:
-    default:
-      size: 10Gi
+    - true
+    type: boolean
+  default-branch:
+    default: main
     examples:
-    - size: 10Gi
-    properties:
-      size:
-        default: 10Gi
-        type: string
-    type: object
-  release:
-    default: 8.3.0
+    - main
+    type: string
+  domain-name:
+    default: your_company.com
     examples:
-    - 8.3.0
+    - your_company.com
+    type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
     type: string
   images:
     default:
@@ -192,6 +162,31 @@ options:
             type: string
         type: object
     type: object
+  release:
+    default: 8.3.0
+    examples:
+    - 8.3.0
+    type: string
+  push-create:
+    default:
+      org: 'true'
+      private: 'false'
+      user: 'true'
+    examples:
+    - org: 'true'
+      private: 'false'
+      user: 'true'
+    properties:
+      org:
+        default: 'true'
+        type: string
+      private:
+        default: 'false'
+        type: string
+      user:
+        default: 'true'
+        type: string
+    type: object
   load-balancer:
     default:
       ip: ''
@@ -202,25 +197,30 @@ options:
         default: ''
         type: string
     type: object
+  postgres:
+    default:
+      replicas: 1
+      storage: 10Gi
+      version: '14'
+    examples:
+    - replicas: 1
+      storage: 10Gi
+      version: '14'
+    properties:
+      replicas:
+        default: 1
+        type: integer
+      storage:
+        default: 10Gi
+        type: string
+      version:
+        default: '14'
+        type: string
+    type: object
   sub-domain:
     default: git
     examples:
     - git
-    type: string
-  disable-registration:
-    default: true
-    examples:
-    - true
-    type: boolean
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
     type: string
 dependencies:
 - dist: null
