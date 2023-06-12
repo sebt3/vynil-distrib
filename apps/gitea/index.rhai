@@ -10,5 +10,5 @@ fn post_pack() {
     shell(`rm -f ${global::DEST}/v1_Secret_gitea-inline-config.yaml`);
 }
 fn pre_install() {
-    shell(`kubectl apply -f ${global::SRC}/themes.yaml`);
+    shell(`kubectl apply -f ${global::SRC}/v1_ConfigMap_gitea-themes.yaml`);
 }

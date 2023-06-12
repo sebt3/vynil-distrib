@@ -37,7 +37,7 @@ data "kubernetes_secret_v1" "authentik" {
 data "kustomization_overlay" "data" {
   common_labels = local.common-labels
   namespace = var.namespace
-  resources = [for file in fileset(path.module, "*.yaml"): file if ! contains(["index.yaml", "themes.yaml"], file)]
+  resources = [for file in fileset(path.module, "*.yaml"): file if ! contains(["index.yaml", "v1_ConfigMap_gitea-themes.yaml"], file)]
   images {
     name = "docker.io/bitnami/memcached"
     new_name = "${var.images.memcached.registry}/${var.images.memcached.repository}"
