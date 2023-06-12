@@ -1,6 +1,6 @@
 
 # first loop through resources in ids_prio[0]
-resource "kustomization_resource" "pre" {
+resource "kustomization_resource" "pre_no_ns" {
   for_each = data.kustomization_overlay.data_no_ns.ids_prio[0]
 
   manifest = (
@@ -13,7 +13,7 @@ resource "kustomization_resource" "pre" {
 # then loop through resources in ids_prio[1]
 # and set an explicit depends_on on kustomization_resource.pre
 # wait 2 minutes for any deployment or daemonset to become ready
-resource "kustomization_resource" "main" {
+resource "kustomization_resource" "main_no_ns" {
   for_each = data.kustomization_overlay.data_no_ns.ids_prio[1]
 
   manifest = (
@@ -32,7 +32,7 @@ resource "kustomization_resource" "main" {
 
 # finally, loop through resources in ids_prio[2]
 # and set an explicit depends_on on kustomization_resource.main
-resource "kustomization_resource" "post" {
+resource "kustomization_resource" "post_no_ns" {
   for_each = data.kustomization_overlay.data_no_ns.ids_prio[2]
 
   manifest = (
