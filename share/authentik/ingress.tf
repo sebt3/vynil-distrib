@@ -56,6 +56,9 @@ resource "kubernetes_manifest" "authentik_https_redirect" {
 }
 
 resource "kubernetes_manifest" "authentik_ingress" {
+  field_manager {
+    force_conflicts = true
+  }
   manifest = {
     apiVersion = "traefik.containo.us/v1alpha1"
     kind       = "IngressRoute"

@@ -56,6 +56,9 @@ resource "kubernetes_manifest" "gitea_https_redirect" {
 }
 
 resource "kubernetes_manifest" "gitea_ingress" {
+  field_manager {
+    force_conflicts = true
+  }
   manifest = {
     apiVersion = "traefik.containo.us/v1alpha1"
     kind       = "IngressRoute"
