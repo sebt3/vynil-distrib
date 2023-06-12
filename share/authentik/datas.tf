@@ -1,7 +1,27 @@
+locals {
+  common-labels = {
+    "vynil.solidite.fr/owner-name" = var.instance
+    "vynil.solidite.fr/owner-namespace" = var.namespace
+    "vynil.solidite.fr/owner-category" = var.category
+    "vynil.solidite.fr/owner-component" = var.component
+    "app.kubernetes.io/managed-by" = "vynil"
+    "app.kubernetes.io/name" = var.component
+    "app.kubernetes.io/instance" = var.instance
+  }
+}
+
+data "kubernetes_secret_v1" "authentik" {
+  depends_on = [kubernetes_manifest.authentik_secret]
+  metadata {
+    name      = var.component
+    namespace = var.namespace
+  }
+}
 
 data "kustomization_overlay" "data" {
+  depends_on = [kubernetes_manifest.authentik_secret]
   namespace = var.namespace
-  common_labels = local.labels
+  common_labels = local.common-labels
   resources = [for file in fileset(path.module, "*.yaml"): file if file != "index.yaml"]
   images {
     name = "ghcr.io/goauthentik/server"
@@ -27,7 +47,7 @@ data "kustomization_overlay" "data" {
       "AUTHENTIK_POSTGRESQL__PORT=5432",
       "AUTHENTIK_POSTGRESQL__USER=${local.app-name}",
       "AUTHENTIK_REDIS__HOST=${var.name}-${local.app-name}-redis",
-      "AUTHENTIK_BOOTSTRAP_EMAIL=${var.admin-email}@${var.domain-name}",
+      "AUTHENTIK_BOOTSTRAP_EMAIL=${var.admin.email}@${var.domain-name}",
     ]
   }
   patches {
