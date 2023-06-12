@@ -1,4 +1,5 @@
 
+const NS=config.namespace;
 const SRC=src;
 const DEST=dest;
 fn pre_pack() {
@@ -10,5 +11,5 @@ fn post_pack() {
     shell(`rm -f ${global::DEST}/v1_Secret_gitea-inline-config.yaml`);
 }
 fn pre_install() {
-    shell(`kubectl apply -f ${global::SRC}/v1_ConfigMap_gitea-themes.yaml`);
+    shell(`kubectl create -n ${global::SRC} -f ${global::SRC}/v1_ConfigMap_gitea-themes.yaml || :`);
 }
