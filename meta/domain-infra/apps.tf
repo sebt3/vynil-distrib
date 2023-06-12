@@ -15,7 +15,7 @@ locals {
 }
 
 resource "kubernetes_namespace_v1" "infra-ns" {
-  count = ( var.gitea.enable )? 1 : 0
+  count = ( var.traefik.enable )? 1 : 0
   metadata {
     annotations = local.annotations
     labels = local.common-labels

@@ -6,10 +6,10 @@ metadata:
   name: domain-infra
   description: null
 options:
-  domain-name:
-    default: your_company.com
+  domain:
+    default: your-company
     examples:
-    - your_company.com
+    - your-company
     type: string
   issuer:
     default: letsencrypt-prod
@@ -31,10 +31,10 @@ options:
         default: false
         type: boolean
     type: object
-  domain:
-    default: your-company
+  domain-name:
+    default: your_company.com
     examples:
-    - your-company
+    - your_company.com
     type: string
 dependencies: []
 providers:
