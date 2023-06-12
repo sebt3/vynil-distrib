@@ -56,4 +56,20 @@ data "kustomization_overlay" "data" {
 data "kustomization_overlay" "data_no_ns" {
   common_labels = local.common-labels
   resources = [for file in fileset(path.module, "*.yaml"): file if file != "index.yaml" && length(regexall("ClusterRole",file))>0]
+  patches {
+    target {
+      kind = "ClusterRoleBinding"
+      name = "k8up"
+    }
+    patch = <<-EOF
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRoleBinding
+      metadata:
+        name: k8up
+      subjects:
+      - kind: ServiceAccount
+        name: k8up
+        namespace: "${var.namespace}"
+    EOF
+  }
 }
