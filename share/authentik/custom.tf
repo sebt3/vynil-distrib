@@ -51,13 +51,13 @@ resource "authentik_group" "group" {
 }
 
 resource "authentik_service_connection_kubernetes" "local" {
-  count = (var.outpost.ldap || var.outpost.forward) ? 1 : 0
+  count = (var.outposts.ldap || var.outposts.forward) ? 1 : 0
   name  = "local"
   local = true
 }
 
 resource "authentik_outpost" "outpost-ldap" {
-  count = var.outpost.ldap ? 1 : 0
+  count = var.outposts.ldap ? 1 : 0
   name = "ldap"
   type = "ldap"
   service_connection = authentik_service_connection_kubernetes.local.id
@@ -80,7 +80,7 @@ resource "authentik_outpost" "outpost-ldap" {
 }
 
 resource "authentik_outpost" "outpost-forward" {
-  count = var.outpost.forward ? 1 : 0
+  count = var.outposts.forward ? 1 : 0
   name = "forward"
   type = "proxy"
   service_connection = authentik_service_connection_kubernetes.local.id

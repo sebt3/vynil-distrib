@@ -16,31 +16,46 @@ options:
         default: auth-admin
         type: string
     type: object
-  postgres:
+  outposts:
     default:
-      replicas: 1
-      storage: 8Gi
-      version: '14'
+      forward: true
+      ldap: true
     examples:
-    - replicas: 1
-      storage: 8Gi
-      version: '14'
+    - forward: true
+      ldap: true
     properties:
-      replicas:
-        default: 1
-        type: integer
-      storage:
-        default: 8Gi
-        type: string
-      version:
-        default: '14'
-        type: string
+      forward:
+        default: true
+        type: boolean
+      ldap:
+        default: true
+        type: boolean
     type: object
-  issuer:
-    default: letsencrypt-prod
+  domain-name:
+    default: your_company.com
     examples:
-    - letsencrypt-prod
+    - your_company.com
     type: string
+  error_reporting:
+    default:
+      enabled: false
+      environment: k8s
+      send_pii: false
+    examples:
+    - enabled: false
+      environment: k8s
+      send_pii: false
+    properties:
+      enabled:
+        default: false
+        type: boolean
+      environment:
+        default: k8s
+        type: string
+      send_pii:
+        default: false
+        type: boolean
+    type: object
   redis:
     default:
       exporter:
@@ -74,10 +89,40 @@ options:
         default: 8Gi
         type: string
     type: object
-  loglevel:
-    default: info
+  postgres:
+    default:
+      replicas: 1
+      storage: 8Gi
+      version: '14'
     examples:
-    - info
+    - replicas: 1
+      storage: 8Gi
+      version: '14'
+    properties:
+      replicas:
+        default: 1
+        type: integer
+      storage:
+        default: 8Gi
+        type: string
+      version:
+        default: '14'
+        type: string
+    type: object
+  geoip:
+    default: /geoip/GeoLite2-City.mmdb
+    examples:
+    - /geoip/GeoLite2-City.mmdb
+    type: string
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
     type: string
   email:
     default:
@@ -104,66 +149,11 @@ options:
         default: false
         type: boolean
     type: object
-  sub-domain:
-    default: auth
+  loglevel:
+    default: info
     examples:
-    - auth
+    - info
     type: string
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  error_reporting:
-    default:
-      enabled: false
-      environment: k8s
-      send_pii: false
-    examples:
-    - enabled: false
-      environment: k8s
-      send_pii: false
-    properties:
-      enabled:
-        default: false
-        type: boolean
-      environment:
-        default: k8s
-        type: string
-      send_pii:
-        default: false
-        type: boolean
-    type: object
-  geoip:
-    default: /geoip/GeoLite2-City.mmdb
-    examples:
-    - /geoip/GeoLite2-City.mmdb
-    type: string
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
-  outposts:
-    default:
-      forward: true
-      ldap: true
-    examples:
-    - forward: true
-      ldap: true
-    properties:
-      forward:
-        default: true
-        type: boolean
-      ldap:
-        default: true
-        type: boolean
-    type: object
   image:
     default:
       project: goauthentik
@@ -194,6 +184,16 @@ options:
         default: 2023.5.3
         type: string
     type: object
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  sub-domain:
+    default: auth
+    examples:
+    - auth
+    type: string
 dependencies:
 - dist: null
   category: core
