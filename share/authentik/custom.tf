@@ -51,15 +51,23 @@ resource "authentik_group" "group" {
 }
 
 resource "authentik_service_connection_kubernetes" "local" {
+  count = (var.outposts.ldap || var.outposts.forward) ? 1 : 0
   name  = "local"
   local = true
 }
+
+resource "authentik_provider_ldap" "provider_ldap" {
+  count = var.outposts.ldap ? 1 : 0
+  name         = "authentik-ldap-provider"
+  bind_flow    = authentik_flow.ldap-authentication-flow.id
+}
+
 
 resource "authentik_outpost" "outpost-ldap" {
   count = var.outposts.ldap ? 1 : 0
   name = "ldap"
   type = "ldap"
-  service_connection = authentik_service_connection_kubernetes.local.id
+  service_connection = authentik_service_connection_kubernetes.local[count.index].id
   config = jsonencode({
     "log_level": "info",
     "authentik_host": "authentik",
@@ -75,14 +83,25 @@ resource "authentik_outpost" "outpost-ldap" {
     "kubernetes_ingress_annotations": {},
     "kubernetes_ingress_secret_name": "authentik-outpost-tls"
   })
-  protocol_providers = []
+  protocol_providers = [authentik_provider_ldap.provider_ldap.id]
+}
+
+data "authentik_flow" "default-authorization-flow" {
+  slug = "default-provider-authorization-implicit-consent"
+}
+
+resource "authentik_provider_proxy" "provider_forward" {
+  count = var.outposts.forward ? 1 : 0
+  name               = "authentik-forward-provider"
+  external_host      = "http://authentik"
+  authorization_flow = data.authentik_flow.default-authorization-flow.id
 }
 
 resource "authentik_outpost" "outpost-forward" {
   count = var.outposts.forward ? 1 : 0
   name = "forward"
   type = "proxy"
-  service_connection = authentik_service_connection_kubernetes.local.id
+  service_connection = authentik_service_connection_kubernetes.local[count.index].id
   config = jsonencode({
     "log_level": "info",
     "authentik_host": "authentik",
@@ -98,6 +117,6 @@ resource "authentik_outpost" "outpost-forward" {
     "kubernetes_ingress_annotations": {},
     "kubernetes_ingress_secret_name": "authentik-outpost-tls"
   })
-  protocol_providers = []
+  protocol_providers = [authentik_provider_proxy.provider_forward[count.index].id]
 }
 
