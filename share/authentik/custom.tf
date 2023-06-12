@@ -70,7 +70,7 @@ resource "authentik_outpost" "outpost-ldap" {
   service_connection = authentik_service_connection_kubernetes.local[count.index].id
   config = jsonencode({
     "log_level": "info",
-    "authentik_host": "authentik",
+    "authentik_host": "http://authentik",
     "docker_map_ports": true,
     "kubernetes_replicas": 1,
     "kubernetes_namespace": var.namespace,
@@ -105,7 +105,7 @@ resource "authentik_outpost" "outpost-forward" {
   service_connection = authentik_service_connection_kubernetes.local[count.index].id
   config = jsonencode({
     "log_level": "info",
-    "authentik_host": "authentik",
+    "authentik_host": "http://authentik",
     "docker_map_ports": true,
     "kubernetes_replicas": 1,
     "kubernetes_namespace": var.namespace,
