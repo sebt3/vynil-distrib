@@ -1,0 +1,231 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: apps
+metadata:
+  name: gitea
+  description: |-
+    Git with a cup of tea
+    A painless self-hosted Git service.
+    Gitea is a community managed lightweight code hosting solution written in Go. It is published under the MIT license.
+options:
+  webhook:
+    default:
+      allowed-hosts: private
+      skip-tls-verify: false
+    examples:
+    - allowed-hosts: private
+      skip-tls-verify: false
+    properties:
+      allowed-hosts:
+        default: private
+        type: string
+      skip-tls-verify:
+        default: false
+        type: boolean
+    type: object
+  volume:
+    default:
+      size: 10Gi
+    examples:
+    - size: 10Gi
+    properties:
+      size:
+        default: 10Gi
+        type: string
+    type: object
+  images:
+    default:
+      gitea:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: gitea/gitea
+        tag: 1.19.3
+      memcached:
+        registry: docker.io
+        repository: bitnami/memcached
+        tag: 1.6.19-debian-11-r7
+    examples:
+    - gitea:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: gitea/gitea
+        tag: 1.19.3
+      memcached:
+        registry: docker.io
+        repository: bitnami/memcached
+        tag: 1.6.19-debian-11-r7
+    properties:
+      gitea:
+        default:
+          pullPolicy: IfNotPresent
+          registry: docker.io
+          repository: gitea/gitea
+          tag: 1.19.3
+        properties:
+          pullPolicy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: gitea/gitea
+            type: string
+          tag:
+            default: 1.19.3
+            type: string
+        type: object
+      memcached:
+        default:
+          registry: docker.io
+          repository: bitnami/memcached
+          tag: 1.6.19-debian-11-r7
+        properties:
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: bitnami/memcached
+            type: string
+          tag:
+            default: 1.6.19-debian-11-r7
+            type: string
+        type: object
+    type: object
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  ssh-port:
+    default: 2222
+    examples:
+    - 2222
+    type: integer
+  admin:
+    default:
+      email: git-admin@git.your_company.com
+      name: gitea_admin
+    examples:
+    - email: git-admin@git.your_company.com
+      name: gitea_admin
+    properties:
+      email:
+        default: git-admin@git.your_company.com
+        type: string
+      name:
+        default: gitea_admin
+        type: string
+    type: object
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  postgres:
+    default:
+      replicas: 1
+      storage: 10Gi
+      version: '14'
+    examples:
+    - replicas: 1
+      storage: 10Gi
+      version: '14'
+    properties:
+      replicas:
+        default: 1
+        type: integer
+      storage:
+        default: 10Gi
+        type: string
+      version:
+        default: '14'
+        type: string
+    type: object
+  replicas:
+    default: 1
+    examples:
+    - 1
+    type: integer
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  timezone:
+    default: Europe/Paris
+    examples:
+    - Europe/Paris
+    type: string
+  push-create:
+    default:
+      org: 'true'
+      private: 'false'
+      user: 'true'
+    examples:
+    - org: 'true'
+      private: 'false'
+      user: 'true'
+    properties:
+      org:
+        default: 'true'
+        type: string
+      private:
+        default: 'false'
+        type: string
+      user:
+        default: 'true'
+        type: string
+    type: object
+  release:
+    default: 8.3.0
+    examples:
+    - 8.3.0
+    type: string
+  theme:
+    default: gitea-modern
+    examples:
+    - gitea-modern
+    type: string
+  load-balancer:
+    default:
+      ip: ''
+    examples:
+    - ip: ''
+    properties:
+      ip:
+        default: ''
+        type: string
+    type: object
+  sub-domain:
+    default: git
+    examples:
+    - git
+    type: string
+  default-branch:
+    default: main
+    examples:
+    - main
+    type: string
+  disable-registration:
+    default: true
+    examples:
+    - true
+    type: boolean
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+dependencies: []
+providers:
+  kubernetes: true
+  authentik: true
+  kubectl: null
+  postgresql: null
+  restapi: true

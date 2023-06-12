@@ -1,0 +1,23 @@
+# Source: gitea/charts/memcached/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitea-memcached
+  namespace: vynil-ci
+  labels:
+    app.kubernetes.io/name: memcached
+    helm.sh/chart: memcached-6.3.14
+    app.kubernetes.io/instance: gitea
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+spec:
+  type: ClusterIP
+  sessionAffinity: None
+  ports:
+    - name: memcache
+      port: 11211
+      targetPort: memcache
+      nodePort: null
+  selector:
+    app.kubernetes.io/name: memcached
+    app.kubernetes.io/instance: gitea

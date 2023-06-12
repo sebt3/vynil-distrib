@@ -1,0 +1,28 @@
+# Source: gitea/templates/gitea/ssh-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitea-ssh
+  labels:
+    helm.sh/chart: gitea-8.3.0
+    app: gitea
+    app.kubernetes.io/name: gitea
+    app.kubernetes.io/instance: gitea
+    app.kubernetes.io/version: "1.19.3"
+    version: "1.19.3"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    metallb.universe.tf/address-pool: mlb-pool-public
+    metallb.universe.tf/allow-shared-ip: traefik-public-ip
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 1.2.3.4
+  ipFamilyPolicy: PreferDualStack
+  ports:
+  - name: ssh
+    port: 2222
+    targetPort: 2222
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: gitea
+    app.kubernetes.io/instance: gitea
