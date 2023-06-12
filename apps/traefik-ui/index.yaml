@@ -21,15 +21,15 @@ options:
     examples:
     - your_company.com
     type: string
-  sub-domain:
-    default: traefik
-    examples:
-    - traefik
-    type: string
   issuer:
     default: letsencrypt-prod
     examples:
     - letsencrypt-prod
+    type: string
+  sub-domain:
+    default: traefik
+    examples:
+    - traefik
     type: string
 dependencies: []
 providers:
