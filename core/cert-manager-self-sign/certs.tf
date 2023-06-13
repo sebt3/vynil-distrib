@@ -16,7 +16,7 @@ resource "kubectl_manifest" "selfsigned-ca" {
     kind: "Certificate"
     metadata:
       name: "selfsigned-ca"
-      namespace: var.namespace
+      namespace: "${var.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
       isCA: true

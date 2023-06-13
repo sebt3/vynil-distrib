@@ -24,7 +24,7 @@ resource "kubectl_manifest" "prj_certificate" {
       labels: ${jsonencode(local.common-labels)}
     spec:
         secretName: "${var.instance}-cert"
-        dnsNames: "${local.dns-names}"
+        dnsNames: ${jsonencode(local.dns-names)}
         issuerRef:
           name: "${var.issuer}"
           kind: "ClusterIssuer"

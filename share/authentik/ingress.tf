@@ -50,9 +50,7 @@ resource "kubectl_manifest" "authentik_https_redirect" {
 }
 
 resource "kubectl_manifest" "authentik_ingress" {
-  field_manager {
-    force_conflicts = true
-  }
+  force_conflicts = true
   yaml_body  = <<-EOF
     apiVersion: "traefik.containo.us/v1alpha1"
     kind: "IngressRoute"
