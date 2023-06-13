@@ -6,16 +6,6 @@ metadata:
   name: domain
   description: null
 options:
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
   default-dist:
     default: core
     examples:
@@ -25,6 +15,16 @@ options:
     default: your_company.com
     examples:
     - your_company.com
+    type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
     type: string
   metas:
     default: []

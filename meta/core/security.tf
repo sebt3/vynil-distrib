@@ -77,7 +77,7 @@ resource "kubectl_manifest" "self-sign" {
     metadata:
       name: "cert-manager-self-sign"
       namespace: "${var.security.namespace}"
-        labels: ${jsonencode(local.common-labels)}
+      labels: ${jsonencode(local.common-labels)}
     spec:
       distrib: "core"
       category: "core"

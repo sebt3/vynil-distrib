@@ -41,7 +41,7 @@ resource "kubectl_manifest" "dbo-redis" {
     metadata:
       name: "dbo-redis"
       namespace: "${var.databases.namespace}"
-        labels: ${jsonencode(local.common-labels)}
+      labels: ${jsonencode(local.common-labels)}
     spec:
       distrib: "core"
       category: "dbo"

@@ -11,7 +11,7 @@ resource "kubectl_manifest" "installs" {
   yaml_body  = <<-EOF
     apiVersion: "vynil.solidite.fr/v1"
     kind: "Install"
-    metadata
+    metadata:
       name: "${try(var.metas[count.index].component, "auth")}"
       namespace: "${var.namespace}"
       labels: ${jsonencode(local.common-labels)}
