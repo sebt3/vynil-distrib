@@ -9,11 +9,6 @@ metadata:
     A painless self-hosted Git service.
     Gitea is a community managed lightweight code hosting solution written in Go. It is published under the MIT license.
 options:
-  replicas:
-    default: 1
-    examples:
-    - 1
-    type: integer
   volume:
     default:
       size: 10Gi
@@ -24,80 +19,70 @@ options:
         default: 10Gi
         type: string
     type: object
-  ssh-port:
-    default: 2222
+  sub-domain:
+    default: git
     examples:
-    - 2222
-    type: integer
-  timezone:
-    default: Europe/Paris
-    examples:
-    - Europe/Paris
+    - git
     type: string
-  issuer:
-    default: letsencrypt-prod
+  release:
+    default: 8.3.0
     examples:
-    - letsencrypt-prod
+    - 8.3.0
     type: string
   domain:
     default: your-company
     examples:
     - your-company
     type: string
-  webhook:
-    default:
-      allowed-hosts: private
-      skip-tls-verify: false
+  ssh-port:
+    default: 2222
     examples:
-    - allowed-hosts: private
-      skip-tls-verify: false
-    properties:
-      allowed-hosts:
-        default: private
-        type: string
-      skip-tls-verify:
-        default: false
-        type: boolean
-    type: object
-  admin:
+    - 2222
+    type: integer
+  postgres:
     default:
-      email: git-admin@git.your_company.com
-      name: gitea_admin
+      replicas: 1
+      storage: 10Gi
+      version: '14'
     examples:
-    - email: git-admin@git.your_company.com
-      name: gitea_admin
+    - replicas: 1
+      storage: 10Gi
+      version: '14'
     properties:
-      email:
-        default: git-admin@git.your_company.com
+      replicas:
+        default: 1
+        type: integer
+      storage:
+        default: 10Gi
         type: string
-      name:
-        default: gitea_admin
+      version:
+        default: '14'
         type: string
     type: object
-  theme:
-    default: gitea-modern
+  push-create:
+    default:
+      org: 'true'
+      private: 'false'
+      user: 'true'
     examples:
-    - gitea-modern
-    type: string
-  disable-registration:
-    default: true
+    - org: 'true'
+      private: 'false'
+      user: 'true'
+    properties:
+      org:
+        default: 'true'
+        type: string
+      private:
+        default: 'false'
+        type: string
+      user:
+        default: 'true'
+        type: string
+    type: object
+  issuer:
+    default: letsencrypt-prod
     examples:
-    - true
-    type: boolean
-  default-branch:
-    default: main
-    examples:
-    - main
-    type: string
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
+    - letsencrypt-prod
     type: string
   images:
     default:
@@ -162,31 +147,26 @@ options:
             type: string
         type: object
     type: object
-  release:
-    default: 8.3.0
-    examples:
-    - 8.3.0
-    type: string
-  push-create:
+  webhook:
     default:
-      org: 'true'
-      private: 'false'
-      user: 'true'
+      allowed-hosts: private
+      skip-tls-verify: false
     examples:
-    - org: 'true'
-      private: 'false'
-      user: 'true'
+    - allowed-hosts: private
+      skip-tls-verify: false
     properties:
-      org:
-        default: 'true'
+      allowed-hosts:
+        default: private
         type: string
-      private:
-        default: 'false'
-        type: string
-      user:
-        default: 'true'
-        type: string
+      skip-tls-verify:
+        default: false
+        type: boolean
     type: object
+  disable-registration:
+    default: true
+    examples:
+    - true
+    type: boolean
   load-balancer:
     default:
       ip: ''
@@ -197,30 +177,50 @@ options:
         default: ''
         type: string
     type: object
-  postgres:
-    default:
-      replicas: 1
-      storage: 10Gi
-      version: '14'
+  theme:
+    default: gitea-modern
     examples:
-    - replicas: 1
-      storage: 10Gi
-      version: '14'
+    - gitea-modern
+    type: string
+  replicas:
+    default: 1
+    examples:
+    - 1
+    type: integer
+  default-branch:
+    default: main
+    examples:
+    - main
+    type: string
+  admin:
+    default:
+      email: git-admin@git.your_company.com
+      name: gitea_admin
+    examples:
+    - email: git-admin@git.your_company.com
+      name: gitea_admin
     properties:
-      replicas:
-        default: 1
-        type: integer
-      storage:
-        default: 10Gi
+      email:
+        default: git-admin@git.your_company.com
         type: string
-      version:
-        default: '14'
+      name:
+        default: gitea_admin
         type: string
     type: object
-  sub-domain:
-    default: git
+  ingress-class:
+    default: traefik
     examples:
-    - git
+    - traefik
+    type: string
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  timezone:
+    default: Europe/Paris
+    examples:
+    - Europe/Paris
     type: string
 dependencies:
 - dist: null
