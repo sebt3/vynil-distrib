@@ -9,7 +9,7 @@ resource "kubectl_manifest" "authentik_postgresql" {
     spec:
       databases:
         ${var.component}: "${var.component}"
-      numberOfInstances: "${var.postgres.replicas}"
+      numberOfInstances: ${var.postgres.replicas}
       podAnnotations:
         "k8up.io/backupcommand": "pg_dump -U postgres -d ${var.component} --clean"
         "k8up.io/file-extension": ".sql"
