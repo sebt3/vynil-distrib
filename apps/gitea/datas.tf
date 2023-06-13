@@ -19,7 +19,7 @@ locals {
 }
 
 data "kubernetes_secret_v1" "postgresql_password" {
-  depends_on = [kubernetes_manifest.gitea_postgresql]
+  depends_on = [kubectl_manifest.gitea_postgresql]
   metadata {
     name = "${var.component}.${var.instance}-${var.component}.credentials.postgresql.acid.zalan.do"
     namespace = var.namespace

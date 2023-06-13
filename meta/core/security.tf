@@ -14,82 +14,74 @@ resource "kubernetes_namespace_v1" "security-ns" {
   }
 }
 
-resource "kubernetes_manifest" "secret-generator" {
+resource "kubectl_manifest" "secret-generator" {
   count = var.security.secret-generator.enable ? 1 : 0
   depends_on = [kubernetes_namespace_v1.security-ns]
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "secret-generator"
-      "namespace" = var.security.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "core"
-      "component" = "secret-generator"
-      "options" = local.secret-generator
-    }
-  }
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "secret-generator"
+      namespace: "${var.security.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "core"
+      component: "secret-generator"
+      options: ${jsonencode(local.secret-generator)}
+  EOF
 }
 
-resource "kubernetes_manifest" "cert-manager" {
+resource "kubectl_manifest" "cert-manager" {
   count = (var.databases.mariadb.enable || var.security.cert-manager.enable) ? 1 : 0
   depends_on = [kubernetes_namespace_v1.security-ns]
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "cert-manager"
-      "namespace" = var.security.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "core"
-      "component" = "cert-manager"
-      "options" = local.cert-manager
-    }
-  }
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "cert-manager"
+      namespace: "${var.security.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "core"
+      component: "cert-manager"
+      options: ${jsonencode(local.cert-manager)}
+  EOF
 }
 
-resource "kubernetes_manifest" "letsencrypt" {
+resource "kubectl_manifest" "letsencrypt" {
   count = ((var.databases.mariadb.enable || var.security.cert-manager.enable) && var.security.letsencrypt.enable)? 1 : 0
-  depends_on = [kubernetes_namespace_v1.security-ns, kubernetes_manifest.cert-manager]
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "cert-manager-letsencrypt"
-      "namespace" = var.security.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "core"
-      "component" = "cert-manager-letsencrypt"
-      "options" = local.letsencrypt
-    }
-  }
+  depends_on = [kubernetes_namespace_v1.security-ns, kubectl_manifest.cert-manager]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "cert-manager-letsencrypt"
+      namespace: "${var.security.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "core"
+      component: "cert-manager-letsencrypt"
+      options: ${jsonencode(local.letsencrypt)}
+  EOF
 }
 
-resource "kubernetes_manifest" "self-sign" {
+resource "kubectl_manifest" "self-sign" {
   count = ((var.databases.mariadb.enable || var.security.cert-manager.enable) && var.security.self-sign.enable)? 1 : 0
-  depends_on = [kubernetes_namespace_v1.security-ns, kubernetes_manifest.cert-manager]
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "cert-manager-self-sign"
-      "namespace" = var.security.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "core"
-      "component" = "cert-manager-self-sign"
-      "options" = local.self-sign
-    }
-  }
+  depends_on = [kubernetes_namespace_v1.security-ns, kubectl_manifest.cert-manager]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "cert-manager-self-sign"
+      namespace: "${var.security.namespace}"
+        labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "core"
+      component: "cert-manager-self-sign"
+      options: ${jsonencode(local.self-sign)}
+  EOF
 }

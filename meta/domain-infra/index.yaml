@@ -11,15 +11,15 @@ options:
     examples:
     - your-company
     type: string
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
   issuer:
     default: letsencrypt-prod
     examples:
     - letsencrypt-prod
-    type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
     type: string
   traefik:
     default:
@@ -31,16 +31,16 @@ options:
         default: false
         type: boolean
     type: object
-  domain-name:
-    default: your_company.com
+  ingress-class:
+    default: traefik
     examples:
-    - your_company.com
+    - traefik
     type: string
 dependencies: []
 providers:
   kubernetes: true
   authentik: null
-  kubectl: null
+  kubectl: true
   postgresql: null
   restapi: null
   http: null

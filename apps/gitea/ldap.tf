@@ -5,41 +5,35 @@ locals {
   base-user-dn = format("ou=users,%s", local.base-dn)
   authentik-token = data.kubernetes_secret_v1.authentik.data["AUTHENTIK_BOOTSTRAP_TOKEN"]
   request_headers = {
-    "Content-Type" = "application/json"
-    Authorization  = "Bearer ${local.authentik-token}"
+    "Content-Type"  = "application/json"
+    Authorization   = "Bearer ${local.authentik-token}"
   }
   ldap-outpost-prividers = jsondecode(data.http.get_ldap_outpost.response_body).results[0].providers
   ldap-outpost-pk = jsondecode(data.http.get_ldap_outpost.response_body).results[0].pk
 }
-resource "kubernetes_manifest" "gitea_ldap" {
-  manifest = {
-    apiVersion = "secretgenerator.mittwald.de/v1alpha1"
-    kind       = "StringSecret"
-    metadata = {
-      name      = "${var.component}-ldap"
-      namespace = var.namespace
-      labels    = local.common-labels
-    }
-    spec = {
-      forceRegenerate = false,
-      data = {
-        bindDn = "cn=${var.component}-ldapsearch,${local.base-user-dn}"
-        user-search-base = local.base-user-dn
-        user-filter = "(&(|(memberof=cn=gitea_admin,${local.base-group-dn})(memberof=cn=gitea_users,${local.base-group-dn}))(|(cn=%[1]s)(mail=%[1]s)))"
-        admin-filter = "(memberof=cn=gitea_admin,${local.base-group-dn})"
-        endpoint = "ak-outpost-ldap.${var.domain}-auth.svc"
-      }
-      fields = [
-        {
-          fieldName = "bindPassword"
-          length    = "32"
-        }
-      ]
-    }
-  }
+resource "kubectl_manifest" "gitea_ldap" {
+  yaml_body  = <<-EOF
+    apiVersion: "secretgenerator.mittwald.de/v1alpha1"
+    kind: "StringSecret"
+    metadata:
+      name: "${var.component}-ldap"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      forceRegenerate: false
+      data:
+        bindDn: "cn=${var.component}-ldapsearch,${local.base-user-dn}"
+        user-search-base: "${local.base-user-dn}"
+        user-filter: "(&(|(memberof=cn=gitea_admin,${local.base-group-dn})(memberof=cn=gitea_users,${local.base-group-dn}))(|(cn=%[1]s)(mail=%[1]s)))"
+        admin-filter: "(memberof=cn=gitea_admin,${local.base-group-dn})"
+        endpoint: "ak-outpost-ldap.${var.domain}-auth.svc"
+      fields:
+      - fieldName: "bindPassword"
+        length: "32"
+  EOF
 }
 data "kubernetes_secret_v1" "gitea_ldap_password" {
-  depends_on = [kubernetes_manifest.gitea_ldap]
+  depends_on = [kubectl_manifest.gitea_ldap]
   metadata {
     name = "${var.component}-ldap"
     namespace = var.namespace

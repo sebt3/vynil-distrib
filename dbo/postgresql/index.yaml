@@ -6,12 +6,6 @@ metadata:
   name: postgresql
   description: PostgreSQL database operator made by Zalando
 options:
-  release:
-    default: 1.8.2
-    description: postgres-operator version to use
-    examples:
-    - 1.8.2
-    type: string
   images:
     default:
       connectionPooler:
@@ -113,5 +107,11 @@ options:
             type: string
         type: object
     type: object
+  release:
+    default: 1.8.2
+    description: postgres-operator version to use
+    examples:
+    - 1.8.2
+    type: string
 dependencies: []
 providers: null

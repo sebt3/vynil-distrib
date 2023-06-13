@@ -14,82 +14,74 @@ resource "kubernetes_namespace_v1" "databases-ns" {
   }
 }
 
-resource "kubernetes_manifest" "dbo-postgresql" {
+resource "kubectl_manifest" "dbo-postgresql" {
   count = var.databases.postgresql.enable ? 1 : 0
   depends_on = [kubernetes_namespace_v1.databases-ns]
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "dbo-pg"
-      "namespace" = var.databases.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "dbo"
-      "component" = "postgresql"
-      "options" = local.postgresql
-    }
-  }
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "dbo-pg"
+      namespace: "${var.databases.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "dbo"
+      component: "postgresql"
+      options: ${jsonencode(local.postgresql)}
+  EOF
 }
 
-resource "kubernetes_manifest" "dbo-redis" {
+resource "kubectl_manifest" "dbo-redis" {
   count = var.databases.redis.enable ? 1 : 0
-  depends_on = [kubernetes_namespace_v1.databases-ns,kubernetes_manifest.crd-redis]
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "dbo-redis"
-      "namespace" = var.databases.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "dbo"
-      "component" = "redis"
-      "options" = local.redis
-    }
-  }
+  depends_on = [kubernetes_namespace_v1.databases-ns,kubectl_manifest.crd-redis]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "dbo-redis"
+      namespace: "${var.databases.namespace}"
+        labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "dbo"
+      component: "redis"
+      options: ${jsonencode(local.redis)}
+  EOF
 }
 
-resource "kubernetes_manifest" "rabbitmq" {
+resource "kubectl_manifest" "rabbitmq" {
   count = var.databases.rabbitmq.enable? 1 : 0
   depends_on = [kubernetes_namespace_v1.databases-ns]
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "dbo-rabbitmq"
-      "namespace" = var.databases.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "dbo"
-      "component" = "rabbitmq"
-      "options" = local.letsencrypt
-    }
-  }
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "dbo-rabbitmq"
+      namespace: "${var.databases.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "dbo"
+      component: "rabbitmq"
+      options: ${jsonencode(local.letsencrypt)}
+  EOF
 }
 
-resource "kubernetes_manifest" "mariadb" {
+resource "kubectl_manifest" "mariadb" {
   count = var.databases.mariadb.enable? 1 : 0
-  depends_on = [kubernetes_namespace_v1.databases-ns, kubernetes_manifest.crd-prometheus]
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "dbo-mariadb"
-      "namespace" = var.databases.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "dbo"
-      "component" = "mariadb"
-      "options" = local.mariadb
-    }
-  }
+  depends_on = [kubernetes_namespace_v1.databases-ns, kubectl_manifest.crd-prometheus]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "dbo-mariadb"
+      namespace: "${var.databases.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "dbo"
+      component: "mariadb"
+      options: ${jsonencode(local.mariadb)}
+  EOF
 }

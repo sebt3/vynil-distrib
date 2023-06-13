@@ -11,22 +11,20 @@ resource "kubernetes_namespace_v1" "traefik-ns" {
   }
 }
 
-resource "kubernetes_manifest" "traefik" {
+resource "kubectl_manifest" "traefik" {
   count = var.traefik.enable ? 1 : 0
   depends_on = [kubernetes_namespace_v1.traefik-ns]
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "traefik"
-      "namespace" = var.traefik.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "share"
-      "component" = "traefik"
-      "options" = local.traefik
-    }
-  }
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "traefik"
+      namespace: "${var.traefik.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "share"
+      component: "traefik"
+      options: ${jsonencode(local.traefik)}
+  EOF
 }

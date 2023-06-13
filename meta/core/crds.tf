@@ -13,154 +13,138 @@ locals {
     crd-rabbitmq = { for k, v in var.crds.rabbitmq : k => v if k!="enable" }
 }
 
-resource "kubernetes_manifest" "crd-prometheus" {
+resource "kubectl_manifest" "crd-prometheus" {
   count = (var.crds.prometheus.enable || var.databases.mariadb.enable || var.traefik.enable) ? 1 : 0
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "crd-prometheus"
-      "namespace" = var.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "crd"
-      "component" = "prometheus"
-      "options" = local.crd-prometheus
-    }
-  }
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-prometheus"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "crd"
+      component: "prometheus"
+      options: ${jsonencode(local.crd-prometheus)}
+  EOF
 }
 
-resource "kubernetes_manifest" "crd-cert-manager" {
+resource "kubectl_manifest" "crd-cert-manager" {
   count = (var.crds.cert-manager.enable || var.security.cert-manager.enable) ? 1 : 0
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "crd-cert-manager"
-      "namespace" = var.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "crd"
-      "component" = "cert-manager"
-      "options" = local.crd-cert-manager
-    }
-  }
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-cert-manager"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "crd"
+      component: "cert-manager"
+      options: ${jsonencode(local.crd-cert-manager)}
+  EOF
 }
 
-resource "kubernetes_manifest" "crd-secret-generator" {
+resource "kubectl_manifest" "crd-secret-generator" {
   count = (var.crds.secret-generator.enable || var.security.secret-generator.enable) ? 1 : 0
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "crd-secret-generator"
-      "namespace" = var.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "crd"
-      "component" = "secret-generator"
-      "options" = local.crd-cert-manager
-    }
-  }
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-secret-generator"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "crd"
+      component: "secret-generator"
+      options: ${jsonencode(local.crd-cert-manager)}
+  EOF
 }
 
-resource "kubernetes_manifest" "crd-k8up" {
+resource "kubectl_manifest" "crd-k8up" {
   count = (var.crds.k8up.enable || var.backup.k8up.enable) ? 1 : 0
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "crd-k8up"
-      "namespace" = var.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "crd"
-      "component" = "k8up"
-      "options" = local.crd-cert-manager
-    }
-  }
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-k8up"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "crd"
+      component: "k8up"
+      options: ${jsonencode(local.crd-cert-manager)}
+  EOF
 }
 
-resource "kubernetes_manifest" "crd-traefik" {
+resource "kubectl_manifest" "crd-traefik" {
   count = (var.crds.traefik.enable || var.traefik.enable) ? 1 : 0
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "crd-traefik"
-      "namespace" = var.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "crd"
-      "component" = "traefik"
-      "options" = local.crd-traefik
-    }
-  }
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-traefik"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "crd"
+      component: "traefik"
+      options: ${jsonencode(local.crd-traefik)}
+  EOF
 }
 
-resource "kubernetes_manifest" "crd-redis" {
+resource "kubectl_manifest" "crd-redis" {
   count = (var.crds.redis.enable || var.databases.redis.enable)? 1 : 0
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "crd-redis"
-      "namespace" = var.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "crd"
-      "component" = "redis"
-      "options" = local.crd-redis
-    }
-  }
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-redis"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "crd"
+      component: "redis"
+      options: ${jsonencode(local.crd-redis)}
+  EOF
 }
 
-resource "kubernetes_manifest" "crd-mariadb" {
+resource "kubectl_manifest" "crd-mariadb" {
   count = (var.crds.mariadb.enable || var.databases.mariadb.enable)? 1 : 0
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "crd-mariadb"
-      "namespace" = var.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "crd"
-      "component" = "mariadb"
-      "options" = local.crd-mariadb
-    }
-  }
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-mariadb"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "crd"
+      component: "mariadb"
+      options: ${jsonencode(local.crd-mariadb)}
+  EOF
 }
 
-resource "kubernetes_manifest" "crd-rabbitmq" {
+resource "kubectl_manifest" "crd-rabbitmq" {
   count = (var.crds.rabbitmq.enable || var.databases.rabbitmq.enable)? 1 : 0
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "crd-rabbitmq"
-      "namespace" = var.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "crd"
-      "component" = "rabbitmq"
-      "options" = local.crd-rabbitmq
-    }
-  }
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-rabbitmq"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "crd"
+      component: "rabbitmq"
+      options: ${jsonencode(local.crd-rabbitmq)}
+  EOF
 }

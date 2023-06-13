@@ -11,22 +11,20 @@ resource "kubernetes_namespace_v1" "backup-ns" {
   }
 }
 
-resource "kubernetes_manifest" "k8up" {
+resource "kubectl_manifest" "k8up" {
   count = var.backup.k8up.enable ? 1 : 0
   depends_on = [kubernetes_namespace_v1.backup-ns]
-  manifest = {
-    "apiVersion" = "vynil.solidite.fr/v1"
-    "kind"       = "Install"
-    "metadata" = {
-      "name"      = "k8up"
-      "namespace" = var.backup.namespace
-      "labels" = local.common-labels
-    }
-    "spec" = {
-      "distrib" = "core"
-      "category" = "core"
-      "component" = "k8up"
-      "options" = local.k8up
-    }
-  }
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "k8up"
+      namespace: "${var.backup.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "core"
+      component: "k8up"
+      options: ${jsonencode(local.k8up)}
+  EOF
 }

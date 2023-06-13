@@ -20,4 +20,10 @@ dependencies:
 - dist: null
   category: crd
   component: cert-manager
-providers: null
+providers:
+  kubernetes: null
+  authentik: null
+  kubectl: true
+  postgresql: null
+  restapi: null
+  http: null

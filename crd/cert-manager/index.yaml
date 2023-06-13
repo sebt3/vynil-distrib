@@ -6,16 +6,16 @@ metadata:
   name: cert-manager
   description: CRD for Cert Manager
 options:
+  apply:
+    default: true
+    examples:
+    - true
+    type: boolean
   release:
     default: 1.12.1
     description: cert-manager version to use
     examples:
     - 1.12.1
     type: string
-  apply:
-    default: true
-    examples:
-    - true
-    type: boolean
 dependencies: []
 providers: null

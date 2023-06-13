@@ -23,22 +23,20 @@ resource "kubernetes_namespace_v1" "auth-ns" {
   }
 }
 
-resource "kubernetes_manifest" "authentik" {
+resource "kubectl_manifest" "authentik" {
   count = var.authentik.enable ? 1 : 0
   depends_on = [kubernetes_namespace_v1.auth-ns]
-  manifest = {
-    apiVersion = "vynil.solidite.fr/v1"
-    kind       = "Install"
-    metadata   = {
-      name      = "authentik"
-      namespace = "${var.namespace}-auth"
-      labels    = local.common-labels
-    }
-    spec = {
-      distrib = "core"
-      category = "share"
-      component = "authentik"
-      options = merge(local.global, local.authentik)
-    }
-  }
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "authentik"
+      namespace: "${var.namespace}-auth"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "share"
+      component: "authentik"
+      options: ${jsonencode(merge(local.global, local.authentik))}
+  EOF
 }

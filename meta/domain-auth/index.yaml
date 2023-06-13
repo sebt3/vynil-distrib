@@ -6,6 +6,11 @@ metadata:
   name: domain-auth
   description: null
 options:
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
   authentik:
     default:
       enable: true
@@ -16,20 +21,15 @@ options:
         default: true
         type: boolean
     type: object
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
   domain:
     default: your-company
     examples:
     - your-company
     type: string
-  issuer:
-    default: letsencrypt-prod
+  domain-name:
+    default: your_company.com
     examples:
-    - letsencrypt-prod
+    - your_company.com
     type: string
   ingress-class:
     default: traefik
@@ -40,6 +40,7 @@ dependencies: []
 providers:
   kubernetes: true
   authentik: null
-  kubectl: null
+  kubectl: true
   postgresql: null
   restapi: null
+  http: null

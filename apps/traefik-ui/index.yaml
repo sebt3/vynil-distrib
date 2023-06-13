@@ -6,16 +6,6 @@ metadata:
   name: traefik-ui
   description: Access to the Traefik UI
 options:
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
   domain-name:
     default: your_company.com
     examples:
@@ -26,6 +16,16 @@ options:
     examples:
     - letsencrypt-prod
     type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
   sub-domain:
     default: traefik
     examples:
@@ -35,7 +35,7 @@ dependencies: []
 providers:
   kubernetes: true
   authentik: true
-  kubectl: null
+  kubectl: true
   postgresql: null
   restapi: null
   http: null

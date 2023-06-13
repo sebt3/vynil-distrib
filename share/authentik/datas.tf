@@ -11,7 +11,7 @@ locals {
 }
 
 data "kubernetes_secret_v1" "authentik" {
-  depends_on = [kubernetes_manifest.authentik_secret]
+  depends_on = [kubectl_manifest.authentik_secret]
   metadata {
     name      = var.component
     namespace = var.namespace

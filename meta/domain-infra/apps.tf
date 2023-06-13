@@ -1,14 +1,14 @@
 locals {
     annotations = {
-      "vynil.solidite.fr/meta" = "domain-ci"
-      "vynil.solidite.fr/name" = var.namespace
+      "vynil.solidite.fr/meta"   = "domain-ci"
+      "vynil.solidite.fr/name"   = var.namespace
       "vynil.solidite.fr/domain" = var.domain-name
       "vynil.solidite.fr/issuer" = var.issuer
     }
     global = {
-        "domain" = var.namespace
-        "domain-name" = var.domain-name
-        "issuer" = var.issuer
+        "domain"        = var.namespace
+        "domain-name"   = var.domain-name
+        "issuer"        = var.issuer
         "ingress-class" = var.ingress-class
     }
     traefik = { for k, v in var.traefik : k => v if k!="enable" }
@@ -23,22 +23,20 @@ resource "kubernetes_namespace_v1" "infra-ns" {
   }
 }
 
-resource "kubernetes_manifest" "traefik" {
+resource "kubectl_manifest" "traefik" {
   count = var.traefik.enable ? 1 : 0
   depends_on = [kubernetes_namespace_v1.infra-ns]
-  manifest = {
-    apiVersion = "vynil.solidite.fr/v1"
-    kind       = "Install"
-    metadata   = {
-      name      = "traefik"
-      namespace = "${var.namespace}-infra"
-      labels    = local.common-labels
-    }
-    spec = {
-      distrib = "core"
-      category = "apps"
-      component = "traefik-ui"
-      options = merge(local.global, local.traefik)
-    }
-  }
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "traefik"
+      namespace: "${var.namespace}-infra"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "apps"
+      component: "traefik-ui"
+      options: ${jsonencode(merge(local.global, local.traefik))}
+  EOF
 }
