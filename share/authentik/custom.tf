@@ -87,6 +87,7 @@ resource "authentik_outpost" "outpost-ldap" {
 }
 
 data "authentik_flow" "default-authorization-flow" {
+  depends_on = [kustomization_resource.post,authentik_flow_stage_binding.ldap-authentication-flow-30]
   slug = "default-provider-authorization-implicit-consent"
 }
 

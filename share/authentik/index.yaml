@@ -46,26 +46,16 @@ options:
         default: true
         type: boolean
     type: object
-  postgres:
-    default:
-      replicas: 1
-      storage: 8Gi
-      version: '14'
+  domain-name:
+    default: your_company.com
     examples:
-    - replicas: 1
-      storage: 8Gi
-      version: '14'
-    properties:
-      replicas:
-        default: 1
-        type: integer
-      storage:
-        default: 8Gi
-        type: string
-      version:
-        default: '14'
-        type: string
-    type: object
+    - your_company.com
+    type: string
+  sub-domain:
+    default: auth
+    examples:
+    - auth
+    type: string
   redis:
     default:
       exporter:
@@ -129,21 +119,26 @@ options:
         default: 2023.5.3
         type: string
     type: object
-  sub-domain:
-    default: auth
+  postgres:
+    default:
+      replicas: 1
+      storage: 8Gi
+      version: '14'
     examples:
-    - auth
-    type: string
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
+    - replicas: 1
+      storage: 8Gi
+      version: '14'
+    properties:
+      replicas:
+        default: 1
+        type: integer
+      storage:
+        default: 8Gi
+        type: string
+      version:
+        default: '14'
+        type: string
+    type: object
   error_reporting:
     default:
       enabled: false
@@ -164,16 +159,6 @@ options:
         default: false
         type: boolean
     type: object
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
-  geoip:
-    default: /geoip/GeoLite2-City.mmdb
-    examples:
-    - /geoip/GeoLite2-City.mmdb
-    type: string
   issuer:
     default: letsencrypt-prod
     examples:
@@ -183,6 +168,11 @@ options:
     default: info
     examples:
     - info
+    type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
     type: string
   admin:
     default:
@@ -194,6 +184,16 @@ options:
         default: auth-admin
         type: string
     type: object
+  geoip:
+    default: /geoip/GeoLite2-City.mmdb
+    examples:
+    - /geoip/GeoLite2-City.mmdb
+    type: string
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
 dependencies:
 - dist: null
   category: core
