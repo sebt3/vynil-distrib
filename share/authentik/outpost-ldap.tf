@@ -3,6 +3,7 @@ locals {
     "Content-Type"  = "application/json"
     Authorization   = "Bearer ${local.authentik-token}"
   }
+  authentik-token = data.kubernetes_secret_v1.authentik.data["AUTHENTIK_BOOTSTRAP_TOKEN"]
   ldap-outpost-json = jsondecode(data.http.get_ldap_outpost.response_body).results
   ldap-outpost-prividers = length(local.ldap-outpost-json)>0?(contains(local.ldap-outpost-json[0].providers, authentik_provider_ldap.provider_ldap[0].id)?local.ldap-outpost-json[0].providers:concat(local.ldap-outpost-json[0].providers, [authentik_provider_ldap.provider_ldap[0].id])):[authentik_provider_ldap.provider_ldap[0].id]
 }
