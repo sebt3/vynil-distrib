@@ -61,7 +61,11 @@ spec:
               mountPath: /data
             
           securityContext:
-            {}
+            capabilities:
+              add:
+              - SYS_CHROOT
+              drop:
+              - ALL
           resources:
             limits: {}
             requests:
@@ -97,7 +101,11 @@ spec:
               mountPath: /env-to-ini-mounts/inlines/
             
           securityContext:
-            {}
+            capabilities:
+              add:
+              - SYS_CHROOT
+              drop:
+              - ALL
           resources:
             limits: {}
             requests:
@@ -108,6 +116,11 @@ spec:
           command: ["/usr/sbin/configure_gitea.sh"]
           imagePullPolicy: Always
           securityContext:
+            capabilities:
+              add:
+              - SYS_CHROOT
+              drop:
+              - ALL
             runAsUser: 1000
           env:
             - name: GITEA_APP_INI
@@ -202,7 +215,11 @@ spec:
           resources:
             {}
           securityContext:
-            {}
+            capabilities:
+              add:
+              - SYS_CHROOT
+              drop:
+              - ALL
           volumeMounts:
             - name: temp
               mountPath: /tmp
