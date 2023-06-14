@@ -6,11 +6,41 @@ metadata:
   name: domain
   description: null
 options:
-  default-dist:
-    default: core
+  auth:
+    default:
+      enable: true
     examples:
-    - core
+    - enable: true
+    properties:
+      enable:
+        default: true
+        type: boolean
+    type: object
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
     type: string
+  infra:
+    default:
+      enable: false
+    examples:
+    - enable: false
+    properties:
+      enable:
+        default: false
+        type: boolean
+    type: object
+  ci:
+    default:
+      enable: false
+    examples:
+    - enable: false
+    properties:
+      enable:
+        default: false
+        type: boolean
+    type: object
   domain-name:
     default: your_company.com
     examples:
@@ -21,16 +51,6 @@ options:
     examples:
     - traefik
     type: string
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
-  metas:
-    default: []
-    items:
-      type: object
-    type: array
 dependencies: []
 providers:
   kubernetes: null
