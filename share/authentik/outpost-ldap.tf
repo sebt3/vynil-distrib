@@ -8,6 +8,7 @@ locals {
   ldap-outpost-prividers = length(local.ldap-outpost-json)>0?(contains(local.ldap-outpost-json[0].providers, authentik_provider_ldap.provider_ldap[0].id)?local.ldap-outpost-json[0].providers:concat(local.ldap-outpost-json[0].providers, [authentik_provider_ldap.provider_ldap[0].id])):[authentik_provider_ldap.provider_ldap[0].id]
 }
 data "http" "get_ldap_outpost" {
+  depends_on = [kustomization_resource.post, authentik_provider_ldap.provider_ldap]
   url    = "http://authentik.${var.namespace}.svc/api/v3/outposts/instances/?name__iexact=ldap"
   method = "GET"
   request_headers = local.request_headers
