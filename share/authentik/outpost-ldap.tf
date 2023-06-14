@@ -105,7 +105,7 @@ resource "authentik_outpost" "outpost-ldap" {
     "kubernetes_ingress_annotations": {},
     "kubernetes_ingress_secret_name": "authentik-outpost-tls"
   })
-  protocol_providers = []
+  protocol_providers = local.ldap-outpost-prividers
 }
 
 data "authentik_flow" "default-authorization-flow" {
@@ -141,6 +141,6 @@ resource "authentik_outpost" "outpost-forward" {
     "kubernetes_ingress_annotations": {},
     "kubernetes_ingress_secret_name": "authentik-outpost-tls"
   })
-  protocol_providers = local.ldap-outpost-prividers
+  protocol_providers = [authentik_provider_proxy.provider_forward.id]
 }
 
