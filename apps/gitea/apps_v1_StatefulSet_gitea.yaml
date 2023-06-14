@@ -64,8 +64,6 @@ spec:
             capabilities:
               add:
               - SYS_CHROOT
-              drop:
-              - ALL
           resources:
             limits: {}
             requests:
@@ -104,8 +102,6 @@ spec:
             capabilities:
               add:
               - SYS_CHROOT
-              drop:
-              - ALL
           resources:
             limits: {}
             requests:
@@ -119,8 +115,6 @@ spec:
             capabilities:
               add:
               - SYS_CHROOT
-              drop:
-              - ALL
             runAsUser: 1000
           env:
             - name: GITEA_APP_INI
@@ -218,8 +212,6 @@ spec:
             capabilities:
               add:
               - SYS_CHROOT
-              drop:
-              - ALL
           volumeMounts:
             - name: temp
               mountPath: /tmp
