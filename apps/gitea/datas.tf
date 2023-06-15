@@ -102,6 +102,15 @@ data "kustomization_overlay" "data" {
                 value: "INFO"
               - name: TZ
                 value: ${var.timezone}
+        volumeClaimTemplates:
+        - metadata:
+            name: data
+            annotations:
+              k8up.io/backup: "true"
+          spec:
+            resources:
+              requests:
+                storage: "${var.volume.size}"
     EOF
   }
   patches {
