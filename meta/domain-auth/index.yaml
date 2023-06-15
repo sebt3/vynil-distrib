@@ -21,6 +21,11 @@ options:
         default: true
         type: boolean
     type: object
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
   domain:
     default: your-company
     examples:
@@ -30,11 +35,6 @@ options:
     default: your_company.com
     examples:
     - your_company.com
-    type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
     type: string
 dependencies: []
 providers:

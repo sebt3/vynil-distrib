@@ -6,6 +6,16 @@ metadata:
   name: domain-ci
   description: null
 options:
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
   domain:
     default: your-company
     examples:
@@ -15,11 +25,6 @@ options:
     default: your_company.com
     examples:
     - your_company.com
-    type: string
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
     type: string
   gitea:
     default:
@@ -31,11 +36,6 @@ options:
         default: true
         type: boolean
     type: object
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
 dependencies: []
 providers:
   kubernetes: true

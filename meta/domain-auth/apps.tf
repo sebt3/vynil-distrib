@@ -4,6 +4,7 @@ locals {
       "vynil.solidite.fr/name" = "${var.namespace}-auth"
       "vynil.solidite.fr/domain" = var.domain-name
       "vynil.solidite.fr/issuer" = var.issuer
+      "vynil.solidite.fr/ingress" = var.ingress-class
     }
     global = {
         "domain" = var.namespace
@@ -18,7 +19,7 @@ resource "kubernetes_namespace_v1" "auth-ns" {
   count = var.authentik.enable? 1 : 0
   metadata {
     annotations = local.annotations
-    labels = local.common-labels
+    labels = merge(local.common-labels, local.annotations)
     name = "${var.namespace}-auth"
   }
 }
