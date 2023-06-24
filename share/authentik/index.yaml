@@ -6,126 +6,16 @@ metadata:
   name: authentik
   description: authentik is an open-source Identity Provider focused on flexibility and versatility
 options:
-  email:
-    default:
-      port: 587
-      timeout: 30
-      use_ssl: false
-      use_tls: false
+  domain-name:
+    default: your_company.com
     examples:
-    - port: 587
-      timeout: 30
-      use_ssl: false
-      use_tls: false
-    properties:
-      port:
-        default: 587
-        type: integer
-      timeout:
-        default: 30
-        type: integer
-      use_ssl:
-        default: false
-        type: boolean
-      use_tls:
-        default: false
-        type: boolean
-    type: object
-  image:
-    default:
-      project: goauthentik
-      pullPolicy: IfNotPresent
-      registry: ghcr.io
-      repository: goauthentik/server
-      tag: 2023.5.4
-    examples:
-    - project: goauthentik
-      pullPolicy: IfNotPresent
-      registry: ghcr.io
-      repository: goauthentik/server
-      tag: 2023.5.4
-    properties:
-      project:
-        default: goauthentik
-        type: string
-      pullPolicy:
-        default: IfNotPresent
-        type: string
-      registry:
-        default: ghcr.io
-        type: string
-      repository:
-        default: goauthentik/server
-        type: string
-      tag:
-        default: 2023.5.4
-        type: string
-    type: object
-  domain:
-    default: your-company
-    examples:
-    - your-company
+    - your_company.com
     type: string
-  loglevel:
-    default: info
-    examples:
-    - info
-    type: string
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
-  error_reporting:
-    default:
-      enabled: false
-      environment: k8s
-      send_pii: false
-    examples:
-    - enabled: false
-      environment: k8s
-      send_pii: false
-    properties:
-      enabled:
-        default: false
-        type: boolean
-      environment:
-        default: k8s
-        type: string
-      send_pii:
-        default: false
-        type: boolean
-    type: object
   geoip:
     default: /geoip/GeoLite2-City.mmdb
     examples:
     - /geoip/GeoLite2-City.mmdb
     type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
-  sub-domain:
-    default: auth
-    examples:
-    - auth
-    type: string
-  outposts:
-    default:
-      forward: true
-      ldap: true
-    examples:
-    - forward: true
-      ldap: true
-    properties:
-      forward:
-        default: true
-        type: boolean
-      ldap:
-        default: true
-        type: boolean
-    type: object
   redis:
     default:
       exporter:
@@ -159,11 +49,26 @@ options:
         default: 8Gi
         type: string
     type: object
-  domain-name:
-    default: your_company.com
+  error_reporting:
+    default:
+      enabled: false
+      environment: k8s
+      send_pii: false
     examples:
-    - your_company.com
-    type: string
+    - enabled: false
+      environment: k8s
+      send_pii: false
+    properties:
+      enabled:
+        default: false
+        type: boolean
+      environment:
+        default: k8s
+        type: string
+      send_pii:
+        default: false
+        type: boolean
+    type: object
   postgres:
     default:
       replicas: 1
@@ -184,6 +89,101 @@ options:
         default: '14'
         type: string
     type: object
+  image:
+    default:
+      project: goauthentik
+      pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: goauthentik/server
+      tag: 2023.5.4
+    examples:
+    - project: goauthentik
+      pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: goauthentik/server
+      tag: 2023.5.4
+    properties:
+      project:
+        default: goauthentik
+        type: string
+      pullPolicy:
+        default: IfNotPresent
+        type: string
+      registry:
+        default: ghcr.io
+        type: string
+      repository:
+        default: goauthentik/server
+        type: string
+      tag:
+        default: 2023.5.4
+        type: string
+    type: object
+  sub-domain:
+    default: auth
+    examples:
+    - auth
+    type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  email:
+    default:
+      port: 587
+      timeout: 30
+      use_ssl: false
+      use_tls: false
+    examples:
+    - port: 587
+      timeout: 30
+      use_ssl: false
+      use_tls: false
+    properties:
+      port:
+        default: 587
+        type: integer
+      timeout:
+        default: 30
+        type: integer
+      use_ssl:
+        default: false
+        type: boolean
+      use_tls:
+        default: false
+        type: boolean
+    type: object
+  outposts:
+    default:
+      forward: true
+      ldap: true
+    examples:
+    - forward: true
+      ldap: true
+    properties:
+      forward:
+        default: true
+        type: boolean
+      ldap:
+        default: true
+        type: boolean
+    type: object
+  loglevel:
+    default: info
+    examples:
+    - info
+    type: string
   admin:
     default:
       email: auth-admin
