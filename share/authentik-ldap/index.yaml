@@ -5,7 +5,12 @@ category: share
 metadata:
   name: authentik-ldap
   description: null
-options: {}
+options:
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
 dependencies:
 - dist: null
   category: share

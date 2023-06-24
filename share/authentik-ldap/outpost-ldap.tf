@@ -73,22 +73,19 @@ resource "authentik_group" "group" {
   is_superuser = true
 }
 
-resource "authentik_service_connection_kubernetes" "local" {
+data "authentik_service_connection_kubernetes" "local" {
   depends_on = [data.kubernetes_secret_v1.authentik]
-  count = (var.outposts.ldap || var.outposts.forward) ? 1 : 0
-  name  = "local"
+  name  = "Local Kubernetes Cluster"
   local = true
 }
 
 resource "authentik_provider_ldap" "provider_ldap" {
-  count = var.outposts.ldap ? 1 : 0
   name         = "authentik-ldap-provider"
   base_dn      = "dc=${var.namespace},dc=namespace"
   bind_flow    = authentik_flow.ldap-authentication-flow.uuid
 }
 
 resource "authentik_outpost" "outpost-ldap" {
-  count = var.outposts.ldap ? 1 : 0
   name = "ldap"
   type = "ldap"
   service_connection = authentik_service_connection_kubernetes.local[count.index].id
