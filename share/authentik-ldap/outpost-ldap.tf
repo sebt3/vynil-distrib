@@ -9,7 +9,7 @@ locals {
 }
 //TODO: trouver un moyen d'attendre que le service soit ready
 data "http" "get_ldap_outpost" {
-  depends_on = [kustomization_resource.post, authentik_provider_ldap.provider_ldap]
+  depends_on = [authentik_provider_ldap.provider_ldap]
   url    = "http://authentik.${var.namespace}.svc/api/v3/outposts/instances/?name__iexact=ldap"
   method = "GET"
   request_headers = local.request_headers
@@ -22,7 +22,7 @@ data "http" "get_ldap_outpost" {
 }
 
 resource "authentik_stage_password" "ldap-password-stage" {
-  depends_on = [kustomization_resource.post, data.kubernetes_secret_v1.authentik]
+  depends_on = [data.kubernetes_secret_v1.authentik]
   name     = "ldap-authentication-password"
   backends = [
     "authentik.core.auth.InbuiltBackend",
@@ -38,12 +38,12 @@ resource "authentik_stage_identification" "ldap-identification-stage" {
 }
 
 resource "authentik_stage_user_login" "ldap-authentication-login" {
-  depends_on = [kustomization_resource.post, data.kubernetes_secret_v1.authentik]
+  depends_on = [data.kubernetes_secret_v1.authentik]
   name = "ldap-authentication-login"
 }
 
 resource "authentik_flow" "ldap-authentication-flow" {
-  depends_on = [kustomization_resource.post, data.kubernetes_secret_v1.authentik]
+  depends_on = [data.kubernetes_secret_v1.authentik]
   name        = "ldap-authentication-flow"
   title       = "ldap authentication flow"
   slug        = "ldap-authentication-flow"
@@ -74,7 +74,7 @@ resource "authentik_group" "group" {
 }
 
 resource "authentik_service_connection_kubernetes" "local" {
-  depends_on = [kustomization_resource.post, data.kubernetes_secret_v1.authentik]
+  depends_on = [data.kubernetes_secret_v1.authentik]
   count = (var.outposts.ldap || var.outposts.forward) ? 1 : 0
   name  = "local"
   local = true

@@ -10,10 +10,24 @@ locals {
       "vynil.solidite.fr/name" = var.namespace
       "vynil.solidite.fr/domain" = var.domain-name
       "vynil.solidite.fr/issuer" = var.issuer
+      "vynil.solidite.fr/ingress" = var.ingress-class
     }
     auth = { for k, v in var.auth : k => v if k!="enable" }
     infra = { for k, v in var.infra : k => v if k!="enable" }
     ci = { for k, v in var.ci : k => v if k!="enable" }
+
+    # Force install authentik and it's modules when any are needed
+    use-ldap = var.ci.gitea.enable
+    use-forward = var.infra.traefik.enable
+    use-other-auth = false
+    added-auth-ldap = local.use-ldap?{
+      "authentik-ldap" = {"enable"= true}
+    }:{}
+    added-auth-forward = local.use-forward?{
+    }:{}
+    added-auth = local.use-ldap||local.use-forward||local.use-other-auth?merge({
+      "authentik" = {"enable" = true}
+    },local.added-auth-ldap,local.added-auth-forward):{}
 }
 
 resource "kubectl_manifest" "auth" {
@@ -29,7 +43,7 @@ resource "kubectl_manifest" "auth" {
       distrib: "core"
       category: "meta"
       component: "domain-auth"
-      options: ${jsonencode(merge(local.global, local.auth))}
+      options: ${jsonencode(merge(merge(local.global, local.auth), local.added-auth))}
   EOF
 }
 resource "kubectl_manifest" "infra" {

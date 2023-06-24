@@ -16,40 +16,64 @@ options:
         default: true
         type: boolean
     type: object
-  issuer:
-    default: letsencrypt-prod
+  ingress-class:
+    default: traefik
     examples:
-    - letsencrypt-prod
+    - traefik
     type: string
-  infra:
-    default:
-      enable: false
-    examples:
-    - enable: false
-    properties:
-      enable:
-        default: false
-        type: boolean
-    type: object
   ci:
     default:
       enable: false
+      gitea:
+        enable: true
     examples:
     - enable: false
+      gitea:
+        enable: true
     properties:
       enable:
         default: false
         type: boolean
+      gitea:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
     type: object
   domain-name:
     default: your_company.com
     examples:
     - your_company.com
     type: string
-  ingress-class:
-    default: traefik
+  infra:
+    default:
+      enable: false
+      traefik:
+        enable: false
     examples:
-    - traefik
+    - enable: false
+      traefik:
+        enable: false
+    properties:
+      enable:
+        default: false
+        type: boolean
+      traefik:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+    type: object
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
     type: string
 dependencies: []
 providers:

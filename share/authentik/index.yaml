@@ -11,62 +11,24 @@ options:
     examples:
     - your_company.com
     type: string
-  geoip:
-    default: /geoip/GeoLite2-City.mmdb
+  domain:
+    default: your-company
     examples:
-    - /geoip/GeoLite2-City.mmdb
+    - your-company
     type: string
-  redis:
+  outposts:
     default:
-      exporter:
-        enabled: true
-        image: quay.io/opstree/redis-exporter:v1.44.0
-      image: quay.io/opstree/redis:v7.0.5
-      storage: 8Gi
+      forward: true
+      ldap: true
     examples:
-    - exporter:
-        enabled: true
-        image: quay.io/opstree/redis-exporter:v1.44.0
-      image: quay.io/opstree/redis:v7.0.5
-      storage: 8Gi
+    - forward: true
+      ldap: true
     properties:
-      exporter:
-        default:
-          enabled: true
-          image: quay.io/opstree/redis-exporter:v1.44.0
-        properties:
-          enabled:
-            default: true
-            type: boolean
-          image:
-            default: quay.io/opstree/redis-exporter:v1.44.0
-            type: string
-        type: object
-      image:
-        default: quay.io/opstree/redis:v7.0.5
-        type: string
-      storage:
-        default: 8Gi
-        type: string
-    type: object
-  error_reporting:
-    default:
-      enabled: false
-      environment: k8s
-      send_pii: false
-    examples:
-    - enabled: false
-      environment: k8s
-      send_pii: false
-    properties:
-      enabled:
-        default: false
+      forward:
+        default: true
         type: boolean
-      environment:
-        default: k8s
-        type: string
-      send_pii:
-        default: false
+      ldap:
+        default: true
         type: boolean
     type: object
   postgres:
@@ -124,21 +86,64 @@ options:
     examples:
     - auth
     type: string
+  admin:
+    default:
+      email: auth-admin
+    examples:
+    - email: auth-admin
+    properties:
+      email:
+        default: auth-admin
+        type: string
+    type: object
+  loglevel:
+    default: info
+    examples:
+    - info
+    type: string
   ingress-class:
     default: traefik
     examples:
     - traefik
     type: string
-  issuer:
-    default: letsencrypt-prod
+  geoip:
+    default: /geoip/GeoLite2-City.mmdb
     examples:
-    - letsencrypt-prod
+    - /geoip/GeoLite2-City.mmdb
     type: string
-  domain:
-    default: your-company
+  redis:
+    default:
+      exporter:
+        enabled: true
+        image: quay.io/opstree/redis-exporter:v1.44.0
+      image: quay.io/opstree/redis:v7.0.5
+      storage: 8Gi
     examples:
-    - your-company
-    type: string
+    - exporter:
+        enabled: true
+        image: quay.io/opstree/redis-exporter:v1.44.0
+      image: quay.io/opstree/redis:v7.0.5
+      storage: 8Gi
+    properties:
+      exporter:
+        default:
+          enabled: true
+          image: quay.io/opstree/redis-exporter:v1.44.0
+        properties:
+          enabled:
+            default: true
+            type: boolean
+          image:
+            default: quay.io/opstree/redis-exporter:v1.44.0
+            type: string
+        type: object
+      image:
+        default: quay.io/opstree/redis:v7.0.5
+        type: string
+      storage:
+        default: 8Gi
+        type: string
+    type: object
   email:
     default:
       port: 587
@@ -164,36 +169,31 @@ options:
         default: false
         type: boolean
     type: object
-  outposts:
+  error_reporting:
     default:
-      forward: true
-      ldap: true
+      enabled: false
+      environment: k8s
+      send_pii: false
     examples:
-    - forward: true
-      ldap: true
+    - enabled: false
+      environment: k8s
+      send_pii: false
     properties:
-      forward:
-        default: true
+      enabled:
+        default: false
         type: boolean
-      ldap:
-        default: true
-        type: boolean
-    type: object
-  loglevel:
-    default: info
-    examples:
-    - info
-    type: string
-  admin:
-    default:
-      email: auth-admin
-    examples:
-    - email: auth-admin
-    properties:
-      email:
-        default: auth-admin
+      environment:
+        default: k8s
         type: string
+      send_pii:
+        default: false
+        type: boolean
     type: object
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
 dependencies:
 - dist: null
   category: core
@@ -214,9 +214,9 @@ dependencies:
   category: dbo
   component: redis
 providers:
-  kubernetes: true
-  authentik: true
+  kubernetes: null
+  authentik: null
   kubectl: true
   postgresql: null
   restapi: null
-  http: true
+  http: null

@@ -1,0 +1,19 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: share
+metadata:
+  name: authentik-ldap
+  description: null
+options: {}
+dependencies:
+- dist: null
+  category: share
+  component: authentik
+providers:
+  kubernetes: true
+  authentik: true
+  kubectl: true
+  postgresql: null
+  restapi: null
+  http: true

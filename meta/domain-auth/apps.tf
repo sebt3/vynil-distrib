@@ -13,6 +13,7 @@ locals {
         "ingress-class" = var.ingress-class
     }
     authentik = { for k, v in var.authentik : k => v if k!="enable" }
+    authentik-ldap = { for k, v in var.authentik-ldap : k => v if k!="enable" }
 }
 
 resource "kubernetes_namespace_v1" "auth-ns" {
@@ -39,5 +40,23 @@ resource "kubectl_manifest" "authentik" {
       category: "share"
       component: "authentik"
       options: ${jsonencode(merge(local.global, local.authentik))}
+  EOF
+}
+
+resource "kubectl_manifest" "authentik-ldap" {
+  count = var.authentik.enable ? 1 : 0
+  depends_on = [kubernetes_namespace_v1.auth-ns]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "authentik-ldap"
+      namespace: "${var.namespace}-auth"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "share"
+      component: "authentik-ldap"
+      options: ${jsonencode(merge(local.global, local.authentik-ldap))}
   EOF
 }
