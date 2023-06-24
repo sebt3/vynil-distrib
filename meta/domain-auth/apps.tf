@@ -26,7 +26,7 @@ resource "kubernetes_namespace_v1" "auth-ns" {
 }
 
 resource "kubectl_manifest" "authentik" {
-  count = var.authentik.enable ? 1 : 0
+  count = var.authentik.enable || var.authentik-ldap.enable ? 1 : 0
   depends_on = [kubernetes_namespace_v1.auth-ns]
   yaml_body  = <<-EOF
     apiVersion: "vynil.solidite.fr/v1"
@@ -44,7 +44,7 @@ resource "kubectl_manifest" "authentik" {
 }
 
 resource "kubectl_manifest" "authentik-ldap" {
-  count = var.authentik.enable ? 1 : 0
+  count = var.authentik-ldap.enable ? 1 : 0
   depends_on = [kubernetes_namespace_v1.auth-ns]
   yaml_body  = <<-EOF
     apiVersion: "vynil.solidite.fr/v1"
