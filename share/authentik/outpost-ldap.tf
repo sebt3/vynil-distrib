@@ -7,6 +7,7 @@ locals {
   ldap-outpost-json = jsondecode(data.http.get_ldap_outpost.response_body).results
   ldap-outpost-prividers = length(local.ldap-outpost-json)>0?(contains(local.ldap-outpost-json[0].providers, authentik_provider_ldap.provider_ldap[0].id)?local.ldap-outpost-json[0].providers:concat(local.ldap-outpost-json[0].providers, [authentik_provider_ldap.provider_ldap[0].id])):[authentik_provider_ldap.provider_ldap[0].id]
 }
+//TODO: trouver un moyen d'attendre que le service soit ready
 data "http" "get_ldap_outpost" {
   depends_on = [kustomization_resource.post, authentik_provider_ldap.provider_ldap]
   url    = "http://authentik.${var.namespace}.svc/api/v3/outposts/instances/?name__iexact=ldap"
@@ -46,7 +47,7 @@ resource "authentik_flow" "ldap-authentication-flow" {
   name        = "ldap-authentication-flow"
   title       = "ldap authentication flow"
   slug        = "ldap-authentication-flow"
-  designation = "authorization"
+  designation = "authentication"
 }
 
 resource "authentik_flow_stage_binding" "ldap-authentication-flow-10" {

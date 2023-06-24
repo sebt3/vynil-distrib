@@ -1,5 +1,6 @@
 
 resource "kubectl_manifest" "authentik_secret" {
+  ignore_fields = ["metadata.annotations"]
   yaml_body  = <<-EOF
     apiVersion: "secretgenerator.mittwald.de/v1alpha1"
     kind: "StringSecret"

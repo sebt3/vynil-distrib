@@ -4,10 +4,10 @@ kind: Deployment
 metadata:
   name: authentik-worker
   labels:
-    helm.sh/chart: authentik-2023.5.3
+    helm.sh/chart: authentik-2023.5.4
     app.kubernetes.io/name: authentik
     app.kubernetes.io/instance: authentik
-    app.kubernetes.io/version: "2023.5.3"
+    app.kubernetes.io/version: "2023.5.4"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: "worker"
 spec:
@@ -22,9 +22,9 @@ spec:
         app.kubernetes.io/name: authentik
         app.kubernetes.io/instance: authentik
         app.kubernetes.io/component: "worker"
-        app.kubernetes.io/version: "2023.5.3"
+        app.kubernetes.io/version: "2023.5.4"
       annotations:
-        goauthentik.io/config-checksum: 81fdcfe9147f31c089ec3abb4103e85a0373191a40df8b67827f4749a1139958
+        goauthentik.io/config-checksum: 65cbfbbef2c640e96016786be8122e715d26400e522632be8e28013ae257c308
     spec:
       serviceAccountName: authentik
       enableServiceLinks: true
@@ -32,7 +32,7 @@ spec:
         {}
       containers:
         - name: authentik
-          image: "ghcr.io/goauthentik/server:2023.5.3"
+          image: "ghcr.io/goauthentik/server:2023.5.4"
           imagePullPolicy: "IfNotPresent"
           args: ["worker"]
           env:

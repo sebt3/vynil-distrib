@@ -109,4 +109,46 @@ data "kustomization_overlay" "data" {
                     name: ${var.component}
     EOF
   }
+  patches {
+    target {
+      kind = "ClusterRole"
+      name = "authentik-vynil-auth"
+    }
+    patch = <<-EOF
+    - op: replace
+      path: /metadata/name
+      value: authentik-${var.namespace}
+    EOF
+  }
+  patches {
+    target {
+      kind = "ClusterRoleBinding"
+      name = "authentik-vynil-auth"
+    }
+    patch = <<-EOF
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRoleBinding
+      metadata:
+        name: authentik-vynil-auth
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: authentik-${var.namespace}
+      subjects:
+        - kind: ServiceAccount
+          name: authentik
+          namespace: ${var.namespace}
+    EOF
+  }
+  patches {
+    target {
+      kind = "ClusterRoleBinding"
+      name = "authentik-vynil-auth"
+    }
+    patch = <<-EOF
+    - op: replace
+      path: /metadata/name
+      value: authentik-${var.namespace}
+    EOF
+  }
 }
