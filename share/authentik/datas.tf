@@ -12,7 +12,7 @@ locals {
 
 data "kubernetes_secret_v1" "authentik" {
   metadata {
-    name      = kubectl_manifest.authentik_secret.name
+    name      = "authentik"
     namespace = var.namespace
   }
 }

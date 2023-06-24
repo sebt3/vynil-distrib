@@ -6,40 +6,40 @@ metadata:
   name: authentik
   description: authentik is an open-source Identity Provider focused on flexibility and versatility
 options:
-  admin:
-    default:
-      email: auth-admin
+  sub-domain:
+    default: auth
     examples:
-    - email: auth-admin
+    - auth
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  postgres:
+    default:
+      replicas: 1
+      storage: 8Gi
+      version: '14'
+    examples:
+    - replicas: 1
+      storage: 8Gi
+      version: '14'
     properties:
-      email:
-        default: auth-admin
+      replicas:
+        default: 1
+        type: integer
+      storage:
+        default: 8Gi
         type: string
-    type: object
-  email:
-    default:
-      port: 587
-      timeout: 30
-      use_ssl: false
-      use_tls: false
-    examples:
-    - port: 587
-      timeout: 30
-      use_ssl: false
-      use_tls: false
-    properties:
-      port:
-        default: 587
-        type: integer
-      timeout:
-        default: 30
-        type: integer
-      use_ssl:
-        default: false
-        type: boolean
-      use_tls:
-        default: false
-        type: boolean
+      version:
+        default: '14'
+        type: string
     type: object
   image:
     default:
@@ -71,46 +71,6 @@ options:
         default: 2023.5.4
         type: string
     type: object
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
-  loglevel:
-    default: info
-    examples:
-    - info
-    type: string
-  postgres:
-    default:
-      replicas: 1
-      storage: 8Gi
-      version: '14'
-    examples:
-    - replicas: 1
-      storage: 8Gi
-      version: '14'
-    properties:
-      replicas:
-        default: 1
-        type: integer
-      storage:
-        default: 8Gi
-        type: string
-      version:
-        default: '14'
-        type: string
-    type: object
-  geoip:
-    default: /geoip/GeoLite2-City.mmdb
-    examples:
-    - /geoip/GeoLite2-City.mmdb
-    type: string
   redis:
     default:
       exporter:
@@ -144,6 +104,21 @@ options:
         default: 8Gi
         type: string
     type: object
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  loglevel:
+    default: info
+    examples:
+    - info
+    type: string
   error_reporting:
     default:
       enabled: false
@@ -164,21 +139,46 @@ options:
         default: false
         type: boolean
     type: object
-  sub-domain:
-    default: auth
+  geoip:
+    default: /geoip/GeoLite2-City.mmdb
     examples:
-    - auth
+    - /geoip/GeoLite2-City.mmdb
     type: string
-  issuer:
-    default: letsencrypt-prod
+  email:
+    default:
+      port: 587
+      timeout: 30
+      use_ssl: false
+      use_tls: false
     examples:
-    - letsencrypt-prod
-    type: string
-  domain-name:
-    default: your_company.com
+    - port: 587
+      timeout: 30
+      use_ssl: false
+      use_tls: false
+    properties:
+      port:
+        default: 587
+        type: integer
+      timeout:
+        default: 30
+        type: integer
+      use_ssl:
+        default: false
+        type: boolean
+      use_tls:
+        default: false
+        type: boolean
+    type: object
+  admin:
+    default:
+      email: auth-admin
     examples:
-    - your_company.com
-    type: string
+    - email: auth-admin
+    properties:
+      email:
+        default: auth-admin
+        type: string
+    type: object
 dependencies:
 - dist: null
   category: core
