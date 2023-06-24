@@ -22,7 +22,7 @@ data "http" "get_ldap_outpost" {
 }
 
 resource "authentik_stage_password" "ldap-password-stage" {
-  depends_on = [kustomization_resource.post]
+  depends_on = [kustomization_resource.post, data.kubernetes_secret_v1.authentik]
   name     = "ldap-authentication-password"
   backends = [
     "authentik.core.auth.InbuiltBackend",
@@ -38,12 +38,12 @@ resource "authentik_stage_identification" "ldap-identification-stage" {
 }
 
 resource "authentik_stage_user_login" "ldap-authentication-login" {
-  depends_on = [kustomization_resource.post]
+  depends_on = [kustomization_resource.post, data.kubernetes_secret_v1.authentik]
   name = "ldap-authentication-login"
 }
 
 resource "authentik_flow" "ldap-authentication-flow" {
-  depends_on = [kustomization_resource.post]
+  depends_on = [kustomization_resource.post, data.kubernetes_secret_v1.authentik]
   name        = "ldap-authentication-flow"
   title       = "ldap authentication flow"
   slug        = "ldap-authentication-flow"
