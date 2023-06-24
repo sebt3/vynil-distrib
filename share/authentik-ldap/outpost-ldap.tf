@@ -5,7 +5,7 @@ locals {
   }
   authentik-token = data.kubernetes_secret_v1.authentik.data["AUTHENTIK_BOOTSTRAP_TOKEN"]
   ldap-outpost-json = jsondecode(data.http.get_ldap_outpost.response_body).results
-  ldap-outpost-prividers = length(local.ldap-outpost-json)>0?(contains(local.ldap-outpost-json[0].providers, authentik_provider_ldap.provider_ldap[0].id)?local.ldap-outpost-json[0].providers:concat(local.ldap-outpost-json[0].providers, [authentik_provider_ldap.provider_ldap[0].id])):[authentik_provider_ldap.provider_ldap[0].id]
+  ldap-outpost-prividers = length(local.ldap-outpost-json)>0?(contains(local.ldap-outpost-json[0].providers, authentik_provider_ldap.provider_ldap.id)?local.ldap-outpost-json[0].providers:concat(local.ldap-outpost-json[0].providers, [authentik_provider_ldap.provider_ldap.id])):[authentik_provider_ldap.provider_ldap.id]
 }
 //TODO: trouver un moyen d'attendre que le service soit ready
 data "http" "get_ldap_outpost" {
@@ -73,9 +73,9 @@ resource "authentik_group" "group" {
   is_superuser = true
 }
 
-data "authentik_service_connection_kubernetes" "local" {
+resource "authentik_service_connection_kubernetes" "local" {
   depends_on = [data.kubernetes_secret_v1.authentik]
-  name  = "Local Kubernetes Cluster"
+  name  = "local-ldap"
   local = true
 }
 
@@ -88,7 +88,7 @@ resource "authentik_provider_ldap" "provider_ldap" {
 resource "authentik_outpost" "outpost-ldap" {
   name = "ldap"
   type = "ldap"
-  service_connection = authentik_service_connection_kubernetes.local[count.index].id
+  service_connection = authentik_service_connection_kubernetes.local.id
   config = jsonencode({
     "log_level": "info",
     "authentik_host": "http://authentik",
@@ -106,40 +106,3 @@ resource "authentik_outpost" "outpost-ldap" {
   })
   protocol_providers = local.ldap-outpost-prividers
 }
-
-data "authentik_flow" "default-authorization-flow" {
-  depends_on = [kustomization_resource.post,authentik_flow_stage_binding.ldap-authentication-flow-30]
-  slug = "default-provider-authorization-implicit-consent"
-}
-
-resource "authentik_provider_proxy" "provider_forward" {
-  count = var.outposts.forward ? 1 : 0
-  name               = "authentik-forward-provider"
-  internal_host      = "http://authentik"
-  external_host      = "http://authentik"
-  authorization_flow = data.authentik_flow.default-authorization-flow.id
-}
-
-resource "authentik_outpost" "outpost-forward" {
-  count = var.outposts.forward ? 1 : 0
-  name = "forward"
-  type = "proxy"
-  service_connection = authentik_service_connection_kubernetes.local[count.index].id
-  config = jsonencode({
-    "log_level": "info",
-    "authentik_host": "http://authentik",
-    "docker_map_ports": true,
-    "kubernetes_replicas": 1,
-    "kubernetes_namespace": var.namespace,
-    "authentik_host_browser": "",
-    "object_naming_template": "ak-outpost-%(name)s",
-    "authentik_host_insecure": false,
-    "kubernetes_service_type": "ClusterIP",
-    "kubernetes_image_pull_secrets": [],
-    "kubernetes_disabled_components": [],
-    "kubernetes_ingress_annotations": {},
-    "kubernetes_ingress_secret_name": "authentik-outpost-tls"
-  })
-  protocol_providers = [authentik_provider_proxy.provider_forward[count.index].id]
-}
-
