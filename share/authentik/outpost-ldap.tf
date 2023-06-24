@@ -74,6 +74,7 @@ resource "authentik_group" "group" {
 }
 
 resource "authentik_service_connection_kubernetes" "local" {
+  depends_on = [kustomization_resource.post, data.kubernetes_secret_v1.authentik]
   count = (var.outposts.ldap || var.outposts.forward) ? 1 : 0
   name  = "local"
   local = true
