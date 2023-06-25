@@ -133,7 +133,7 @@ locals {
     }]
 }
 
-resource "kubectl_manifest" "prj_middleware" {
+resource "kubectl_manifest" "prj_forward_ingress" {
   yaml_body  = <<-EOF
       apiVersion: traefik.containo.us/v1alpha1
       kind: IngressRoute
