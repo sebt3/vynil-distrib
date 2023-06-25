@@ -108,6 +108,8 @@ data "kustomization_overlay" "data" {
             annotations:
               k8up.io/backup: "true"
           spec:
+            accessModes:
+            - "ReadWriteOnce"
             resources:
               requests:
                 storage: "${var.volume.size}"
