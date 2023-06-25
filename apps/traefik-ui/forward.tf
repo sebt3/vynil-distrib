@@ -94,26 +94,27 @@ resource "restapi_object" "forward_outpost_binding" {
 
 resource "kubectl_manifest" "prj_middleware" {
   yaml_body  = <<-EOF
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-    name: "forward-${local.app-name}"
-    namespace: "${var.domain}-auth"
-spec:
-  forwardAuth:
-    address: http://ak-outpost-forward.${var.domain}-auth.svc:9000/outpost.goauthentik.io/auth/traefik
-    trustForwardHeader: true
-    authResponseHeaders:
-      - X-authentik-username
-    #   - X-authentik-groups
-    #   - X-authentik-email
-    #   - X-authentik-name
-    #   - X-authentik-uid
-    #   - X-authentik-jwt
-    #   - X-authentik-meta-jwks
-    #   - X-authentik-meta-outpost
-    #   - X-authentik-meta-provider
-    #   - X-authentik-meta-app
-    #   - X-authentik-meta-version
+    apiVersion: traefik.containo.us/v1alpha1
+    kind: Middleware
+    metadata:
+        name: "forward-${local.app-name}"
+        namespace: "${var.namespace}"
+        labels: ${jsonencode(local.common-labels)}
+    spec:
+      forwardAuth:
+        address: http://ak-outpost-forward.${var.domain}-auth.svc:9000/outpost.goauthentik.io/auth/traefik
+        trustForwardHeader: true
+        authResponseHeaders:
+          - X-authentik-username
+        #   - X-authentik-groups
+        #   - X-authentik-email
+        #   - X-authentik-name
+        #   - X-authentik-uid
+        #   - X-authentik-jwt
+        #   - X-authentik-meta-jwks
+        #   - X-authentik-meta-outpost
+        #   - X-authentik-meta-provider
+        #   - X-authentik-meta-app
+        #   - X-authentik-meta-version
   EOF
 }

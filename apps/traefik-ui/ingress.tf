@@ -1,7 +1,7 @@
 
 locals {
     dns-names = ["${var.sub-domain}.${var.domain-name}"]
-    middlewares = [{"name" = "${var.instance}-https"}]
+    middlewares = [{"name" = "${var.instance}-https"}, {"name" = "forward-${local.app-name}"}]
     services = [{
       "kind"  = "TraefikService"
       "name"  = "api@internal"
