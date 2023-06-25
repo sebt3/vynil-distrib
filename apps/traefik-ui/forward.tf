@@ -118,3 +118,29 @@ resource "kubectl_manifest" "prj_middleware" {
         #   - X-authentik-meta-version
   EOF
 }
+
+locals {
+    forward-services = [{
+      "kind"  = "Service"
+      "name"  = "ak-outpost-forward"
+      "port"  = "9000"
+    }]
+    forward-routes = [ for v in local.dns-names : {
+      "kind"         = "Rule"
+      "match"        = "Host(`${v}`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      "priority"     = 15
+      "services"     = local.forward-services
+    }]
+}
+
+resource "kubectl_manifest" "prj_middleware" {
+  yaml_body  = <<-EOF
+      apiVersion: traefik.containo.us/v1alpha1
+      kind: IngressRoute
+      metadata:
+        name: "forward-${local.app-name}"
+        namespace: "${var.domain}-auth"
+      spec:
+        routes: ${jsonencode(local.forward-routes)}
+  EOF
+}
