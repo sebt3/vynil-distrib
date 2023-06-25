@@ -14,7 +14,7 @@ locals {
 
 
 data "authentik_flow" "default-authorization-flow" {
-  depends_on = [authentik_application.prj_application]
+  depends_on = [authentik_group.prj_users]
   slug = "default-provider-authorization-implicit-consent"
 }
 
