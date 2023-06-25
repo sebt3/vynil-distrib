@@ -10,6 +10,7 @@ locals {
   app-icon = "dashboard/statics/icons/favicon-96x96.png"
   main-group = format("%s-users", local.app-name)
   sub-groups = []
+  internal-url = "http://${var.instance}.${var.namespace}.svc:9000"
 }
 
 
@@ -19,9 +20,9 @@ data "authentik_flow" "default-authorization-flow" {
 }
 
 resource "authentik_provider_proxy" "prj_forward" {
-  name               = "authentik-forward-provider"
-  internal_host      = "http://authentik"
-  external_host      = "http://authentik"
+  name               = local.app-name
+  internal_host      = local.internal-url
+  external_host      = format("https://%s.%s", var.sub-domain, var.domain-name)
   authorization_flow = data.authentik_flow.default-authorization-flow.id
 }
 
