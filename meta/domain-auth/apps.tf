@@ -14,10 +14,11 @@ locals {
     }
     authentik = { for k, v in var.authentik : k => v if k!="enable" }
     authentik-ldap = { for k, v in var.authentik-ldap : k => v if k!="enable" }
+    authentik-forward = { for k, v in var.authentik-forward : k => v if k!="enable" }
 }
 
 resource "kubernetes_namespace_v1" "auth-ns" {
-  count = var.authentik.enable? 1 : 0
+  count = var.authentik.enable || var.authentik-ldap.enable || var.authentik-forward.enable ? 1 : 0
   metadata {
     annotations = local.annotations
     labels = merge(local.common-labels, local.annotations)
@@ -26,7 +27,7 @@ resource "kubernetes_namespace_v1" "auth-ns" {
 }
 
 resource "kubectl_manifest" "authentik" {
-  count = var.authentik.enable || var.authentik-ldap.enable ? 1 : 0
+  count = var.authentik.enable || var.authentik-ldap.enable || var.authentik-forward.enable ? 1 : 0
   depends_on = [kubernetes_namespace_v1.auth-ns]
   yaml_body  = <<-EOF
     apiVersion: "vynil.solidite.fr/v1"
@@ -58,5 +59,23 @@ resource "kubectl_manifest" "authentik-ldap" {
       category: "share"
       component: "authentik-ldap"
       options: ${jsonencode(merge(local.global, local.authentik-ldap))}
+  EOF
+}
+
+resource "kubectl_manifest" "authentik-forward" {
+  count = var.authentik-forward.enable ? 1 : 0
+  depends_on = [kubernetes_namespace_v1.auth-ns]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "authentik-forward"
+      namespace: "${var.namespace}-auth"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "share"
+      component: "authentik-forward"
+      options: ${jsonencode(merge(local.global, local.authentik-forward))}
   EOF
 }

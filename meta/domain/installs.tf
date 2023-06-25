@@ -17,13 +17,14 @@ locals {
     ci = { for k, v in var.ci : k => v if k!="enable" }
 
     # Force install authentik and it's modules when any are needed
-    use-ldap = var.ci.gitea.enable
-    use-forward = var.infra.traefik.enable
+    use-ldap = var.ci.enable && var.ci.gitea.enable
+    use-forward = var.infra.enable && var.infra.traefik.enable
     use-other-auth = false
     added-auth-ldap = local.use-ldap?{
       "authentik-ldap" = {"enable"= true}
     }:{}
     added-auth-forward = local.use-forward?{
+      "authentik-forward" = {"enable"= true}
     }:{}
     added-auth = local.use-ldap||local.use-forward||local.use-other-auth?merge({
       "authentik" = {"enable" = true}
