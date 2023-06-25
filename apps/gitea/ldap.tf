@@ -12,6 +12,7 @@ locals {
   ldap-outpost-pk = jsondecode(data.http.get_ldap_outpost.response_body).results[0].pk
 }
 resource "kubectl_manifest" "gitea_ldap" {
+  ignore_fields = ["metadata.annotations"]
   yaml_body  = <<-EOF
     apiVersion: "secretgenerator.mittwald.de/v1alpha1"
     kind: "StringSecret"
@@ -35,7 +36,7 @@ resource "kubectl_manifest" "gitea_ldap" {
 data "kubernetes_secret_v1" "gitea_ldap_password" {
   depends_on = [kubectl_manifest.gitea_ldap]
   metadata {
-    name = "${var.component}-ldap"
+    name = kubectl_manifest.gitea_ldap.name
     namespace = var.namespace
   }
 }
