@@ -121,17 +121,9 @@ data "kustomization_overlay" "data" {
       name = "gitea-ssh"
     }
     patch = <<-EOF
-apiVersion: v1
-kind: Service
-metadata:
-  name: gitea-ssh
-spec:
-  loadBalancerIP: 1.2.3.4
-  ports:
-  - name: ssh
-    port: ${var.ssh-port}
-    targetPort: 2222
-    protocol: TCP
+    - op: replace
+      path: /spec/ports/0/port
+      value: "${var.ssh-port}"
     EOF
   }
   patches {
