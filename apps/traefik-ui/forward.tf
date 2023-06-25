@@ -61,7 +61,7 @@ resource "authentik_policy_binding" "prj_access_vynil" {
 }
 
 data "http" "get_forward_outpost" {
-  depends_on = [authentik_provider_proxy.provider_forward]
+  depends_on = [authentik_provider_proxy.prj_forward]
   url    = "http://authentik.${var.namespace}.svc/api/v3/outposts/instances/?name__iexact=forward"
   method = "GET"
   request_headers = local.request_headers
