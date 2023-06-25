@@ -6,36 +6,6 @@ metadata:
   name: domain-auth
   description: null
 options:
-  authentik:
-    default:
-      enable: true
-    examples:
-    - enable: true
-    properties:
-      enable:
-        default: true
-        type: boolean
-    type: object
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  authentik-ldap:
-    default:
-      enable: false
-    examples:
-    - enable: false
-    properties:
-      enable:
-        default: false
-        type: boolean
-    type: object
   authentik-forward:
     default:
       enable: false
@@ -51,11 +21,41 @@ options:
     examples:
     - your-company
     type: string
+  authentik-ldap:
+    default:
+      enable: false
+    examples:
+    - enable: false
+    properties:
+      enable:
+        default: false
+        type: boolean
+    type: object
   ingress-class:
     default: traefik
     examples:
     - traefik
     type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  authentik:
+    default:
+      enable: true
+    examples:
+    - enable: true
+    properties:
+      enable:
+        default: true
+        type: boolean
+    type: object
 dependencies: []
 providers:
   kubernetes: true

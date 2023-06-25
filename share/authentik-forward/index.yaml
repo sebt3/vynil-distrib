@@ -1,10 +1,10 @@
 ---
 apiVersion: vinyl.solidite.fr/v1beta1
 kind: Component
-category: apps
+category: share
 metadata:
-  name: traefik-ui
-  description: Access to the Traefik UI
+  name: authentik-forward
+  description: null
 options:
   issuer:
     default: letsencrypt-prod
@@ -17,25 +17,22 @@ options:
     - traefik
     type: string
   sub-domain:
-    default: traefik
+    default: null
+  domain-name:
+    default: your_company.com
     examples:
-    - traefik
+    - your_company.com
     type: string
   domain:
     default: your-company
     examples:
     - your-company
     type: string
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
 dependencies: []
 providers:
   kubernetes: true
   authentik: true
-  kubectl: true
+  kubectl: null
   postgresql: null
-  restapi: true
+  restapi: null
   http: true
