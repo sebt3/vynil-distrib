@@ -123,7 +123,7 @@ data "kustomization_overlay" "data" {
     patch = <<-EOF
     - op: replace
       path: /spec/ports/0/port
-      value: "${var.ssh-port}"
+      value: ${var.ssh-port}
     EOF
   }
   patches {

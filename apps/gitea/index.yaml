@@ -9,26 +9,21 @@ metadata:
     A painless self-hosted Git service.
     Gitea is a community managed lightweight code hosting solution written in Go. It is published under the MIT license.
 options:
-  default-branch:
-    default: main
+  ingress-class:
+    default: traefik
     examples:
-    - main
+    - traefik
     type: string
-  sub-domain:
-    default: git
+  volume:
+    default:
+      size: 10Gi
     examples:
-    - git
-    type: string
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  disable-registration:
-    default: true
-    examples:
-    - true
-    type: boolean
+    - size: 10Gi
+    properties:
+      size:
+        default: 10Gi
+        type: string
+    type: object
   admin:
     default:
       email: git-admin@git.your_company.com
@@ -44,36 +39,86 @@ options:
         default: gitea_admin
         type: string
     type: object
-  webhook:
-    default:
-      allowed-hosts: private
-      skip-tls-verify: false
+  disable-registration:
+    default: true
     examples:
-    - allowed-hosts: private
-      skip-tls-verify: false
-    properties:
-      allowed-hosts:
-        default: private
-        type: string
-      skip-tls-verify:
-        default: false
-        type: boolean
-    type: object
+    - true
+    type: boolean
   ssh-port:
     default: 2222
     examples:
     - 2222
     type: integer
-  volume:
-    default:
-      size: 10Gi
+  timezone:
+    default: Europe/Paris
     examples:
-    - size: 10Gi
+    - Europe/Paris
+    type: string
+  release:
+    default: 8.3.0
+    examples:
+    - 8.3.0
+    type: string
+  replicas:
+    default: 1
+    examples:
+    - 1
+    type: integer
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  default-branch:
+    default: main
+    examples:
+    - main
+    type: string
+  postgres:
+    default:
+      replicas: 1
+      storage: 10Gi
+      version: '14'
+    examples:
+    - replicas: 1
+      storage: 10Gi
+      version: '14'
     properties:
-      size:
+      replicas:
+        default: 1
+        type: integer
+      storage:
         default: 10Gi
         type: string
+      version:
+        default: '14'
+        type: string
     type: object
+  load-balancer:
+    default:
+      ip: ''
+    examples:
+    - ip: ''
+    properties:
+      ip:
+        default: ''
+        type: string
+    type: object
+  theme:
+    default: gitea-modern
+    examples:
+    - gitea-modern
+    type: string
+  sub-domain:
+    default: git
+    examples:
+    - git
+    type: string
   push-create:
     default:
       org: 'true'
@@ -94,30 +139,25 @@ options:
         default: 'true'
         type: string
     type: object
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
-  load-balancer:
+  webhook:
     default:
-      ip: ''
+      allowed-hosts: private
+      skip-tls-verify: false
     examples:
-    - ip: ''
+    - allowed-hosts: private
+      skip-tls-verify: false
     properties:
-      ip:
-        default: ''
+      allowed-hosts:
+        default: private
         type: string
+      skip-tls-verify:
+        default: false
+        type: boolean
     type: object
-  replicas:
-    default: 1
+  domain-name:
+    default: your_company.com
     examples:
-    - 1
-    type: integer
-  domain:
-    default: your-company
-    examples:
-    - your-company
+    - your_company.com
     type: string
   images:
     default:
@@ -181,46 +221,6 @@ options:
             default: 1.6.19-debian-11-r7
             type: string
         type: object
-    type: object
-  release:
-    default: 8.3.0
-    examples:
-    - 8.3.0
-    type: string
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
-  theme:
-    default: gitea-modern
-    examples:
-    - gitea-modern
-    type: string
-  timezone:
-    default: Europe/Paris
-    examples:
-    - Europe/Paris
-    type: string
-  postgres:
-    default:
-      replicas: 1
-      storage: 10Gi
-      version: '14'
-    examples:
-    - replicas: 1
-      storage: 10Gi
-      version: '14'
-    properties:
-      replicas:
-        default: 1
-        type: integer
-      storage:
-        default: 10Gi
-        type: string
-      version:
-        default: '14'
-        type: string
     type: object
 dependencies:
 - dist: null
