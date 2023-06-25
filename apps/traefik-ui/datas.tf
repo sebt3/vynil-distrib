@@ -13,7 +13,7 @@ locals {
 data "kubernetes_secret_v1" "authentik" {
   metadata {
     name      = "authentik"
-    namespace = var.namespace
+    namespace = "${var.domain}-auth"
   }
 }
 
