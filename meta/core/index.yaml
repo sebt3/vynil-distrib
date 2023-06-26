@@ -6,106 +6,20 @@ metadata:
   name: core
   description: core meta-component installing all the core components
 options:
-  crds:
+  flux:
     default:
-      cert-manager:
-        enable: false
-      k8up:
-        enable: false
-      mariadb:
-        enable: false
-      prometheus:
-        enable: false
-      rabbitmq:
-        enable: false
-      redis:
-        enable: false
-      secret-generator:
-        enable: false
-      traefik:
-        enable: false
+      enable: true
+      namespace: flux
     examples:
-    - cert-manager:
-        enable: false
-      k8up:
-        enable: false
-      mariadb:
-        enable: false
-      prometheus:
-        enable: false
-      rabbitmq:
-        enable: false
-      redis:
-        enable: false
-      secret-generator:
-        enable: false
-      traefik:
-        enable: false
+    - enable: true
+      namespace: flux
     properties:
-      cert-manager:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      k8up:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      mariadb:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      prometheus:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      rabbitmq:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      redis:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      secret-generator:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      traefik:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
+      enable:
+        default: true
+        type: boolean
+      namespace:
+        default: flux
+        type: string
     type: object
   databases:
     default:
@@ -162,6 +76,156 @@ options:
         properties:
           enable:
             default: true
+            type: boolean
+        type: object
+    type: object
+  traefik:
+    default:
+      enable: true
+      namespace: traefik
+    examples:
+    - enable: true
+      namespace: traefik
+    properties:
+      enable:
+        default: true
+        type: boolean
+      namespace:
+        default: traefik
+        type: string
+    type: object
+  backup:
+    default:
+      k8up:
+        enable: true
+      namespace: vynil-backup
+    examples:
+    - k8up:
+        enable: true
+      namespace: vynil-backup
+    properties:
+      k8up:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      namespace:
+        default: vynil-backup
+        type: string
+    type: object
+  crds:
+    default:
+      cert-manager:
+        enable: false
+      flux:
+        enable: false
+      k8up:
+        enable: false
+      mariadb:
+        enable: false
+      prometheus:
+        enable: false
+      rabbitmq:
+        enable: false
+      redis:
+        enable: false
+      secret-generator:
+        enable: false
+      traefik:
+        enable: false
+    examples:
+    - cert-manager:
+        enable: false
+      flux:
+        enable: false
+      k8up:
+        enable: false
+      mariadb:
+        enable: false
+      prometheus:
+        enable: false
+      rabbitmq:
+        enable: false
+      redis:
+        enable: false
+      secret-generator:
+        enable: false
+      traefik:
+        enable: false
+    properties:
+      cert-manager:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      flux:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      k8up:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      mariadb:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      prometheus:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      rabbitmq:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      redis:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      secret-generator:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      traefik:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
             type: boolean
         type: object
     type: object
@@ -222,43 +286,6 @@ options:
             default: false
             type: boolean
         type: object
-    type: object
-  backup:
-    default:
-      k8up:
-        enable: true
-      namespace: vynil-backup
-    examples:
-    - k8up:
-        enable: true
-      namespace: vynil-backup
-    properties:
-      k8up:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      namespace:
-        default: vynil-backup
-        type: string
-    type: object
-  traefik:
-    default:
-      enable: true
-      namespace: traefik
-    examples:
-    - enable: true
-      namespace: traefik
-    properties:
-      enable:
-        default: true
-        type: boolean
-      namespace:
-        default: traefik
-        type: string
     type: object
 dependencies: []
 providers:

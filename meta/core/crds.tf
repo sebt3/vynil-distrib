@@ -8,6 +8,7 @@ locals {
     crd-secret-generator = { for k, v in var.crds.secret-generator : k => v if k!="enable" }
     crd-cert-manager = { for k, v in var.crds.cert-manager : k => v if k!="enable" }
     crd-traefik = { for k, v in var.crds.traefik : k => v if k!="enable" }
+    crd-flux = { for k, v in var.crds.flux : k => v if k!="enable" }
     crd-redis = { for k, v in var.crds.redis : k => v if k!="enable" }
     crd-mariadb = { for k, v in var.crds.mariadb : k => v if k!="enable" }
     crd-rabbitmq = { for k, v in var.crds.rabbitmq : k => v if k!="enable" }
@@ -95,6 +96,23 @@ resource "kubectl_manifest" "crd-traefik" {
       category: "crd"
       component: "traefik"
       options: ${jsonencode(local.crd-traefik)}
+  EOF
+}
+
+resource "kubectl_manifest" "crd-flux" {
+  count = (var.crds.flux.enable || var.flux.enable) ? 1 : 0
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-flux"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "crd"
+      component: "flux"
+      options: ${jsonencode(local.crd-flux)}
   EOF
 }
 

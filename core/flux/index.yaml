@@ -1,0 +1,18 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: flux
+  description: FluxCD
+options:
+  release:
+    default: 2.0.0-rc.5
+    examples:
+    - 2.0.0-rc.5
+    type: string
+dependencies:
+- dist: null
+  category: crd
+  component: flux
+providers: null
