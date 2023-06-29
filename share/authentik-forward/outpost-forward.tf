@@ -56,7 +56,7 @@ resource "authentik_outpost" "outpost-forward" {
     "docker_map_ports": true,
     "kubernetes_replicas": 1,
     "kubernetes_namespace": var.namespace,
-    "authentik_host_browser": "https://${data.kubernetes_ingress_v1.authentik.spec.rule[0].host}",
+    "authentik_host_browser": "https://${data.kubernetes_ingress_v1.authentik.spec[0].rule[0].host}",
     "object_naming_template": "ak-outpost-%(name)s",
     "authentik_host_insecure": false,
     "kubernetes_service_type": "ClusterIP",
