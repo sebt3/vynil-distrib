@@ -62,7 +62,7 @@ resource "authentik_outpost" "outpost-forward" {
 }
 
 data "authentik_user" "akadmin" {
-  depends_on = [kustomization_resource.post,authentik_flow_stage_binding.ldap-authentication-flow-30]
+  depends_on = [authentik_outpost.outpost-forward]
   username = "akadmin"
 }
 

@@ -92,7 +92,7 @@ resource "authentik_group" "gitea_users" {
 
 data "authentik_group" "vynil-admin" {
   depends_on = [authentik_group.gitea_users] # fake dependency so it is not evaluated at plan stage
-  name = "vynil-admins"
+  name = "vynil-ldap-admins"
 }
 
 resource "authentik_group" "gitea_admin" {

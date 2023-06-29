@@ -6,28 +6,28 @@ metadata:
   name: authentik-forward
   description: null
 options:
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
   domain-name:
     default: your_company.com
     examples:
     - your_company.com
-    type: string
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
     type: string
   ingress-class:
     default: traefik
     examples:
     - traefik
     type: string
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
   sub-domain:
     default: null
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
 dependencies:
 - dist: null
   category: share
