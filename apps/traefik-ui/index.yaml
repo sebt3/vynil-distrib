@@ -6,10 +6,15 @@ metadata:
   name: traefik-ui
   description: Access to the Traefik UI
 options:
-  domain-name:
-    default: your_company.com
+  ingress-class:
+    default: traefik
     examples:
-    - your_company.com
+    - traefik
+    type: string
+  sub-domain:
+    default: traefik
+    examples:
+    - traefik
     type: string
   domain:
     default: your-company
@@ -21,15 +26,10 @@ options:
     examples:
     - letsencrypt-prod
     type: string
-  sub-domain:
-    default: traefik
+  domain-name:
+    default: your_company.com
     examples:
-    - traefik
-    type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
+    - your_company.com
     type: string
 dependencies:
 - dist: null

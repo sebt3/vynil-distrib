@@ -32,7 +32,7 @@ resource "kubectl_manifest" "traefik" {
     kind: "Install"
     metadata:
       name: "traefik"
-      namespace: "${var.namespace}-infra"
+      namespace: "${var.traefik.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
       distrib: "core"
