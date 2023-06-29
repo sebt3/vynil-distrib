@@ -40,7 +40,7 @@ data "kustomization_overlay" "data" {
       "AUTHENTIK_GEOIP=${var.geoip}",
       "AUTHENTIK_LOG_LEVEL=${var.loglevel}",
       "AUTHENTIK_OUTPOSTS__CONTAINER_IMAGE_BASE=${var.image.registry}/${var.image.project}/%(type)s:%(version)s",
-      "AUTHENTIK_POSTGRESQL__HOST=${var.name}-${var.component}.${var.namespace}.svc",
+      "AUTHENTIK_POSTGRESQL__HOST=${var.instance}-${var.component}.${var.namespace}.svc",
       "AUTHENTIK_POSTGRESQL__NAME=${var.component}",
       "AUTHENTIK_POSTGRESQL__PORT=5432",
       "AUTHENTIK_POSTGRESQL__USER=${var.component}",
@@ -69,7 +69,7 @@ data "kustomization_overlay" "data" {
                 - name: AUTHENTIK_POSTGRESQL__PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: ${var.component}.${var.name}-${var.component}.credentials.postgresql.acid.zalan.do
+                      name: ${var.component}.${var.instance}-${var.component}.credentials.postgresql.acid.zalan.do
                       key: password
                 envFrom:
                 - secretRef:

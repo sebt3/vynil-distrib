@@ -1,22 +1,27 @@
-
 locals {
     dns-names = ["${var.sub-domain}.${var.domain-name}"]
-    middlewares = [{"name" = "${var.instance}-https"}]
-    services = [{
-      "kind"       = "Service"
-      "name"       = "${var.instance}"
-      "namespace"  = var.namespace
-      "port"       = 80
-    }]
-    routes = [ for v in local.dns-names : {
-      "kind"         = "Rule"
-      "match"        = "Host(`${v}`)"
-      "middlewares"  = local.middlewares
-      "services"     = local.services
+    middlewares = ["${var.instance}-https"]
+    service = {
+      "name"  = "${var.instance}"
+      "port" = {
+        "number" = 80
+      }
+    }
+    rules = [ for v in local.dns-names : {
+      "host" = "${v}"
+      "http" = {
+        "paths" = [{
+          "backend"  = {
+            "service" = local.service
+          }
+          "path"     = "/"
+          "pathType" = "Prefix"
+        }]
+      }
     }]
 }
 
-resource "kubectl_manifest" "authentik_certificate" {
+resource "kubectl_manifest" "prj_certificate" {
   yaml_body  = <<-EOF
     apiVersion: "cert-manager.io/v1"
     kind: "Certificate"
@@ -34,7 +39,7 @@ resource "kubectl_manifest" "authentik_certificate" {
   EOF
 }
 
-resource "kubectl_manifest" "authentik_https_redirect" {
+resource "kubectl_manifest" "prj_https_redirect" {
   yaml_body  = <<-EOF
     apiVersion: "traefik.containo.us/v1alpha1"
     kind: "Middleware"
@@ -49,22 +54,22 @@ resource "kubectl_manifest" "authentik_https_redirect" {
   EOF
 }
 
-resource "kubectl_manifest" "authentik_ingress" {
+resource "kubectl_manifest" "prj_ingress" {
   force_conflicts = true
   yaml_body  = <<-EOF
-    apiVersion: "traefik.containo.us/v1alpha1"
-    kind: "IngressRoute"
+    apiVersion: "networking.k8s.io/v1"
+    kind: "Ingress"
     metadata:
       name: "${var.instance}"
       namespace: "${var.namespace}"
       labels: ${jsonencode(local.common-labels)}
-      # Failing
-      # annotations:
-      #   "kubernetes.io/ingress.class": "${var.ingress-class}"
+      annotations:
+        "traefik.ingress.kubernetes.io/router.middlewares": "${join(",", [for m in local.middlewares : format("%s-%s@kubernetescrd", var.namespace, m)])}"
     spec:
-      entryPoints: ["web","websecure"]
-      routes: ${jsonencode(local.routes)}
+      ingressClassName: "${var.ingress-class}"
+      rules: ${jsonencode(local.rules)}
       tls:
+      - hosts: ${jsonencode(local.dns-names)}
         secretName: "${var.instance}-cert"
   EOF
 }
