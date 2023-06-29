@@ -59,7 +59,7 @@ resource "kubectl_manifest" "prj_ingress" {
   force_conflicts = true
   yaml_body  = <<-EOF
     apiVersion: "networking.k8s.io/v1"
-    kind: "networking.k8s.io/v1"
+    kind: "Ingress"
     metadata:
       name: "${var.instance}"
       namespace: "${var.namespace}"
