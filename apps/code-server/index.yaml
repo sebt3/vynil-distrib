@@ -6,52 +6,10 @@ metadata:
   name: code-server
   description: null
 options:
-  domain-name:
-    default: your_company.com
+  ingress-class:
+    default: traefik
     examples:
-    - your_company.com
-    type: string
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
-  sub-domain:
-    default: code
-    examples:
-    - code
-    type: string
-  storage:
-    default:
-      accessMode: ReadWriteOnce
-      size: 50Gi
-      type: Filesystem
-    examples:
-    - accessMode: ReadWriteOnce
-      size: 50Gi
-      type: Filesystem
-    properties:
-      accessMode:
-        default: ReadWriteOnce
-        enum:
-        - ReadWriteOnce
-        - ReadOnlyMany
-        - ReadWriteMany
-        type: string
-      size:
-        default: 50Gi
-        type: string
-      type:
-        default: Filesystem
-        enum:
-        - Filesystem
-        - block
-        type: string
-    type: object
-  timezone:
-    default: Europe/Paris
-    examples:
-    - Europe/Paris
+    - traefik
     type: string
   admin:
     default:
@@ -73,10 +31,47 @@ options:
     examples:
     - your-company
     type: string
-  ingress-class:
-    default: traefik
+  sub-domain:
+    default: code
     examples:
-    - traefik
+    - code
+    type: string
+  timezone:
+    default: Europe/Paris
+    examples:
+    - Europe/Paris
+    type: string
+  storage:
+    default:
+      accessMode: ReadWriteOnce
+      size: 20Gi
+      type: Filesystem
+    examples:
+    - accessMode: ReadWriteOnce
+      size: 20Gi
+      type: Filesystem
+    properties:
+      accessMode:
+        default: ReadWriteOnce
+        enum:
+        - ReadWriteOnce
+        - ReadOnlyMany
+        - ReadWriteMany
+        type: string
+      size:
+        default: 20Gi
+        type: string
+      type:
+        default: Filesystem
+        enum:
+        - Filesystem
+        - block
+        type: string
+    type: object
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
     type: string
   images:
     default:
@@ -117,7 +112,18 @@ options:
             type: number
         type: object
     type: object
-dependencies: []
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+dependencies:
+- dist: null
+  category: share
+  component: authentik
+- dist: null
+  category: share
+  component: authentik-forward
 providers:
   kubernetes: true
   authentik: true

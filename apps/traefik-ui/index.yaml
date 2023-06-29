@@ -11,27 +11,33 @@ options:
     examples:
     - your_company.com
     type: string
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
   domain:
     default: your-company
     examples:
     - your-company
-    type: string
-  sub-domain:
-    default: traefik
-    examples:
-    - traefik
     type: string
   ingress-class:
     default: traefik
     examples:
     - traefik
     type: string
-dependencies: []
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  sub-domain:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+dependencies:
+- dist: null
+  category: share
+  component: authentik
+- dist: null
+  category: share
+  component: authentik-forward
 providers:
   kubernetes: true
   authentik: true

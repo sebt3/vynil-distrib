@@ -68,7 +68,7 @@ data "authentik_user" "akadmin" {
 }
 
 resource "authentik_group" "group" {
-  name         = "vynil-admins"
+  name         = "vynil-ldap-admins"
   users        = [data.authentik_user.akadmin.id]
   is_superuser = true
 }

@@ -47,7 +47,7 @@ resource "authentik_group" "subgroup" {
 
 data "authentik_group" "vynil-admin" {
   depends_on = [authentik_group.prj_users] # fake dependency so it is not evaluated at plan stage
-  name = "vynil-admins"
+  name = "vynil-forward-admins"
 }
 
 resource "authentik_policy_binding" "prj_access_users" {
@@ -116,31 +116,5 @@ resource "kubectl_manifest" "prj_middleware" {
         #   - X-authentik-meta-provider
         #   - X-authentik-meta-app
         #   - X-authentik-meta-version
-  EOF
-}
-
-locals {
-    forward-services = [{
-      "kind"  = "Service"
-      "name"  = "ak-outpost-forward"
-      "port"  = "9000"
-    }]
-    forward-routes = [ for v in local.dns-names : {
-      "kind"         = "Rule"
-      "match"        = "Host(`${v}`) && PathPrefix(`/outpost.goauthentik.io/`)"
-      "priority"     = 15
-      "services"     = local.forward-services
-    }]
-}
-
-resource "kubectl_manifest" "prj_forward_ingress" {
-  yaml_body  = <<-EOF
-      apiVersion: traefik.containo.us/v1alpha1
-      kind: IngressRoute
-      metadata:
-        name: "forward-${local.app-name}"
-        namespace: "${var.domain}-auth"
-      spec:
-        routes: ${jsonencode(local.forward-routes)}
   EOF
 }

@@ -48,7 +48,7 @@ resource "authentik_group" "subgroup" {
 
 data "authentik_group" "vynil-admin" {
   depends_on = [authentik_group.prj_users] # fake dependency so it is not evaluated at plan stage
-  name = "vynil-admins"
+  name = "vynil-forward-admins"
 }
 
 resource "authentik_policy_binding" "prj_access_users" {
