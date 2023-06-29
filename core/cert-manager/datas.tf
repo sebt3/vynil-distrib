@@ -19,7 +19,7 @@ locals {
 data "kustomization_overlay" "data" {
   common_labels = local.common-labels
   namespace = var.namespace
-  resources = [for file in fileset(path.module, "*.yaml"): file if file != "index.yaml" && length(regexall("ClusterRole",file))<1 && length(regexall("WebhookConfiguration",file))<1]
+  resources = [for file in fileset(path.module, "*.yaml"): file if file != "index.yaml" && length(regexall("leaderelection.yaml",file))<1 && length(regexall("ClusterRole",file))<1 && length(regexall("WebhookConfiguration",file))<1]
   images {
     name = "quay.io/jetstack/cert-manager-cainjector"
     new_name = "${var.images.cainjector.registry}/${var.images.cainjector.repository}"
@@ -44,7 +44,7 @@ data "kustomization_overlay" "data" {
 
 data "kustomization_overlay" "data_no_ns" {
   common_labels = local.common-labels
-  resources = [for file in fileset(path.module, "*.yaml"): file if file != "index.yaml" && (length(regexall("ClusterRole",file))>0 || length(regexall("WebhookConfiguration",file))>0)]
+  resources = [for file in fileset(path.module, "*.yaml"): file if file != "index.yaml" && (length(regexall("leaderelection.yaml",file))>0 || length(regexall("ClusterRole",file))>0 || length(regexall("WebhookConfiguration",file))>0)]
   patches {
     target {
       kind = "ClusterRoleBinding"
@@ -112,6 +112,22 @@ data "kustomization_overlay" "data_no_ns" {
     target {
       kind = "ClusterRoleBinding"
       name = "cert-manager-webhook:subjectaccessreviews"
+    }
+    patch = local.rb-patch
+  }
+  patches {
+    target {
+      kind = "RoleBinding"
+      name = "cert-manager-cainjector:leaderelection"
+      namespace = "kube-system"
+    }
+    patch = local.rb-patch
+  }
+  patches {
+    target {
+      kind = "RoleBinding"
+      name = "cert-manager:leaderelection"
+      namespace = "kube-system"
     }
     patch = local.rb-patch
   }
