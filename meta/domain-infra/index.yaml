@@ -6,6 +6,26 @@ metadata:
   name: domain-infra
   description: null
 options:
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
   traefik:
     default:
       enable: false
@@ -21,26 +41,6 @@ options:
         default: traefik
         type: string
     type: object
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
 dependencies: []
 providers:
   kubernetes: true

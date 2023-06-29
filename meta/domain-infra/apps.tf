@@ -31,7 +31,7 @@ resource "kubectl_manifest" "traefik" {
     apiVersion: "vynil.solidite.fr/v1"
     kind: "Install"
     metadata:
-      name: "traefik"
+      name: "traefik-ui-${var.namespace}"
       namespace: "${var.traefik.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:

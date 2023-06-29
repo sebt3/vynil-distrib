@@ -19,11 +19,6 @@ locals {
           "pathType" = "Prefix"
         }]
       }
-
-      "kind"         = "Rule"
-      "match"        = "Host(`${v}`)"
-      "middlewares"  = local.middlewares
-      "services"     = local.services
     }]
 }
 
