@@ -11,7 +11,7 @@ locals {
     rules = [ for v in local.dns-names : {
       "host" = "${v}"
       "http" = {
-        "path" = [{
+        "paths" = [{
           "backend"  = {
             "service" = local.service
           }
