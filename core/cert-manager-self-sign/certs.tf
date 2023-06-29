@@ -38,7 +38,7 @@ resource "kubectl_manifest" "ca-issuer" {
     apiVersion: "cert-manager.io/v1"
     kind: "ClusterIssuer"
     metadata:
-      name: "ca-issuer"
+      name: "self-sign"
       labels: ${jsonencode(local.common-labels)}
     spec:
       ca:
