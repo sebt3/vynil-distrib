@@ -39,6 +39,13 @@ resource "authentik_provider_proxy" "provider_forward" {
   authorization_flow = data.authentik_flow.default-authorization-flow.id
 }
 
+data "kubernetes_ingress_v1" "authentik" {
+  metadata {
+    name = "authentik"
+    namespace = var.namespace
+  }
+}
+
 resource "authentik_outpost" "outpost-forward" {
   name = "forward"
   type = "proxy"
@@ -49,7 +56,7 @@ resource "authentik_outpost" "outpost-forward" {
     "docker_map_ports": true,
     "kubernetes_replicas": 1,
     "kubernetes_namespace": var.namespace,
-    "authentik_host_browser": "",
+    "authentik_host_browser": "https://${data.kubernetes_ingress_v1.authentik.spec.rule[0].host}",
     "object_naming_template": "ak-outpost-%(name)s",
     "authentik_host_insecure": false,
     "kubernetes_service_type": "ClusterIP",
