@@ -141,7 +141,7 @@ data "kustomization_overlay" "data_no_ns" {
       path: /webhooks/0/clientConfig/service/namespace
       value: "${var.namespace}"
     - op: replace
-      path: /metadata/annotations/manager.io~1inject-ca-from-secret
+      path: /metadata/annotations/cert-manager.io~1inject-ca-from-secret
       value: "${var.namespace}/cert-manager-webhook-ca"
     EOF
   }
@@ -155,7 +155,7 @@ data "kustomization_overlay" "data_no_ns" {
       path: /webhooks/0/clientConfig/service/namespace
       value: "${var.namespace}"
     - op: replace
-      path: /metadata/annotations/manager.io~1inject-ca-from-secret
+      path: /metadata/annotations/cert-manager.io~1inject-ca-from-secret
       value: "${var.namespace}/cert-manager-webhook-ca"
     EOF
   }
