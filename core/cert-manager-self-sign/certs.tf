@@ -20,7 +20,8 @@ resource "kubectl_manifest" "selfsigned-ca" {
       labels: ${jsonencode(local.common-labels)}
     spec:
       isCA: true
-      commonName: "self-signed"
+      duration: "${var.duration}"
+      commonName: "${var.commonName}"
       secretName: "selfsigned-ca"
       privateKey:
         algorithm: "ECDSA"
