@@ -6,16 +6,45 @@ metadata:
   name: code-server
   description: null
 options:
-  sub-domain:
-    default: code
+  images:
+    default:
+      codeserver:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: sebt3/code-server
+        tag: 4.13
     examples:
-    - code
-    type: string
-  timezone:
-    default: Europe/Paris
-    examples:
-    - Europe/Paris
-    type: string
+    - codeserver:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: sebt3/code-server
+        tag: 4.13
+    properties:
+      codeserver:
+        default:
+          pullPolicy: IfNotPresent
+          registry: docker.io
+          repository: sebt3/code-server
+          tag: 4.13
+        properties:
+          pullPolicy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: sebt3/code-server
+            type: string
+          tag:
+            default: 4.13
+            type: number
+        type: object
+    type: object
   admin:
     default:
       cluster: false
@@ -58,64 +87,35 @@ options:
         - block
         type: string
     type: object
-  issuer:
-    default: letsencrypt-prod
+  timezone:
+    default: Europe/Paris
     examples:
-    - letsencrypt-prod
+    - Europe/Paris
     type: string
-  images:
-    default:
-      codeserver:
-        pullPolicy: IfNotPresent
-        registry: docker.io
-        repository: sebt3/code-server
-        tag: 4.13
+  domain-name:
+    default: your_company.com
     examples:
-    - codeserver:
-        pullPolicy: IfNotPresent
-        registry: docker.io
-        repository: sebt3/code-server
-        tag: 4.13
-    properties:
-      codeserver:
-        default:
-          pullPolicy: IfNotPresent
-          registry: docker.io
-          repository: sebt3/code-server
-          tag: 4.13
-        properties:
-          pullPolicy:
-            default: IfNotPresent
-            enum:
-            - Always
-            - Never
-            - IfNotPresent
-            type: string
-          registry:
-            default: docker.io
-            type: string
-          repository:
-            default: sebt3/code-server
-            type: string
-          tag:
-            default: 4.13
-            type: number
-        type: object
-    type: object
-  domain:
-    default: your-company
-    examples:
-    - your-company
+    - your_company.com
     type: string
   ingress-class:
     default: traefik
     examples:
     - traefik
     type: string
-  domain-name:
-    default: your_company.com
+  domain:
+    default: your-company
     examples:
-    - your_company.com
+    - your-company
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  sub-domain:
+    default: code
+    examples:
+    - code
     type: string
 dependencies:
 - dist: null

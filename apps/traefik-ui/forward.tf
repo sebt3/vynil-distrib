@@ -24,6 +24,7 @@ resource "authentik_provider_proxy" "prj_forward" {
   internal_host      = local.internal-url
   external_host      = format("https://%s.%s", var.sub-domain, var.domain-name)
   authorization_flow = data.authentik_flow.default-authorization-flow.id
+  mode               = "forward_single"
 }
 
 
