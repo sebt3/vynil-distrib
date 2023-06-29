@@ -11,6 +11,7 @@ locals {
   main-group = format("%s-users", local.app-name)
   sub-groups = []
   external-url = format("https://%s", local.dns-names[0])
+  access-token-validity = "hours=10" // ;minutes=10
 }
 
 
@@ -24,6 +25,7 @@ resource "authentik_provider_proxy" "prj_forward" {
   external_host      = local.external-url
   authorization_flow = data.authentik_flow.default-authorization-flow.id
   mode               = "forward_single"
+  access_token_validity = local.access-token-validity
 }
 
 

@@ -45,26 +45,6 @@ options:
             type: number
         type: object
     type: object
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  sub-domain:
-    default: code
-    examples:
-    - code
-    type: string
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
   admin:
     default:
       cluster: false
@@ -80,16 +60,6 @@ options:
         default: false
         type: boolean
     type: object
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
-  timezone:
-    default: Europe/Paris
-    examples:
-    - Europe/Paris
-    type: string
   storage:
     default:
       accessMode: ReadWriteOnce
@@ -117,6 +87,36 @@ options:
         - block
         type: string
     type: object
+  timezone:
+    default: Europe/Paris
+    examples:
+    - Europe/Paris
+    type: string
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  sub-domain:
+    default: code
+    examples:
+    - code
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
 dependencies:
 - dist: null
   category: share

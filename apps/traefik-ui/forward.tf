@@ -10,6 +10,7 @@ locals {
   app-icon = "dashboard/statics/icons/favicon-96x96.png"
   main-group = format("%s-users", local.app-name)
   sub-groups = []
+  access-token-validity = "minutes=10"
 }
 
 
@@ -19,10 +20,11 @@ data "authentik_flow" "default-authorization-flow" {
 }
 
 resource "authentik_provider_proxy" "prj_forward" {
-  name               = local.app-name
-  external_host      = format("https://%s.%s", var.sub-domain, var.domain-name)
-  authorization_flow = data.authentik_flow.default-authorization-flow.id
-  mode               = "forward_single"
+  name                  = local.app-name
+  external_host         = format("https://%s.%s", var.sub-domain, var.domain-name)
+  authorization_flow    = data.authentik_flow.default-authorization-flow.id
+  mode                  = "forward_single"
+  access_token_validity = local.access-token-validity
 }
 
 
