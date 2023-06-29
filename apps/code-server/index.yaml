@@ -6,6 +6,16 @@ metadata:
   name: code-server
   description: null
 options:
+  sub-domain:
+    default: code
+    examples:
+    - code
+    type: string
+  timezone:
+    default: Europe/Paris
+    examples:
+    - Europe/Paris
+    type: string
   admin:
     default:
       cluster: false
@@ -21,21 +31,6 @@ options:
         default: false
         type: boolean
     type: object
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
   storage:
     default:
       accessMode: ReadWriteOnce
@@ -67,11 +62,6 @@ options:
     default: letsencrypt-prod
     examples:
     - letsencrypt-prod
-    type: string
-  timezone:
-    default: Europe/Paris
-    examples:
-    - Europe/Paris
     type: string
   images:
     default:
@@ -112,10 +102,20 @@ options:
             type: number
         type: object
     type: object
-  sub-domain:
-    default: code
+  domain:
+    default: your-company
     examples:
-    - code
+    - your-company
+    type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
     type: string
 dependencies:
 - dist: null
