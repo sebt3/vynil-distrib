@@ -6,6 +6,73 @@ metadata:
   name: code-server
   description: null
 options:
+  storage:
+    default:
+      accessMode: ReadWriteOnce
+      size: 20Gi
+      type: Filesystem
+    examples:
+    - accessMode: ReadWriteOnce
+      size: 20Gi
+      type: Filesystem
+    properties:
+      accessMode:
+        default: ReadWriteOnce
+        enum:
+        - ReadWriteOnce
+        - ReadOnlyMany
+        - ReadWriteMany
+        type: string
+      size:
+        default: 20Gi
+        type: string
+      type:
+        default: Filesystem
+        enum:
+        - Filesystem
+        - block
+        type: string
+    type: object
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  sub-domain:
+    default: code
+    examples:
+    - code
+    type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  admin:
+    default:
+      cluster: false
+      namespace: false
+    examples:
+    - cluster: false
+      namespace: false
+    properties:
+      cluster:
+        default: false
+        type: boolean
+      namespace:
+        default: false
+        type: boolean
+    type: object
   images:
     default:
       codeserver:
@@ -45,77 +112,10 @@ options:
             type: number
         type: object
     type: object
-  admin:
-    default:
-      cluster: false
-      namespace: false
-    examples:
-    - cluster: false
-      namespace: false
-    properties:
-      cluster:
-        default: false
-        type: boolean
-      namespace:
-        default: false
-        type: boolean
-    type: object
-  storage:
-    default:
-      accessMode: ReadWriteOnce
-      size: 20Gi
-      type: Filesystem
-    examples:
-    - accessMode: ReadWriteOnce
-      size: 20Gi
-      type: Filesystem
-    properties:
-      accessMode:
-        default: ReadWriteOnce
-        enum:
-        - ReadWriteOnce
-        - ReadOnlyMany
-        - ReadWriteMany
-        type: string
-      size:
-        default: 20Gi
-        type: string
-      type:
-        default: Filesystem
-        enum:
-        - Filesystem
-        - block
-        type: string
-    type: object
   timezone:
     default: Europe/Paris
     examples:
     - Europe/Paris
-    type: string
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
-  sub-domain:
-    default: code
-    examples:
-    - code
     type: string
 dependencies:
 - dist: null

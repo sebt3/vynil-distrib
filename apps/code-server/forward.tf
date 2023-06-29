@@ -11,7 +11,6 @@ locals {
   main-group = format("%s-users", local.app-name)
   sub-groups = []
   external-url = format("https://%s", local.dns-names[0])
-  internal-url = "http://${var.component}-${var.instance}.${var.namespace}.svc"
 }
 
 
@@ -22,7 +21,6 @@ data "authentik_flow" "default-authorization-flow" {
 
 resource "authentik_provider_proxy" "prj_forward" {
   name               = local.app-name
-  internal_host      = local.internal-url
   external_host      = local.external-url
   authorization_flow = data.authentik_flow.default-authorization-flow.id
   mode               = "forward_single"
