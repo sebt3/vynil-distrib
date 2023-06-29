@@ -88,8 +88,6 @@ spec:
           - name: plugins
             mountPath: "/plugins-storage"
         args:
-          - "--global.checknewversion"
-          - "--global.sendanonymoususage"
           - "--entrypoints.metrics.address=:9100/tcp"
           - "--entrypoints.traefik.address=:9000/tcp"
           - "--entrypoints.web.address=:8000/tcp"
@@ -109,6 +107,7 @@ spec:
           - "--experimental.plugins.redirect2https.version=v0.0.7"
           - "--experimental.plugins.ldapAuth.modulename=github.com/wiltonsr/ldapAuth"
           - "--experimental.plugins.ldapAuth.version=v0.0.19"
+          - "--api.insecure=true"
         env:
           - name: TZ
             value: Europe/Paris
