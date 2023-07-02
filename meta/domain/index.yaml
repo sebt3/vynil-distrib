@@ -16,28 +16,6 @@ options:
         default: true
         type: boolean
     type: object
-  ci:
-    default:
-      enable: false
-      gitea:
-        enable: true
-    examples:
-    - enable: false
-      gitea:
-        enable: true
-    properties:
-      enable:
-        default: false
-        type: boolean
-      gitea:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-    type: object
   infra:
     default:
       enable: false
@@ -65,15 +43,59 @@ options:
     examples:
     - traefik
     type: string
-  issuer:
-    default: letsencrypt-prod
+  ci:
+    default:
+      enable: false
+      gitea:
+        enable: true
     examples:
-    - letsencrypt-prod
-    type: string
+    - enable: false
+      gitea:
+        enable: true
+    properties:
+      enable:
+        default: false
+        type: boolean
+      gitea:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+    type: object
+  erp:
+    default:
+      dolibarr:
+        enable: true
+      enable: false
+    examples:
+    - dolibarr:
+        enable: true
+      enable: false
+    properties:
+      dolibarr:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      enable:
+        default: false
+        type: boolean
+    type: object
   domain-name:
     default: your_company.com
     examples:
     - your_company.com
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
     type: string
 dependencies: []
 providers:

@@ -1,0 +1,89 @@
+# Source: coredns/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coredns-coredns
+  labels:
+    app.kubernetes.io/managed-by: "Helm"
+    app.kubernetes.io/instance: "coredns"
+    helm.sh/chart: "coredns-1.24.1"
+    k8s-app: coredns
+    kubernetes.io/cluster-service: "true"
+    kubernetes.io/name: "CoreDNS"
+    app.kubernetes.io/name: coredns
+    app.kubernetes.io/version: "1.10.1"
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 25%
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: "coredns"
+      k8s-app: coredns
+      app.kubernetes.io/name: coredns
+  template:
+    metadata:
+      labels:
+        k8s-app: coredns
+        app.kubernetes.io/name: coredns
+        app.kubernetes.io/instance: "coredns"
+      annotations:
+        checksum/config: 2c80ea26dcf7cd4d57c4ccbe0561210d06f8e048704a7edb5c495e4e2d60999d
+        scheduler.alpha.kubernetes.io/tolerations: '[{"key":"CriticalAddonsOnly", "operator":"Exists"}]'
+    spec:
+      terminationGracePeriodSeconds: 30
+      serviceAccountName: coredns-coredns
+      dnsPolicy: Default
+      containers:
+      - name: "coredns"
+        image: "coredns/coredns:1.10.1"
+        imagePullPolicy: IfNotPresent
+        args: [ "-conf", "/etc/coredns/Corefile" ]
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/coredns
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        ports:
+        - {"containerPort":53,"name":"udp-53","protocol":"UDP"}
+        - {"containerPort":53,"name":"tcp-53","protocol":"TCP"}
+        
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 5
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8181
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 5
+        securityContext:
+          capabilities:
+            add:
+            - NET_BIND_SERVICE
+      volumes:
+        - name: config-volume
+          configMap:
+            name: coredns-coredns
+            items:
+            - key: Corefile
+              path: Corefile

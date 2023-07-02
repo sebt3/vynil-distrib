@@ -15,9 +15,10 @@ locals {
     auth = { for k, v in var.auth : k => v if k!="enable" }
     infra = { for k, v in var.infra : k => v if k!="enable" }
     ci = { for k, v in var.ci : k => v if k!="enable" }
+    erp = { for k, v in var.erp : k => v if k!="enable" }
 
     # Force install authentik and it's modules when any are needed
-    use-ldap = var.ci.enable && var.ci.gitea.enable
+    use-ldap = (var.ci.enable && var.ci.gitea.enable) || (var.erp.enable && var.erp.dolibarr.enable)
     use-forward = var.infra.enable && var.infra.traefik.enable
     use-other-auth = false
     added-auth-ldap = local.use-ldap?{
@@ -77,5 +78,21 @@ resource "kubectl_manifest" "ci" {
       category: "meta"
       component: "domain-ci"
       options: ${jsonencode(merge(local.global, local.ci))}
+  EOF
+}
+resource "kubectl_manifest" "erp" {
+  count = var.erp.enable ? 1 : 0
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "erp"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "meta"
+      component: "domain-erp"
+      options: ${jsonencode(merge(local.global, local.erp))}
   EOF
 }

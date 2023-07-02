@@ -13,15 +13,34 @@ locals {
         "ingress-class" = var.ingress-class
     }
     traefik = { for k, v in var.traefik : k => v if k!="enable" }
+    dns = { for k, v in var.dns : k => v if k!="enable" }
 }
 
 resource "kubernetes_namespace_v1" "infra-ns" {
-  count = ( var.traefik.enable )? 1 : 0
+  count = ( var.dns.enable )? 1 : 0
   metadata {
     annotations = local.annotations
     labels = merge(local.common-labels, local.annotations)
     name = "${var.namespace}-infra"
   }
+}
+
+resource "kubectl_manifest" "dns" {
+  count = var.dns.enable ? 1 : 0
+  depends_on = [kubernetes_namespace_v1.infra-ns]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "dns"
+      namespace: "${kubernetes_namespace_v1.infra-ns.name}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "share"
+      component: "dns"
+      options: ${jsonencode(merge(local.global, local.dns))}
+  EOF
 }
 
 resource "kubectl_manifest" "traefik" {

@@ -1,0 +1,84 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: share
+metadata:
+  name: dns
+  description: null
+options:
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  image:
+    default:
+      pullPolicy: IfNotPresent
+      registry: docker.io
+      repository: coredns/coredns
+      tag: 1.10.1
+    examples:
+    - pullPolicy: IfNotPresent
+      registry: docker.io
+      repository: coredns/coredns
+      tag: 1.10.1
+    properties:
+      pullPolicy:
+        default: IfNotPresent
+        enum:
+        - Always
+        - Never
+        - IfNotPresent
+        type: string
+      registry:
+        default: docker.io
+        type: string
+      repository:
+        default: coredns/coredns
+        type: string
+      tag:
+        default: 1.10.1
+        type: string
+    type: object
+  sub-domain:
+    default: dns
+    examples:
+    - dns
+    type: string
+  zones:
+    default: []
+    items:
+      properties:
+        alias:
+          default: {}
+          type: object
+        hosts:
+          default: {}
+          type: object
+        hosts6:
+          default: {}
+          type: object
+        name:
+          default: local.domain
+          type: string
+        wildcard:
+          default: ''
+          type: string
+        wildcard6:
+          default: ''
+          type: string
+      type: object
+    type: array
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+dependencies: []
+providers:
+  kubernetes: true
+  authentik: null
+  kubectl: null
+  postgresql: null
+  restapi: null
+  http: null

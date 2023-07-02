@@ -1,0 +1,263 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: apps
+metadata:
+  name: dolibarr
+  description: null
+options:
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  hpa:
+    default:
+      avg-cpu: 50
+      max-replicas: 5
+      min-replicas: 1
+    examples:
+    - avg-cpu: 50
+      max-replicas: 5
+      min-replicas: 1
+    properties:
+      avg-cpu:
+        default: 50
+        type: integer
+      max-replicas:
+        default: 5
+        type: integer
+      min-replicas:
+        default: 1
+        type: integer
+    type: object
+  sub-domain:
+    default: erp
+    examples:
+    - erp
+    type: string
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  postgres:
+    default:
+      replicas: 1
+      storage: 5Gi
+      version: '14'
+    examples:
+    - replicas: 1
+      storage: 5Gi
+      version: '14'
+    properties:
+      replicas:
+        default: 1
+        type: integer
+      storage:
+        default: 5Gi
+        type: string
+      version:
+        default: '14'
+        type: string
+    type: object
+  resources:
+    default:
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
+    examples:
+    - limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
+    properties:
+      limits:
+        default:
+          cpu: 200m
+          memory: 256Mi
+        properties:
+          cpu:
+            default: 200m
+            type: string
+          memory:
+            default: 256Mi
+            type: string
+        type: object
+      requests:
+        default:
+          cpu: 50m
+          memory: 100Mi
+        properties:
+          cpu:
+            default: 50m
+            type: string
+          memory:
+            default: 100Mi
+            type: string
+        type: object
+    type: object
+  redis:
+    default:
+      exporter:
+        enabled: true
+        image: quay.io/opstree/redis-exporter:v1.44.0
+      image: quay.io/opstree/redis:v7.0.5
+      storage: 8Gi
+    examples:
+    - exporter:
+        enabled: true
+        image: quay.io/opstree/redis-exporter:v1.44.0
+      image: quay.io/opstree/redis:v7.0.5
+      storage: 8Gi
+    properties:
+      exporter:
+        default:
+          enabled: true
+          image: quay.io/opstree/redis-exporter:v1.44.0
+        properties:
+          enabled:
+            default: true
+            type: boolean
+          image:
+            default: quay.io/opstree/redis-exporter:v1.44.0
+            type: string
+        type: object
+      image:
+        default: quay.io/opstree/redis:v7.0.5
+        type: string
+      storage:
+        default: 8Gi
+        type: string
+    type: object
+  images:
+    default:
+      dolibarr:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: sebt3/dolibarr
+        tag: 17.0.1
+      nginx:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: nginx
+        tag: alpine
+    examples:
+    - dolibarr:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: sebt3/dolibarr
+        tag: 17.0.1
+      nginx:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: nginx
+        tag: alpine
+    properties:
+      dolibarr:
+        default:
+          pullPolicy: IfNotPresent
+          registry: docker.io
+          repository: sebt3/dolibarr
+          tag: 17.0.1
+        properties:
+          pullPolicy:
+            default: IfNotPresent
+            type: string
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: sebt3/dolibarr
+            type: string
+          tag:
+            default: 17.0.1
+            type: string
+        type: object
+      nginx:
+        default:
+          pullPolicy: IfNotPresent
+          registry: docker.io
+          repository: nginx
+          tag: alpine
+        properties:
+          pullPolicy:
+            default: IfNotPresent
+            type: string
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: nginx
+            type: string
+          tag:
+            default: alpine
+            type: string
+        type: object
+    type: object
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  modules:
+    default:
+    - societe
+    examples:
+    - - societe
+    items:
+      type: string
+    type: array
+  user-groups:
+    default:
+    - admin: true
+      name: dolibarr-admin
+    examples:
+    - - admin: true
+        name: dolibarr-admin
+    items:
+      properties:
+        admin:
+          type: boolean
+        name:
+          type: string
+      type: object
+    type: array
+  parameters:
+    default:
+      MAIN_LANG_DEFAULT: auto
+    examples:
+    - MAIN_LANG_DEFAULT: auto
+    properties:
+      MAIN_LANG_DEFAULT:
+        default: auto
+        type: string
+    type: object
+  storage:
+    default:
+      size: 10Gi
+    examples:
+    - size: 10Gi
+    properties:
+      size:
+        default: 10Gi
+        type: string
+    type: object
+dependencies: []
+providers:
+  kubernetes: true
+  authentik: true
+  kubectl: true
+  postgresql: true
+  restapi: true
+  http: true
