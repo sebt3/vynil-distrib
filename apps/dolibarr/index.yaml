@@ -6,64 +6,42 @@ metadata:
   name: dolibarr
   description: null
 options:
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
-  hpa:
-    default:
-      avg-cpu: 50
-      max-replicas: 5
-      min-replicas: 1
-    examples:
-    - avg-cpu: 50
-      max-replicas: 5
-      min-replicas: 1
-    properties:
-      avg-cpu:
-        default: 50
-        type: integer
-      max-replicas:
-        default: 5
-        type: integer
-      min-replicas:
-        default: 1
-        type: integer
-    type: object
   sub-domain:
     default: erp
     examples:
     - erp
     type: string
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  postgres:
+  redis:
     default:
-      replicas: 1
-      storage: 5Gi
-      version: '14'
+      exporter:
+        enabled: true
+        image: quay.io/opstree/redis-exporter:v1.44.0
+      image: quay.io/opstree/redis:v7.0.5
+      storage: 2Gi
     examples:
-    - replicas: 1
-      storage: 5Gi
-      version: '14'
+    - exporter:
+        enabled: true
+        image: quay.io/opstree/redis-exporter:v1.44.0
+      image: quay.io/opstree/redis:v7.0.5
+      storage: 2Gi
     properties:
-      replicas:
-        default: 1
-        type: integer
-      storage:
-        default: 5Gi
+      exporter:
+        default:
+          enabled: true
+          image: quay.io/opstree/redis-exporter:v1.44.0
+        properties:
+          enabled:
+            default: true
+            type: boolean
+          image:
+            default: quay.io/opstree/redis-exporter:v1.44.0
+            type: string
+        type: object
+      image:
+        default: quay.io/opstree/redis:v7.0.5
         type: string
-      version:
-        default: '14'
+      storage:
+        default: 2Gi
         type: string
     type: object
   resources:
@@ -106,39 +84,6 @@ options:
             default: 100Mi
             type: string
         type: object
-    type: object
-  redis:
-    default:
-      exporter:
-        enabled: true
-        image: quay.io/opstree/redis-exporter:v1.44.0
-      image: quay.io/opstree/redis:v7.0.5
-      storage: 8Gi
-    examples:
-    - exporter:
-        enabled: true
-        image: quay.io/opstree/redis-exporter:v1.44.0
-      image: quay.io/opstree/redis:v7.0.5
-      storage: 8Gi
-    properties:
-      exporter:
-        default:
-          enabled: true
-          image: quay.io/opstree/redis-exporter:v1.44.0
-        properties:
-          enabled:
-            default: true
-            type: boolean
-          image:
-            default: quay.io/opstree/redis-exporter:v1.44.0
-            type: string
-        type: object
-      image:
-        default: quay.io/opstree/redis:v7.0.5
-        type: string
-      storage:
-        default: 8Gi
-        type: string
     type: object
   images:
     default:
@@ -205,11 +150,81 @@ options:
             type: string
         type: object
     type: object
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
   ingress-class:
     default: traefik
     examples:
     - traefik
     type: string
+  postgres:
+    default:
+      replicas: 1
+      storage: 5Gi
+      version: '14'
+    examples:
+    - replicas: 1
+      storage: 5Gi
+      version: '14'
+    properties:
+      replicas:
+        default: 1
+        type: integer
+      storage:
+        default: 5Gi
+        type: string
+      version:
+        default: '14'
+        type: string
+    type: object
+  parameters:
+    default:
+      MAIN_LANG_DEFAULT: auto
+    examples:
+    - MAIN_LANG_DEFAULT: auto
+    properties:
+      MAIN_LANG_DEFAULT:
+        default: auto
+        type: string
+    type: object
+  hpa:
+    default:
+      avg-cpu: 50
+      max-replicas: 5
+      min-replicas: 1
+    examples:
+    - avg-cpu: 50
+      max-replicas: 5
+      min-replicas: 1
+    properties:
+      avg-cpu:
+        default: 50
+        type: integer
+      max-replicas:
+        default: 5
+        type: integer
+      min-replicas:
+        default: 1
+        type: integer
+    type: object
+  storage:
+    default:
+      size: 10Gi
+    examples:
+    - size: 10Gi
+    properties:
+      size:
+        default: 10Gi
+        type: string
+    type: object
   modules:
     default:
     - societe
@@ -233,31 +248,16 @@ options:
           type: string
       type: object
     type: array
-  parameters:
-    default:
-      MAIN_LANG_DEFAULT: auto
+  issuer:
+    default: letsencrypt-prod
     examples:
-    - MAIN_LANG_DEFAULT: auto
-    properties:
-      MAIN_LANG_DEFAULT:
-        default: auto
-        type: string
-    type: object
-  storage:
-    default:
-      size: 10Gi
-    examples:
-    - size: 10Gi
-    properties:
-      size:
-        default: 10Gi
-        type: string
-    type: object
+    - letsencrypt-prod
+    type: string
 dependencies: []
 providers:
   kubernetes: true
   authentik: true
   kubectl: true
-  postgresql: true
+  postgresql: null
   restapi: true
   http: true

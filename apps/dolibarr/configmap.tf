@@ -41,7 +41,7 @@ locals {
       LDAP_USER_DN=local.base-user-dn
       LDAP_GROUP_DN=local.base-group-dn
       LDAP_GROUP_FILTER="&(&(objectClass=groupOfNames)(|${join("",[for g in local.sorted-groups: format("(cn=%s)",g.name)])}))"
-      LDAP_ADMIN_DN="cn=breizhfly-dolibarr-search,${local.base-user-dn}"
+      LDAP_ADMIN_DN="cn=${var.instance}-${var.component}-ldapsearch,${local.base-user-dn}"
       LDAP_FILTER_CONNECTION="&(&(objectClass=inetOrgPerson)(|${join("",[for g in local.sorted-groups: format("(memberof=cn=%s,%s)",g.name,local.base-group-dn)])}))"
       SAMLCONNECTOR_CREATE_UNEXISTING_USER="1"
       SAMLCONNECTOR_MAPPING_USER_EMAIL="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
@@ -147,9 +147,9 @@ resource "kubectl_manifest" "config" {
       namespace: "${var.namespace}"
       labels: ${jsonencode(local.common-labels)}
     data:
-      DOLI_DB_HOST: "${local.pg-host}"
-      DOLI_DB_USER: "${postgresql_role.owner.name}"
-      DOLI_DB_NAME: "${postgresql_database.my_db.name}"
+      DOLI_DB_HOST: "${var.instance}-${var.component}.${var.namespace}.svc"
+      DOLI_DB_USER: "${var.component}"
+      DOLI_DB_NAME: "${var.component}"
       DOLI_DB_PORT: "5432"
       DOLI_DB_TYPE: "pgsql"
       DOLI_ADMIN_LOGIN: "admin_${var.instance}"
@@ -159,8 +159,8 @@ resource "kubectl_manifest" "config" {
       DOLI_LDAP_VERSION: "3"
       DOLI_LDAP_SERVERTYPE: "openldap"
       DOLI_LDAP_LOGIN_ATTRIBUTE: "sAMAccountName"
-      DOLI_LDAP_FILTER: "(&(|(memberof=cn=client-${var.instance},${local.base-group-dn})(memberof=cn=breizhfly-support,${local.base-group-dn}))(|(uid=%1%)(mail=%1%)))"
-      DOLI_LDAP_ADMIN_LOGIN: "cn=breizhfly-ldapsearch,${local.base-user-dn}"
+      DOLI_LDAP_FILTER: "(&(|${join("",[for g in local.sorted-groups: format("(memberof=cn=%s,%s)",g.name,local.base-group-dn)])})(|(uid=%1%)(mail=%1%)))"
+      DOLI_LDAP_ADMIN_LOGIN: "cn=${var.instance}-${var.component}-ldapsearch,${local.base-user-dn}"
       DOLI_LDAP_DN: "${local.base-dn}"
       DOLI_LDAP_HOST: "ak-outpost-ldap.${var.domain}-auth.svc"
   EOF

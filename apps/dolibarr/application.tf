@@ -15,8 +15,8 @@ data "authentik_group" "vynil-admin" {
 }
 
 resource "authentik_group" "groups" {
-  count = length(local.sorted_groups)
-  name         = local.sorted_groups[count.index].name
+  count = length(local.sorted-groups)
+  name         = local.sorted-groups[count.index].name
 }
 
 resource "authentik_application" "dolibarr_application_ldap" {
@@ -27,7 +27,7 @@ resource "authentik_application" "dolibarr_application_ldap" {
 }
 
 resource "authentik_policy_binding" "dolibarr_ldap_access_users" {
-  count = length(local.sorted_groups)
+  count = length(local.sorted-groups)
   target = authentik_application.dolibarr_application_ldap.uuid
   group  = authentik_group.groups[count.index].id
   order  = count.index
@@ -35,12 +35,12 @@ resource "authentik_policy_binding" "dolibarr_ldap_access_users" {
 resource "authentik_policy_binding" "dolibarr_ldap_access_ldap" {
   target = authentik_application.dolibarr_application_ldap.uuid
   group  = authentik_group.dolibarr_ldapsearch.id
-  order  = length(local.sorted_groups)+1
+  order  = length(local.sorted-groups)+1
 }
 resource "authentik_policy_binding" "dolibarr_ldap_access_vynil" {
   target = authentik_application.dolibarr_application_ldap.uuid
   group  = data.authentik_group.vynil-admin.id
-  order  = length(local.sorted_groups)+2
+  order  = length(local.sorted-groups)+2
 }
 
 resource "authentik_application" "dolibarr_application_saml" {
@@ -52,18 +52,13 @@ resource "authentik_application" "dolibarr_application_saml" {
 }
 
 resource "authentik_policy_binding" "dolibarr_saml_access_users" {
-  count = length(local.sorted_groups)
+  count = length(local.sorted-groups)
   target = authentik_application.dolibarr_application_saml.uuid
   group  = authentik_group.groups[count.index].id
   order  = count.index
 }
-resource "authentik_policy_binding" "dolibarr_saml_access_breizhfly" {
-  target = authentik_application.dolibarr_application_saml.uuid
-  group  = data.authentik_group.breizhfly-support.id
-  order  = 1
-}
 resource "authentik_policy_binding" "dolibarr_saml_access_vynil" {
   target = authentik_application.dolibarr_application_saml.uuid
   group  = data.authentik_group.vynil-admin.id
-  order  = length(local.sorted_groups)+1
+  order  = length(local.sorted-groups)+1
 }

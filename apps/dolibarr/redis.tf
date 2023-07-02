@@ -1,5 +1,4 @@
 resource "kubectl_manifest" "dolibarr_redis" {
-  depends_on = [kubernetes_namespace_v1.db-ns]
   yaml_body  = <<-EOF
     apiVersion: "redis.redis.opstreelabs.in/v1beta1"
     kind: "Redis"

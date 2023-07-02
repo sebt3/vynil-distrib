@@ -78,7 +78,7 @@ data "authentik_flow" "ldap-authentication-flow" {
 resource "authentik_provider_ldap" "dolibarr_provider_ldap" {
   name         = "dolibarr-${var.instance}-ldap"
   base_dn      = local.base-dn
-  search_group = data.authentik_group.breizhfly-ldapsearch.id
+  search_group = authentik_group.dolibarr_ldapsearch.id
   bind_flow    = data.authentik_flow.ldap-authentication-flow.id
 }
 

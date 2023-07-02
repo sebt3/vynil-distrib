@@ -43,9 +43,6 @@ spec:
         runAsUser: 82
         fsGroup: 82
       volumes:
-      - name: configurator
-        configMap:
-          name: breizhfly-dolibarr-configurator
       - name: config-json
         configMap:
           name: ${kubectl_manifest.config-json.name}
