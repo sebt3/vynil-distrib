@@ -1,0 +1,16 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: dbo
+metadata:
+  name: mongo
+  description: MongoDB database operator
+options:
+  release:
+    default: 0.7.6
+    description: postgres-operator version to use
+    examples:
+    - 0.7.6
+    type: string
+dependencies: []
+providers: null

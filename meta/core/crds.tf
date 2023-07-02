@@ -12,6 +12,7 @@ locals {
     crd-redis = { for k, v in var.crds.redis : k => v if k!="enable" }
     crd-mariadb = { for k, v in var.crds.mariadb : k => v if k!="enable" }
     crd-rabbitmq = { for k, v in var.crds.rabbitmq : k => v if k!="enable" }
+    crd-mongo = { for k, v in var.crds.mongo : k => v if k!="enable" }
 }
 
 resource "kubectl_manifest" "crd-prometheus" {
@@ -164,5 +165,22 @@ resource "kubectl_manifest" "crd-rabbitmq" {
       category: "crd"
       component: "rabbitmq"
       options: ${jsonencode(local.crd-rabbitmq)}
+  EOF
+}
+
+resource "kubectl_manifest" "crd-mongo" {
+  count = (var.crds.mongo.enable || var.databases.mongo.enable)? 1 : 0
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-mongo"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "crd"
+      component: "mongo"
+      options: ${jsonencode(local.crd-mongo)}
   EOF
 }

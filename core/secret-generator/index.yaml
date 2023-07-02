@@ -6,10 +6,16 @@ metadata:
   name: secret-generator
   description: Automatically generated secrets for Kubernetes
 options:
-  namespaces:
-    default: ''
+  secret_length:
+    default: 40
     examples:
-    - ''
+    - 40
+    type: integer
+  release:
+    default: 3.4.0
+    description: secret-generator version to use
+    examples:
+    - 3.4.0
     type: string
   image:
     default:
@@ -31,17 +37,11 @@ options:
         default: latest
         type: string
     type: object
-  release:
-    default: 3.4.0
-    description: secret-generator version to use
+  namespaces:
+    default: ''
     examples:
-    - 3.4.0
+    - ''
     type: string
-  secret_length:
-    default: 40
-    examples:
-    - 40
-    type: integer
 dependencies:
 - dist: null
   category: crd

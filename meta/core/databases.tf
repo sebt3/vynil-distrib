@@ -3,10 +3,11 @@ locals {
     redis = { for k, v in var.databases.redis : k => v if k!="enable" }
     rabbitmq = { for k, v in var.databases.rabbitmq : k => v if k!="enable" }
     mariadb = { for k, v in var.databases.mariadb : k => v if k!="enable" }
+    mongo = { for k, v in var.databases.mongo : k => v if k!="enable" }
 }
 
 resource "kubernetes_namespace_v1" "databases-ns" {
-  count = ( var.databases.postgresql.enable || var.databases.redis.enable || var.databases.rabbitmq.enable || var.databases.mariadb.enable )? 1 : 0
+  count = ( var.databases.postgresql.enable || var.databases.redis.enable || var.databases.rabbitmq.enable || var.databases.mariadb.enable || var.databases.mongo.enable )? 1 : 0
   metadata {
     annotations = local.annotations
     labels = local.common-labels
@@ -70,7 +71,7 @@ resource "kubectl_manifest" "rabbitmq" {
 
 resource "kubectl_manifest" "mariadb" {
   count = var.databases.mariadb.enable? 1 : 0
-  depends_on = [kubernetes_namespace_v1.databases-ns, kubectl_manifest.crd-prometheus]
+  depends_on = [kubernetes_namespace_v1.databases-ns, kubectl_manifest.crd-prometheus, kubectl_manifest.crd-mariadb]
   yaml_body  = <<-EOF
     apiVersion: "vynil.solidite.fr/v1"
     kind: "Install"
@@ -83,5 +84,23 @@ resource "kubectl_manifest" "mariadb" {
       category: "dbo"
       component: "mariadb"
       options: ${jsonencode(local.mariadb)}
+  EOF
+}
+
+resource "kubectl_manifest" "mongo" {
+  count = var.databases.mongo.enable? 1 : 0
+  depends_on = [kubernetes_namespace_v1.databases-ns, kubectl_manifest.crd-mongo]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "dbo-mongo"
+      namespace: "${var.databases.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "dbo"
+      component: "mongo"
+      options: ${jsonencode(local.mongo)}
   EOF
 }
