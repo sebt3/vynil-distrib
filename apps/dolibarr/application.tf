@@ -2,12 +2,12 @@ locals {
   sorted-group-names = reverse(distinct(sort([
     for grp in var.user-groups: grp.name
   ])))
-  sorted-groups = compact(flatten([
+  sorted-groups = flatten([
     for name in local.sorted-group-names: [
       for grp in var.user-groups:
         grp if grp.name == name
     ]
-  ]))
+  ])
 }
 
 data "authentik_group" "vynil-admin" {
@@ -16,7 +16,7 @@ data "authentik_group" "vynil-admin" {
 
 resource "authentik_group" "groups" {
   count = length(local.sorted-groups)
-  name         = local.sorted-groups[count.index].name
+  name  = local.sorted-groups[count.index].name
 }
 
 resource "authentik_application" "dolibarr_application_ldap" {
