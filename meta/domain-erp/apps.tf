@@ -32,7 +32,7 @@ resource "kubectl_manifest" "dolibarr" {
     kind: "Install"
     metadata:
       name: "dolibarr"
-      namespace: "${kubernetes_namespace_v1.erp-ns[0].metadata.name}"
+      namespace: "${kubernetes_namespace_v1.erp-ns[0].metadata[0].name}"
       labels: ${jsonencode(local.common-labels)}
     spec:
       distrib: "core"

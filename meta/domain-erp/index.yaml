@@ -6,15 +6,20 @@ metadata:
   name: domain-erp
   description: null
 options:
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
   issuer:
     default: letsencrypt-prod
     examples:
     - letsencrypt-prod
-    type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
     type: string
   dolibarr:
     default:
@@ -26,15 +31,10 @@ options:
         default: true
         type: boolean
     type: object
-  domain-name:
-    default: your_company.com
+  ingress-class:
+    default: traefik
     examples:
-    - your_company.com
-    type: string
-  domain:
-    default: your-company
-    examples:
-    - your-company
+    - traefik
     type: string
 dependencies: []
 providers:
