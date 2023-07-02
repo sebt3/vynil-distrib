@@ -18,6 +18,11 @@ resource "authentik_group" "groups" {
   count = length(local.sorted-groups)
   name  = local.sorted-groups[count.index].name
 }
+data "authentik_group" "readed_groups" {
+  depends_on = [ authentik_group.groups ]
+  count = length(local.sorted-groups)
+  name  = local.sorted-groups[count.index].name
+}
 
 resource "authentik_application" "dolibarr_application_ldap" {
   name              = "${var.component}-${var.instance}-ldap"

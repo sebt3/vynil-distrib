@@ -6,90 +6,69 @@ metadata:
   name: dolibarr
   description: null
 options:
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  resources:
-    default:
-      limits:
-        cpu: 200m
-        memory: 256Mi
-      requests:
-        cpu: 50m
-        memory: 100Mi
-    examples:
-    - limits:
-        cpu: 200m
-        memory: 256Mi
-      requests:
-        cpu: 50m
-        memory: 100Mi
-    properties:
-      limits:
-        default:
-          cpu: 200m
-          memory: 256Mi
-        properties:
-          cpu:
-            default: 200m
-            type: string
-          memory:
-            default: 256Mi
-            type: string
-        type: object
-      requests:
-        default:
-          cpu: 50m
-          memory: 100Mi
-        properties:
-          cpu:
-            default: 50m
-            type: string
-          memory:
-            default: 100Mi
-            type: string
-        type: object
-    type: object
-  parameters:
-    default:
-      MAIN_LANG_DEFAULT: auto
-    examples:
-    - MAIN_LANG_DEFAULT: auto
-    properties:
-      MAIN_LANG_DEFAULT:
-        default: auto
-        type: string
-    type: object
   issuer:
     default: letsencrypt-prod
     examples:
     - letsencrypt-prod
     type: string
-  modules:
-    default:
-    - societe
+  ingress-class:
+    default: traefik
     examples:
-    - - societe
-    items:
-      type: string
-    type: array
-  user-groups:
-    default:
-    - admin: true
-      name: dolibarr-admin
+    - traefik
+    type: string
+  domain:
+    default: your-company
     examples:
-    - - admin: true
-        name: dolibarr-admin
-    items:
-      properties:
-        admin:
-          type: boolean
-        name:
-          type: string
-      type: object
-    type: array
+    - your-company
+    type: string
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  redis:
+    default:
+      exporter:
+        enabled: true
+        image: quay.io/opstree/redis-exporter:v1.44.0
+      image: quay.io/opstree/redis:v7.0.5
+      storage: 2Gi
+    examples:
+    - exporter:
+        enabled: true
+        image: quay.io/opstree/redis-exporter:v1.44.0
+      image: quay.io/opstree/redis:v7.0.5
+      storage: 2Gi
+    properties:
+      exporter:
+        default:
+          enabled: true
+          image: quay.io/opstree/redis-exporter:v1.44.0
+        properties:
+          enabled:
+            default: true
+            type: boolean
+          image:
+            default: quay.io/opstree/redis-exporter:v1.44.0
+            type: string
+        type: object
+      image:
+        default: quay.io/opstree/redis:v7.0.5
+        type: string
+      storage:
+        default: 2Gi
+        type: string
+    type: object
+  storage:
+    default:
+      size: 10Gi
+    examples:
+    - size: 10Gi
+    properties:
+      size:
+        default: 10Gi
+        type: string
+    type: object
   hpa:
     default:
       avg-cpu: 50
@@ -175,21 +154,85 @@ options:
             type: string
         type: object
     type: object
-  storage:
-    default:
-      size: 10Gi
+  sub-domain:
+    default: erp
     examples:
-    - size: 10Gi
+    - erp
+    type: string
+  modules:
+    default:
+    - societe
+    examples:
+    - - societe
+    items:
+      type: string
+    type: array
+  user-groups:
+    default:
+    - admin: true
+      name: dolibarr-admin
+    examples:
+    - - admin: true
+        name: dolibarr-admin
+    items:
+      properties:
+        admin:
+          type: boolean
+        name:
+          type: string
+      type: object
+    type: array
+  resources:
+    default:
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
+    examples:
+    - limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
     properties:
-      size:
-        default: 10Gi
+      limits:
+        default:
+          cpu: 200m
+          memory: 256Mi
+        properties:
+          cpu:
+            default: 200m
+            type: string
+          memory:
+            default: 256Mi
+            type: string
+        type: object
+      requests:
+        default:
+          cpu: 50m
+          memory: 100Mi
+        properties:
+          cpu:
+            default: 50m
+            type: string
+          memory:
+            default: 100Mi
+            type: string
+        type: object
+    type: object
+  parameters:
+    default:
+      MAIN_LANG_DEFAULT: auto
+    examples:
+    - MAIN_LANG_DEFAULT: auto
+    properties:
+      MAIN_LANG_DEFAULT:
+        default: auto
         type: string
     type: object
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
   postgres:
     default:
       replicas: 1
@@ -208,49 +251,6 @@ options:
         type: string
       version:
         default: '14'
-        type: string
-    type: object
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
-  sub-domain:
-    default: erp
-    examples:
-    - erp
-    type: string
-  redis:
-    default:
-      exporter:
-        enabled: true
-        image: quay.io/opstree/redis-exporter:v1.44.0
-      image: quay.io/opstree/redis:v7.0.5
-      storage: 2Gi
-    examples:
-    - exporter:
-        enabled: true
-        image: quay.io/opstree/redis-exporter:v1.44.0
-      image: quay.io/opstree/redis:v7.0.5
-      storage: 2Gi
-    properties:
-      exporter:
-        default:
-          enabled: true
-          image: quay.io/opstree/redis-exporter:v1.44.0
-        properties:
-          enabled:
-            default: true
-            type: boolean
-          image:
-            default: quay.io/opstree/redis-exporter:v1.44.0
-            type: string
-        type: object
-      image:
-        default: quay.io/opstree/redis:v7.0.5
-        type: string
-      storage:
-        default: 2Gi
         type: string
     type: object
 dependencies: []

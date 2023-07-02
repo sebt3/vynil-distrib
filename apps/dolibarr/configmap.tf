@@ -15,7 +15,7 @@ locals {
     groups = [ for index, g in local.sorted-groups: {
         name  = g.name
         admin = contains([for k,v in g:k], "admin")?g.admin:false
-        users = authentik_group.groups[index].users_obj
+        users = data.authentik_group.readed_groups[index].users_obj
     }]
     parameters = merge(var.parameters, {
       LDAP_FIELD_FULLNAME="sAMAccountName"
