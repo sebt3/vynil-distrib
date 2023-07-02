@@ -12,10 +12,10 @@ locals {
       "samlConnector",
     ]
   json-config = {
-    groups = [ for g in local.sorted-groups: {
+    groups = [ for index, g in local.sorted-groups: {
         name  = g.name
         admin = contains([for k,v in g:k], "admin")?g.admin:false
-        users = authentik_group.groups[count.index].users_obj
+        users = authentik_group.groups[index].users_obj
     }]
     parameters = merge(var.parameters, {
       LDAP_FIELD_FULLNAME="sAMAccountName"
