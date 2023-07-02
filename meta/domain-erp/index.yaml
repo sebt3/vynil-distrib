@@ -11,16 +11,6 @@ options:
     examples:
     - letsencrypt-prod
     type: string
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
   dolibarr:
     default:
       enable: true
@@ -31,6 +21,16 @@ options:
         default: true
         type: boolean
     type: object
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
   ingress-class:
     default: traefik
     examples:
