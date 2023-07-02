@@ -6,43 +6,6 @@ metadata:
   name: domain
   description: null
 options:
-  auth:
-    default:
-      enable: true
-    examples:
-    - enable: true
-    properties:
-      enable:
-        default: true
-        type: boolean
-    type: object
-  infra:
-    default:
-      enable: false
-      traefik:
-        enable: false
-    examples:
-    - enable: false
-      traefik:
-        enable: false
-    properties:
-      enable:
-        default: false
-        type: boolean
-      traefik:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-    type: object
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
   ci:
     default:
       enable: false
@@ -65,6 +28,11 @@ options:
             type: boolean
         type: object
     type: object
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
   erp:
     default:
       dolibarr:
@@ -87,16 +55,48 @@ options:
         default: false
         type: boolean
     type: object
-  domain-name:
-    default: your_company.com
+  auth:
+    default:
+      enable: true
     examples:
-    - your_company.com
-    type: string
+    - enable: true
+    properties:
+      enable:
+        default: true
+        type: boolean
+    type: object
   issuer:
     default: letsencrypt-prod
     examples:
     - letsencrypt-prod
     type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  infra:
+    default:
+      enable: false
+      traefik:
+        enable: false
+    examples:
+    - enable: false
+      traefik:
+        enable: false
+    properties:
+      enable:
+        default: false
+        type: boolean
+      traefik:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+    type: object
 dependencies: []
 providers:
   kubernetes: null
