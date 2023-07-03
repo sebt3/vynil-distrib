@@ -6,16 +6,11 @@ metadata:
   name: dolibarr
   description: null
 options:
-  parameters:
-    default:
-      MAIN_LANG_DEFAULT: auto
+  domain-name:
+    default: your_company.com
     examples:
-    - MAIN_LANG_DEFAULT: auto
-    properties:
-      MAIN_LANG_DEFAULT:
-        default: auto
-        type: string
-    type: object
+    - your_company.com
+    type: string
   redis:
     default:
       exporter:
@@ -49,14 +44,51 @@ options:
         default: 2Gi
         type: string
     type: object
-  modules:
+  postgres:
     default:
-    - societe
+      replicas: 1
+      storage: 5Gi
+      version: '14'
     examples:
-    - - societe
-    items:
-      type: string
-    type: array
+    - replicas: 1
+      storage: 5Gi
+      version: '14'
+    properties:
+      replicas:
+        default: 1
+        type: integer
+      storage:
+        default: 5Gi
+        type: string
+      version:
+        default: '14'
+        type: string
+    type: object
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  storage:
+    default:
+      size: 10Gi
+    examples:
+    - size: 10Gi
+    properties:
+      size:
+        default: 10Gi
+        type: string
+    type: object
+  sub-domain:
+    default: erp
+    examples:
+    - erp
+    type: string
   resources:
     default:
       limits:
@@ -163,21 +195,6 @@ options:
             type: string
         type: object
     type: object
-  user-groups:
-    default:
-    - admin: true
-      name: dolibarr-admin
-    examples:
-    - - admin: true
-        name: dolibarr-admin
-    items:
-      properties:
-        admin:
-          type: boolean
-        name:
-          type: string
-      type: object
-    type: array
   ingress-class:
     default: traefik
     examples:
@@ -203,56 +220,39 @@ options:
         default: 1
         type: integer
     type: object
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
-  postgres:
+  parameters:
     default:
-      replicas: 1
-      storage: 5Gi
-      version: '14'
+      MAIN_LANG_DEFAULT: auto
     examples:
-    - replicas: 1
-      storage: 5Gi
-      version: '14'
+    - MAIN_LANG_DEFAULT: auto
     properties:
-      replicas:
-        default: 1
-        type: integer
-      storage:
-        default: 5Gi
-        type: string
-      version:
-        default: '14'
+      MAIN_LANG_DEFAULT:
+        default: auto
         type: string
     type: object
-  sub-domain:
-    default: erp
-    examples:
-    - erp
-    type: string
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
-  storage:
+  modules:
     default:
-      size: 10Gi
+    - societe
     examples:
-    - size: 10Gi
-    properties:
-      size:
-        default: 10Gi
-        type: string
-    type: object
+    - - societe
+    items:
+      type: string
+    type: array
+  user-groups:
+    default:
+    - admin: true
+      name: dolibarr-admin
+    examples:
+    - - admin: true
+        name: dolibarr-admin
+    items:
+      properties:
+        admin:
+          type: boolean
+        name:
+          type: string
+      type: object
+    type: array
 dependencies:
 - dist: null
   category: share

@@ -3,7 +3,7 @@ locals {
     "app.kubernetes.io/component" = "redis"
   })
 }
-resourresource "kubectl_manifest" "dolibarr_redis" {
+resource "kubectl_manifest" "dolibarr_redis" {
   yaml_body  = <<-EOF
     apiVersion: "redis.redis.opstreelabs.in/v1beta1"
     kind: "Redis"
