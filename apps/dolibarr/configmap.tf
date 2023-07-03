@@ -8,8 +8,7 @@ locals {
   authentik-metadata-url="${data.kubernetes_ingress_v1.authentik.spec[0].rule[0].host}/api/v3/providers/saml/${authentik_provider_saml.dolibarr.id}/metadata/?download"
   module-list = [
       "user",
-      "ldap",
-      "samlConnector",
+      "ldap"
     ]
   json-config = {
     groups = [ for index, g in local.sorted-groups: {
@@ -56,6 +55,14 @@ locals {
       SAMLCONNECTOR_SP_PRIV_KEY_PATH="/var/saml/tls.key"
       SAMLCONNECTOR_IDP_METADATA_URL=local.authentik-metadata-url
       SAMLCONNECTOR_IDP_METADATA_XML_PATH=local.authentik-metadata-url
+      MAIN_MODULE_SAMLCONNECTOR="1"
+      MAIN_MODULE_SAMLCONNECTOR_CSS="[\"\\/samlconnector\\/css\\/samlconnector.css.php\"]"
+      MAIN_MODULE_SAMLCONNECTOR_HOOKS="[\"mainloginpage\",\"logout\",\"samlconnectorsetup\"]"
+      MAIN_MODULE_SAMLCONNECTOR_JS="[\"\\/samlconnector\\/js\\/samlconnector.js.php\"]"
+      MAIN_MODULE_SAMLCONNECTOR_LOGIN="1"
+      MAIN_MODULE_SAMLCONNECTOR_MODULEFOREXTERNAL="1"
+      MAIN_MODULE_SAMLCONNECTOR_SUBSTITUTIONS="1"
+      MAIN_MODULE_SAMLCONNECTOR_TRIGGERS="1"
     })
     modules=join(",",[for i in concat(var.modules, local.module-list): format("MAIN_MODULE_%s",upper(i))])
   }
