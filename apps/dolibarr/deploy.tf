@@ -60,6 +60,8 @@ spec:
         emptyDir: {}
       - name: shared-files
         emptyDir: {}
+      - name: shared-logs
+        emptyDir: {}
       - name: nginx-config
         configMap:
           name: ${kubectl_manifest.nginx-config.name}
@@ -76,6 +78,8 @@ spec:
         volumeMounts:
         - name: shared-files
           mountPath: /var/www/
+        - name: shared-logs
+          mountPath: /var/logs/
         - name: documents
           mountPath: /var/documents
         - name: config-json
@@ -123,6 +127,8 @@ spec:
           failureThreshold: 3
           successThreshold: 1
         volumeMounts:
+        - name: shared-logs
+          mountPath: /var/logs/
         - name: shared-files
           mountPath: /var/www/
         - name: documents
@@ -145,6 +151,14 @@ spec:
             name: "${kubectl_manifest.config.name}"
         - secretRef:
             name: "${kubectl_manifest.dolibarr_ldap.name}"
+      - name: dolibarr-logs
+        command:
+        - "tail -f /var/logs/dolibarr.log"
+        image: "${var.images.dolibarr.registry}/${var.images.dolibarr.repository}:${var.images.dolibarr.tag}"
+        imagePullPolicy: "${var.images.dolibarr.pullPolicy}"
+        volumeMounts:
+        - name: shared-logs
+          mountPath: /var/logs/
       - name: nginx
         image: "${var.images.nginx.registry}/${var.images.nginx.repository}:${var.images.nginx.tag}"
         imagePullPolicy: "${var.images.nginx.pullPolicy}"

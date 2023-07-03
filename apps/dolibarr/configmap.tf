@@ -8,7 +8,8 @@ locals {
   authentik-metadata-url="${data.kubernetes_ingress_v1.authentik.spec[0].rule[0].host}/api/v3/providers/saml/${authentik_provider_saml.dolibarr.id}/metadata/?download"
   module-list = [
       "user",
-      "ldap"
+      "ldap",
+      "syslog"
     ]
   json-config = {
     groups = [ for index, g in local.sorted-groups: {
@@ -63,6 +64,9 @@ locals {
       MAIN_MODULE_SAMLCONNECTOR_MODULEFOREXTERNAL="1"
       MAIN_MODULE_SAMLCONNECTOR_SUBSTITUTIONS="1"
       MAIN_MODULE_SAMLCONNECTOR_TRIGGERS="1"
+      MAIN_MODULE_SYSLOG="1"
+      SYSLOG_LEVEL="6"
+      SYSLOG_FILE="/var/logs/dolibarr.log"
     })
     modules=join(",",[for i in concat(var.modules, local.module-list): format("MAIN_MODULE_%s",upper(i))])
   }
@@ -140,6 +144,7 @@ resource "kubectl_manifest" "config-json" {
                 setGroupUser "$${gname}" "$${username}"
             done
         done
+        >/var/logs/dolibarr.log
       "config.json": |-
         ${jsonencode(local.json-config)}
   EOF
@@ -160,8 +165,9 @@ resource "kubectl_manifest" "config" {
       DOLI_DB_PORT: "5432"
       DOLI_DB_TYPE: "pgsql"
       DOLI_ADMIN_LOGIN: "admin_${var.instance}"
-      DOLI_MODULES: "modSociete,modAgenda,modBlockedLog,modSamlConnector,modBanque,modFacture,modFournisseur,modCategorie,modComptabilite,modCommande,modContrat,modFicheinter,modKnowledgeManagement,modLabel,modMargin,modProduct,modPropale,modStock,modVariants,modOauth,modLdap,modApi"
+      DOLI_MODULES: "modSociete,modBlockedLog,modSamlConnector,modLdap"
       DOLI_AUTH: "dolibarr"
+      DOLI_URL_ROOT: "https://${var.sub-domain}.${var.domain-name}"
       DOLI_LDAP_PORT: "389"
       DOLI_LDAP_VERSION: "3"
       DOLI_LDAP_SERVERTYPE: "openldap"
