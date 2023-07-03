@@ -2,7 +2,7 @@ locals {
     dns-names = ["${var.sub-domain}.${var.domain-name}"]
     middlewares = ["${var.instance}-https"]
     service = {
-      "name"  = "${var.component}-${var.instance}"
+      "name"  = "${var.instance}"
       "port" = {
         "number" = 80
       }
