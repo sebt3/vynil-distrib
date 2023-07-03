@@ -1,0 +1,44 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: apps
+metadata:
+  name: k8s-ui
+  description: Access to the kubernetes api
+options:
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  sub-domain:
+    default: api
+    examples:
+    - api
+    type: string
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+dependencies:
+- dist: null
+  category: share
+  component: authentik-forward
+providers:
+  kubernetes: true
+  authentik: true
+  kubectl: true
+  postgresql: null
+  restapi: true
+  http: true
