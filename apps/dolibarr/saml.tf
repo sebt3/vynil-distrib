@@ -38,7 +38,7 @@ resource "kubectl_manifest" "saml_certificate" {
         dnsNames: ${jsonencode(local.dns-names)}
         issuerRef:
           name: "self-sign"
-          kind: "Issuer"
+          kind: "ClusterIssuer"
           group: "cert-manager.io"
   EOF
 }
