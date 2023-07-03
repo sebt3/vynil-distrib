@@ -77,7 +77,7 @@ spec:
           mountPath: /etc/config/config.json
           subPath: config.json
         - name: config-json
-          mountPath: /docker-entrypoint.d/
+          mountPath: /docker-entrypoint.d/vynil-configurator.sh
           subPath: vynil-configurator.sh
         securityContext:
           runAsNonRoot: true

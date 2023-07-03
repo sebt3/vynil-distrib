@@ -6,163 +6,6 @@ metadata:
   name: dolibarr
   description: null
 options:
-  modules:
-    default:
-    - societe
-    examples:
-    - - societe
-    items:
-      type: string
-    type: array
-  user-groups:
-    default:
-    - admin: true
-      name: dolibarr-admin
-    examples:
-    - - admin: true
-        name: dolibarr-admin
-    items:
-      properties:
-        admin:
-          type: boolean
-        name:
-          type: string
-      type: object
-    type: array
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
-  redis:
-    default:
-      exporter:
-        enabled: true
-        image: quay.io/opstree/redis-exporter:v1.44.0
-      image: quay.io/opstree/redis:v7.0.5
-      storage: 2Gi
-    examples:
-    - exporter:
-        enabled: true
-        image: quay.io/opstree/redis-exporter:v1.44.0
-      image: quay.io/opstree/redis:v7.0.5
-      storage: 2Gi
-    properties:
-      exporter:
-        default:
-          enabled: true
-          image: quay.io/opstree/redis-exporter:v1.44.0
-        properties:
-          enabled:
-            default: true
-            type: boolean
-          image:
-            default: quay.io/opstree/redis-exporter:v1.44.0
-            type: string
-        type: object
-      image:
-        default: quay.io/opstree/redis:v7.0.5
-        type: string
-      storage:
-        default: 2Gi
-        type: string
-    type: object
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
-  resources:
-    default:
-      limits:
-        cpu: 200m
-        memory: 256Mi
-      requests:
-        cpu: 50m
-        memory: 100Mi
-    examples:
-    - limits:
-        cpu: 200m
-        memory: 256Mi
-      requests:
-        cpu: 50m
-        memory: 100Mi
-    properties:
-      limits:
-        default:
-          cpu: 200m
-          memory: 256Mi
-        properties:
-          cpu:
-            default: 200m
-            type: string
-          memory:
-            default: 256Mi
-            type: string
-        type: object
-      requests:
-        default:
-          cpu: 50m
-          memory: 100Mi
-        properties:
-          cpu:
-            default: 50m
-            type: string
-          memory:
-            default: 100Mi
-            type: string
-        type: object
-    type: object
-  postgres:
-    default:
-      replicas: 1
-      storage: 5Gi
-      version: '14'
-    examples:
-    - replicas: 1
-      storage: 5Gi
-      version: '14'
-    properties:
-      replicas:
-        default: 1
-        type: integer
-      storage:
-        default: 5Gi
-        type: string
-      version:
-        default: '14'
-        type: string
-    type: object
-  hpa:
-    default:
-      avg-cpu: 50
-      max-replicas: 5
-      min-replicas: 1
-    examples:
-    - avg-cpu: 50
-      max-replicas: 5
-      min-replicas: 1
-    properties:
-      avg-cpu:
-        default: 50
-        type: integer
-      max-replicas:
-        default: 5
-        type: integer
-      min-replicas:
-        default: 1
-        type: integer
-    type: object
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
   images:
     default:
       dolibarr:
@@ -228,11 +71,6 @@ options:
             type: string
         type: object
     type: object
-  sub-domain:
-    default: erp
-    examples:
-    - erp
-    type: string
   storage:
     default:
       size: 10Gi
@@ -243,6 +81,11 @@ options:
         default: 10Gi
         type: string
     type: object
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
   parameters:
     default:
       MAIN_LANG_DEFAULT: auto
@@ -252,6 +95,163 @@ options:
       MAIN_LANG_DEFAULT:
         default: auto
         type: string
+    type: object
+  modules:
+    default:
+    - societe
+    examples:
+    - - societe
+    items:
+      type: string
+    type: array
+  user-groups:
+    default:
+    - admin: true
+      name: dolibarr-admin
+    examples:
+    - - admin: true
+        name: dolibarr-admin
+    items:
+      properties:
+        admin:
+          type: boolean
+        name:
+          type: string
+      type: object
+    type: array
+  sub-domain:
+    default: erp
+    examples:
+    - erp
+    type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  redis:
+    default:
+      exporter:
+        enabled: true
+        image: quay.io/opstree/redis-exporter:v1.44.0
+      image: quay.io/opstree/redis:v7.0.5
+      storage: 2Gi
+    examples:
+    - exporter:
+        enabled: true
+        image: quay.io/opstree/redis-exporter:v1.44.0
+      image: quay.io/opstree/redis:v7.0.5
+      storage: 2Gi
+    properties:
+      exporter:
+        default:
+          enabled: true
+          image: quay.io/opstree/redis-exporter:v1.44.0
+        properties:
+          enabled:
+            default: true
+            type: boolean
+          image:
+            default: quay.io/opstree/redis-exporter:v1.44.0
+            type: string
+        type: object
+      image:
+        default: quay.io/opstree/redis:v7.0.5
+        type: string
+      storage:
+        default: 2Gi
+        type: string
+    type: object
+  postgres:
+    default:
+      replicas: 1
+      storage: 5Gi
+      version: '14'
+    examples:
+    - replicas: 1
+      storage: 5Gi
+      version: '14'
+    properties:
+      replicas:
+        default: 1
+        type: integer
+      storage:
+        default: 5Gi
+        type: string
+      version:
+        default: '14'
+        type: string
+    type: object
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  hpa:
+    default:
+      avg-cpu: 50
+      max-replicas: 5
+      min-replicas: 1
+    examples:
+    - avg-cpu: 50
+      max-replicas: 5
+      min-replicas: 1
+    properties:
+      avg-cpu:
+        default: 50
+        type: integer
+      max-replicas:
+        default: 5
+        type: integer
+      min-replicas:
+        default: 1
+        type: integer
+    type: object
+  resources:
+    default:
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
+    examples:
+    - limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
+    properties:
+      limits:
+        default:
+          cpu: 200m
+          memory: 256Mi
+        properties:
+          cpu:
+            default: 200m
+            type: string
+          memory:
+            default: 256Mi
+            type: string
+        type: object
+      requests:
+        default:
+          cpu: 50m
+          memory: 100Mi
+        properties:
+          cpu:
+            default: 50m
+            type: string
+          memory:
+            default: 100Mi
+            type: string
+        type: object
     type: object
 dependencies:
 - dist: null
