@@ -1,3 +1,8 @@
+locals {
+  deploy-labels = merge(local.common-labels, {
+    "app.kubernetes.io/component" = "dolibarr"
+  })
+}
 resource "kubectl_manifest" "hpa" {
   yaml_body  = <<-EOF
 apiVersion: autoscaling/v2
@@ -5,7 +10,7 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: ${var.instance}
   namespace: ${var.namespace}
-  labels: ${jsonencode(local.common-labels)}
+  labels: ${jsonencode(local.deploy-labels)}
 spec:
   minReplicas: ${var.hpa.min-replicas}
   maxReplicas: ${var.hpa.max-replicas}
@@ -30,13 +35,13 @@ kind: Deployment
 metadata:
   name: ${var.instance}
   namespace: ${var.namespace}
-  labels: ${jsonencode(local.common-labels)}
+  labels: ${jsonencode(local.deploy-labels)}
 spec:
   selector:
-    matchLabels: ${jsonencode(local.common-labels)}
+    matchLabels: ${jsonencode(local.deploy-labels)}
   template:
     metadata:
-      labels: ${jsonencode(local.common-labels)}
+      labels: ${jsonencode(local.deploy-labels)}
     spec:
       securityContext:
         runAsGroup: 82

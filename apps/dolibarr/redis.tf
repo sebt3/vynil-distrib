@@ -1,11 +1,16 @@
-resource "kubectl_manifest" "dolibarr_redis" {
+locals {
+  redis-labels = merge(local.common-labels, {
+    "app.kubernetes.io/component" = "redis"
+  })
+}
+resourresource "kubectl_manifest" "dolibarr_redis" {
   yaml_body  = <<-EOF
     apiVersion: "redis.redis.opstreelabs.in/v1beta1"
     kind: "Redis"
     metadata:
       name: "${var.instance}-${var.component}-redis"
       namespace: "${var.namespace}"
-      labels: ${jsonencode(local.common-labels)}
+      labels: ${jsonencode(local.redis-labels)}
     spec:
       kubernetesConfig:
         image: "${var.redis.image}"

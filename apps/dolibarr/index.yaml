@@ -6,11 +6,57 @@ metadata:
   name: dolibarr
   description: null
 options:
-  domain:
-    default: your-company
+  parameters:
+    default:
+      MAIN_LANG_DEFAULT: auto
     examples:
-    - your-company
-    type: string
+    - MAIN_LANG_DEFAULT: auto
+    properties:
+      MAIN_LANG_DEFAULT:
+        default: auto
+        type: string
+    type: object
+  redis:
+    default:
+      exporter:
+        enabled: true
+        image: quay.io/opstree/redis-exporter:v1.44.0
+      image: quay.io/opstree/redis:v7.0.5
+      storage: 2Gi
+    examples:
+    - exporter:
+        enabled: true
+        image: quay.io/opstree/redis-exporter:v1.44.0
+      image: quay.io/opstree/redis:v7.0.5
+      storage: 2Gi
+    properties:
+      exporter:
+        default:
+          enabled: true
+          image: quay.io/opstree/redis-exporter:v1.44.0
+        properties:
+          enabled:
+            default: true
+            type: boolean
+          image:
+            default: quay.io/opstree/redis-exporter:v1.44.0
+            type: string
+        type: object
+      image:
+        default: quay.io/opstree/redis:v7.0.5
+        type: string
+      storage:
+        default: 2Gi
+        type: string
+    type: object
+  modules:
+    default:
+    - societe
+    examples:
+    - - societe
+    items:
+      type: string
+    type: array
   resources:
     default:
       limits:
@@ -52,24 +98,6 @@ options:
             type: string
         type: object
     type: object
-  parameters:
-    default:
-      MAIN_LANG_DEFAULT: auto
-    examples:
-    - MAIN_LANG_DEFAULT: auto
-    properties:
-      MAIN_LANG_DEFAULT:
-        default: auto
-        type: string
-    type: object
-  modules:
-    default:
-    - societe
-    examples:
-    - - societe
-    items:
-      type: string
-    type: array
   images:
     default:
       dolibarr:
@@ -150,44 +178,6 @@ options:
           type: string
       type: object
     type: array
-  redis:
-    default:
-      exporter:
-        enabled: true
-        image: quay.io/opstree/redis-exporter:v1.44.0
-      image: quay.io/opstree/redis:v7.0.5
-      storage: 2Gi
-    examples:
-    - exporter:
-        enabled: true
-        image: quay.io/opstree/redis-exporter:v1.44.0
-      image: quay.io/opstree/redis:v7.0.5
-      storage: 2Gi
-    properties:
-      exporter:
-        default:
-          enabled: true
-          image: quay.io/opstree/redis-exporter:v1.44.0
-        properties:
-          enabled:
-            default: true
-            type: boolean
-          image:
-            default: quay.io/opstree/redis-exporter:v1.44.0
-            type: string
-        type: object
-      image:
-        default: quay.io/opstree/redis:v7.0.5
-        type: string
-      storage:
-        default: 2Gi
-        type: string
-    type: object
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
   ingress-class:
     default: traefik
     examples:
@@ -238,6 +228,21 @@ options:
         default: '14'
         type: string
     type: object
+  sub-domain:
+    default: erp
+    examples:
+    - erp
+    type: string
+  domain-name:
+    default: your_company.com
+    examples:
+    - your_company.com
+    type: string
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
   storage:
     default:
       size: 10Gi
@@ -248,11 +253,6 @@ options:
         default: 10Gi
         type: string
     type: object
-  sub-domain:
-    default: erp
-    examples:
-    - erp
-    type: string
 dependencies:
 - dist: null
   category: share

@@ -1,3 +1,8 @@
+locals {
+  pg-labels = merge(local.common-labels, {
+    "app.kubernetes.io/component" = "postgresql"
+  })
+}
 resource "kubectl_manifest" "dolibarr_postgresql" {
   yaml_body  = <<-EOF
     apiVersion: "acid.zalan.do/v1"
@@ -5,7 +10,7 @@ resource "kubectl_manifest" "dolibarr_postgresql" {
     metadata:
       name: "${var.instance}-${var.component}"
       namespace: "${var.namespace}"
-      labels: ${jsonencode(local.common-labels)}
+      labels: ${jsonencode(local.pg-labels)}
     spec:
       databases:
         ${var.component}: "${var.component}"
