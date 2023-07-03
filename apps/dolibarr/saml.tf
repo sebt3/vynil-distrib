@@ -25,6 +25,24 @@ data "authentik_certificate_key_pair" "generated" {
   name = "authentik Self-signed Certificate"
 }
 
+resource "kubectl_manifest" "saml_certificate" {
+  yaml_body  = <<-EOF
+    apiVersion: "cert-manager.io/v1"
+    kind: "Certificate"
+    metadata:
+      name: "${var.instance}-${var.component}-saml"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+        secretName: "${var.instance}-${var.component}-saml"
+        dnsNames: ${jsonencode(local.dns-names)}
+        issuerRef:
+          name: "self-sign"
+          kind: "Issuer"
+          group: "cert-manager.io"
+  EOF
+}
+
 resource "authentik_provider_saml" "dolibarr" {
   name                = "dolibarr-${var.instance}-saml"
   authentication_flow = data.authentik_flow.default-authentication-flow.id
@@ -35,3 +53,4 @@ resource "authentik_provider_saml" "dolibarr" {
   signing_kp          = data.authentik_certificate_key_pair.generated.id
   sp_binding          = "post"
 }
+

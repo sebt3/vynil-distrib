@@ -165,21 +165,3 @@ resource "kubectl_manifest" "config" {
       DOLI_LDAP_HOST: "ak-outpost-ldap.${var.domain}-auth.svc"
   EOF
 }
-
-resource "kubectl_manifest" "saml_certificate" {
-  yaml_body  = <<-EOF
-    apiVersion: "cert-manager.io/v1"
-    kind: "Certificate"
-    metadata:
-      name: "${var.instance}-saml"
-      namespace: "${var.namespace}"
-      labels: ${jsonencode(local.common-labels)}
-    spec:
-        secretName: "${var.instance}-saml"
-        dnsNames: ${jsonencode(local.dns-names)}
-        issuerRef:
-          name: "dolibarr-issuer"
-          kind: "Issuer"
-          group: "cert-manager.io"
-  EOF
-}

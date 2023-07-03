@@ -6,16 +6,6 @@ metadata:
   name: dolibarr
   description: null
 options:
-  issuer:
-    default: letsencrypt-prod
-    examples:
-    - letsencrypt-prod
-    type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
   domain:
     default: your-company
     examples:
@@ -26,38 +16,46 @@ options:
     examples:
     - your_company.com
     type: string
-  redis:
+  resources:
     default:
-      exporter:
-        enabled: true
-        image: quay.io/opstree/redis-exporter:v1.44.0
-      image: quay.io/opstree/redis:v7.0.5
-      storage: 2Gi
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
     examples:
-    - exporter:
-        enabled: true
-        image: quay.io/opstree/redis-exporter:v1.44.0
-      image: quay.io/opstree/redis:v7.0.5
-      storage: 2Gi
+    - limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
     properties:
-      exporter:
+      limits:
         default:
-          enabled: true
-          image: quay.io/opstree/redis-exporter:v1.44.0
+          cpu: 200m
+          memory: 256Mi
         properties:
-          enabled:
-            default: true
-            type: boolean
-          image:
-            default: quay.io/opstree/redis-exporter:v1.44.0
+          cpu:
+            default: 200m
+            type: string
+          memory:
+            default: 256Mi
             type: string
         type: object
-      image:
-        default: quay.io/opstree/redis:v7.0.5
-        type: string
-      storage:
-        default: 2Gi
-        type: string
+      requests:
+        default:
+          cpu: 50m
+          memory: 100Mi
+        properties:
+          cpu:
+            default: 50m
+            type: string
+          memory:
+            default: 100Mi
+            type: string
+        type: object
     type: object
   storage:
     default:
@@ -68,26 +66,6 @@ options:
       size:
         default: 10Gi
         type: string
-    type: object
-  hpa:
-    default:
-      avg-cpu: 50
-      max-replicas: 5
-      min-replicas: 1
-    examples:
-    - avg-cpu: 50
-      max-replicas: 5
-      min-replicas: 1
-    properties:
-      avg-cpu:
-        default: 50
-        type: integer
-      max-replicas:
-        default: 5
-        type: integer
-      min-replicas:
-        default: 1
-        type: integer
     type: object
   images:
     default:
@@ -154,11 +132,6 @@ options:
             type: string
         type: object
     type: object
-  sub-domain:
-    default: erp
-    examples:
-    - erp
-    type: string
   modules:
     default:
     - societe
@@ -182,55 +155,47 @@ options:
           type: string
       type: object
     type: array
-  resources:
-    default:
-      limits:
-        cpu: 200m
-        memory: 256Mi
-      requests:
-        cpu: 50m
-        memory: 100Mi
+  sub-domain:
+    default: erp
     examples:
-    - limits:
-        cpu: 200m
-        memory: 256Mi
-      requests:
-        cpu: 50m
-        memory: 100Mi
+    - erp
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  redis:
+    default:
+      exporter:
+        enabled: true
+        image: quay.io/opstree/redis-exporter:v1.44.0
+      image: quay.io/opstree/redis:v7.0.5
+      storage: 2Gi
+    examples:
+    - exporter:
+        enabled: true
+        image: quay.io/opstree/redis-exporter:v1.44.0
+      image: quay.io/opstree/redis:v7.0.5
+      storage: 2Gi
     properties:
-      limits:
+      exporter:
         default:
-          cpu: 200m
-          memory: 256Mi
+          enabled: true
+          image: quay.io/opstree/redis-exporter:v1.44.0
         properties:
-          cpu:
-            default: 200m
-            type: string
-          memory:
-            default: 256Mi
+          enabled:
+            default: true
+            type: boolean
+          image:
+            default: quay.io/opstree/redis-exporter:v1.44.0
             type: string
         type: object
-      requests:
-        default:
-          cpu: 50m
-          memory: 100Mi
-        properties:
-          cpu:
-            default: 50m
-            type: string
-          memory:
-            default: 100Mi
-            type: string
-        type: object
-    type: object
-  parameters:
-    default:
-      MAIN_LANG_DEFAULT: auto
-    examples:
-    - MAIN_LANG_DEFAULT: auto
-    properties:
-      MAIN_LANG_DEFAULT:
-        default: auto
+      image:
+        default: quay.io/opstree/redis:v7.0.5
+        type: string
+      storage:
+        default: 2Gi
         type: string
     type: object
   postgres:
@@ -253,7 +218,57 @@ options:
         default: '14'
         type: string
     type: object
-dependencies: []
+  parameters:
+    default:
+      MAIN_LANG_DEFAULT: auto
+    examples:
+    - MAIN_LANG_DEFAULT: auto
+    properties:
+      MAIN_LANG_DEFAULT:
+        default: auto
+        type: string
+    type: object
+  hpa:
+    default:
+      avg-cpu: 50
+      max-replicas: 5
+      min-replicas: 1
+    examples:
+    - avg-cpu: 50
+      max-replicas: 5
+      min-replicas: 1
+    properties:
+      avg-cpu:
+        default: 50
+        type: integer
+      max-replicas:
+        default: 5
+        type: integer
+      min-replicas:
+        default: 1
+        type: integer
+    type: object
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+dependencies:
+- dist: null
+  category: share
+  component: authentik-ldap
+- dist: null
+  category: core
+  component: secret-generator
+- dist: null
+  category: core
+  component: cert-manager-self-sign
+- dist: null
+  category: dbo
+  component: postgresql
+- dist: null
+  category: dbo
+  component: redis
 providers:
   kubernetes: true
   authentik: true
