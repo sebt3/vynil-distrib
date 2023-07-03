@@ -64,9 +64,9 @@ locals {
       MAIN_MODULE_SAMLCONNECTOR_MODULEFOREXTERNAL="1"
       MAIN_MODULE_SAMLCONNECTOR_SUBSTITUTIONS="1"
       MAIN_MODULE_SAMLCONNECTOR_TRIGGERS="1"
-      MAIN_MODULE_SYSLOG="1"
-      SYSLOG_LEVEL="6"
+      SYSLOG_LEVEL="${var.log-level}"
       SYSLOG_FILE="/var/logs/dolibarr.log"
+      SYSLOG_HANDLERS="[\"mod_syslog_file\"]"
     })
     modules=join(",",[for i in concat(var.modules, local.module-list): format("MAIN_MODULE_%s",upper(i))])
   }
