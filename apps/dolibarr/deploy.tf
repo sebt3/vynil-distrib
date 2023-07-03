@@ -102,7 +102,7 @@ spec:
         readinessProbe:
           httpGet:
             path: /index.php
-            port: http
+            port: 3000
             scheme: HTTP
           periodSeconds: 10
           timeoutSeconds: 1
@@ -111,7 +111,8 @@ spec:
         livenessProbe:
           httpGet:
             path: /index.php
-            port: http
+            port: 3000
+            scheme: HTTP
           periodSeconds: 10
           timeoutSeconds: 1
           failureThreshold: 3
