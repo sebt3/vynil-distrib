@@ -153,7 +153,9 @@ spec:
             name: "${kubectl_manifest.dolibarr_ldap.name}"
       - name: dolibarr-logs
         command:
-        - "tail -f /var/logs/dolibarr.log"
+        - "tail"
+        - "-f"
+        - "/var/logs/dolibarr.log"
         image: "${var.images.dolibarr.registry}/${var.images.dolibarr.repository}:${var.images.dolibarr.tag}"
         imagePullPolicy: "${var.images.dolibarr.pullPolicy}"
         volumeMounts:

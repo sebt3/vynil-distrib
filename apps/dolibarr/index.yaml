@@ -11,11 +11,6 @@ options:
     examples:
     - letsencrypt-prod
     type: string
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
   hpa:
     default:
       avg-cpu: 50
@@ -35,47 +30,6 @@ options:
       min-replicas:
         default: 1
         type: integer
-    type: object
-  resources:
-    default:
-      limits:
-        cpu: 200m
-        memory: 256Mi
-      requests:
-        cpu: 50m
-        memory: 100Mi
-    examples:
-    - limits:
-        cpu: 200m
-        memory: 256Mi
-      requests:
-        cpu: 50m
-        memory: 100Mi
-    properties:
-      limits:
-        default:
-          cpu: 200m
-          memory: 256Mi
-        properties:
-          cpu:
-            default: 200m
-            type: string
-          memory:
-            default: 256Mi
-            type: string
-        type: object
-      requests:
-        default:
-          cpu: 50m
-          memory: 100Mi
-        properties:
-          cpu:
-            default: 50m
-            type: string
-          memory:
-            default: 100Mi
-            type: string
-        type: object
     type: object
   images:
     default:
@@ -142,14 +96,36 @@ options:
             type: string
         type: object
     type: object
-  modules:
-    default:
-    - societe
+  sub-domain:
+    default: erp
     examples:
-    - - societe
-    items:
-      type: string
-    type: array
+    - erp
+    type: string
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  storage:
+    default:
+      size: 10Gi
+    examples:
+    - size: 10Gi
+    properties:
+      size:
+        default: 10Gi
+        type: string
+    type: object
+  parameters:
+    default:
+      MAIN_LANG_DEFAULT: auto
+    examples:
+    - MAIN_LANG_DEFAULT: auto
+    properties:
+      MAIN_LANG_DEFAULT:
+        default: auto
+        type: string
+    type: object
   postgres:
     default:
       replicas: 1
@@ -170,40 +146,64 @@ options:
         default: '14'
         type: string
     type: object
-  storage:
-    default:
-      size: 10Gi
+  domain:
+    default: your-company
     examples:
-    - size: 10Gi
-    properties:
-      size:
-        default: 10Gi
-        type: string
-    type: object
-  user-groups:
-    default:
-    - admin: true
-      name: dolibarr-admin
+    - your-company
+    type: string
+  domain-name:
+    default: your_company.com
     examples:
-    - - admin: true
-        name: dolibarr-admin
+    - your_company.com
+    type: string
+  modules:
+    default:
+    - societe
+    examples:
+    - - societe
     items:
-      properties:
-        admin:
-          type: boolean
-        name:
-          type: string
-      type: object
+      type: string
     type: array
-  parameters:
+  resources:
     default:
-      MAIN_LANG_DEFAULT: auto
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
     examples:
-    - MAIN_LANG_DEFAULT: auto
+    - limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
     properties:
-      MAIN_LANG_DEFAULT:
-        default: auto
-        type: string
+      limits:
+        default:
+          cpu: 200m
+          memory: 256Mi
+        properties:
+          cpu:
+            default: 200m
+            type: string
+          memory:
+            default: 256Mi
+            type: string
+        type: object
+      requests:
+        default:
+          cpu: 50m
+          memory: 100Mi
+        properties:
+          cpu:
+            default: 50m
+            type: string
+          memory:
+            default: 100Mi
+            type: string
+        type: object
     type: object
   redis:
     default:
@@ -238,21 +238,21 @@ options:
         default: 2Gi
         type: string
     type: object
-  domain:
-    default: your-company
+  user-groups:
+    default:
+    - admin: true
+      name: dolibarr-admin
     examples:
-    - your-company
-    type: string
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
-  sub-domain:
-    default: erp
-    examples:
-    - erp
-    type: string
+    - - admin: true
+        name: dolibarr-admin
+    items:
+      properties:
+        admin:
+          type: boolean
+        name:
+          type: string
+      type: object
+    type: array
 dependencies:
 - dist: null
   category: share
