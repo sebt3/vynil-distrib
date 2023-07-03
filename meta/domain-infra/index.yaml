@@ -6,10 +6,15 @@ metadata:
   name: domain-infra
   description: null
 options:
-  ingress-class:
-    default: traefik
+  domain-name:
+    default: your_company.com
     examples:
-    - traefik
+    - your_company.com
+    type: string
+  domain:
+    default: your-company
+    examples:
+    - your-company
     type: string
   traefik:
     default:
@@ -26,6 +31,21 @@ options:
         default: traefik
         type: string
     type: object
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  api:
+    default:
+      enable: false
+    examples:
+    - enable: false
+    properties:
+      enable:
+        default: false
+        type: boolean
+    type: object
   dns:
     default:
       enable: false
@@ -36,16 +56,6 @@ options:
         default: false
         type: boolean
     type: object
-  domain-name:
-    default: your_company.com
-    examples:
-    - your_company.com
-    type: string
-  domain:
-    default: your-company
-    examples:
-    - your-company
-    type: string
   issuer:
     default: letsencrypt-prod
     examples:

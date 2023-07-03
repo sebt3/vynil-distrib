@@ -14,6 +14,7 @@ locals {
     }
     traefik = { for k, v in var.traefik : k => v if k!="enable" }
     dns = { for k, v in var.dns : k => v if k!="enable" }
+    api = { for k, v in var.api : k => v if k!="enable" }
 }
 
 resource "kubernetes_namespace_v1" "infra-ns" {
@@ -58,5 +59,22 @@ resource "kubectl_manifest" "traefik" {
       category: "apps"
       component: "traefik-ui"
       options: ${jsonencode(merge(local.global, local.traefik))}
+  EOF
+}
+resource "kubectl_manifest" "traefik" {
+  count = var.traefik.enable ? 1 : 0
+  depends_on = [kubernetes_namespace_v1.infra-ns]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "k8s-api-${var.namespace}"
+      namespace: "default"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "apps"
+      component: "k8s-ui"
+      options: ${jsonencode(merge(local.global, local.api))}
   EOF
 }
