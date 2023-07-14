@@ -1,0 +1,19 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: dbo
+metadata:
+  name: mariadb
+  description: Run and operate MariaDB in a cloud native way. Declaratively manage your MariaDB using Kubernetes CRDs rather than imperative commands.
+options: {}
+dependencies:
+- dist: null
+  category: core
+  component: cert-manager
+- dist: null
+  category: crd
+  component: prometheus
+- dist: null
+  category: crd
+  component: mariadb
+providers: null

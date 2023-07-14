@@ -1,0 +1,39 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: dbo
+metadata:
+  name: rabbitmq
+  description: RabbitMQ Operator
+options:
+  image:
+    default:
+      registry: quay.io
+      repository: rabbitmqoperator/cluster-operator
+      tag: 2.2.0
+    examples:
+    - registry: quay.io
+      repository: rabbitmqoperator/cluster-operator
+      tag: 2.2.0
+    properties:
+      registry:
+        default: quay.io
+        type: string
+      repository:
+        default: rabbitmqoperator/cluster-operator
+        type: string
+      tag:
+        default: 2.2.0
+        type: string
+    type: object
+  release:
+    default: 2.2.0
+    description: RabbitMQ Operator version to use
+    examples:
+    - 2.2.0
+    type: string
+dependencies:
+- dist: null
+  category: crd
+  component: rabbitmq
+providers: null

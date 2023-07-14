@@ -1,0 +1,20 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: crd
+metadata:
+  name: k8up
+  description: CRD for k8up
+options:
+  apply:
+    default: true
+    examples:
+    - true
+    type: boolean
+  release:
+    default: 2.7.1
+    examples:
+    - 2.7.1
+    type: string
+dependencies: []
+providers: null

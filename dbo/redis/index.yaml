@@ -1,0 +1,83 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: dbo
+metadata:
+  name: redis
+  description: Redis Operator is a software to set up and manage Redis on Kubernetes.
+options:
+  image:
+    default:
+      pullPolicy: IfNotPresent
+      registry: quay.io
+      repository: opstree/redis-operator
+      tag: v0.14.0
+    examples:
+    - pullPolicy: IfNotPresent
+      registry: quay.io
+      repository: opstree/redis-operator
+      tag: v0.14.0
+    properties:
+      pullPolicy:
+        default: IfNotPresent
+        enum:
+        - Always
+        - Never
+        - IfNotPresent
+        type: string
+      registry:
+        default: quay.io
+        type: string
+      repository:
+        default: opstree/redis-operator
+        type: string
+      tag:
+        default: v0.14.0
+        type: string
+    type: object
+  resources:
+    default:
+      limits:
+        cpu: 500m
+        memory: 500Mi
+      requests:
+        cpu: 500m
+        memory: 500Mi
+    examples:
+    - limits:
+        cpu: 500m
+        memory: 500Mi
+      requests:
+        cpu: 500m
+        memory: 500Mi
+    properties:
+      limits:
+        default:
+          cpu: 500m
+          memory: 500Mi
+        properties:
+          cpu:
+            default: 500m
+            type: string
+          memory:
+            default: 500Mi
+            type: string
+        type: object
+      requests:
+        default:
+          cpu: 500m
+          memory: 500Mi
+        properties:
+          cpu:
+            default: 500m
+            type: string
+          memory:
+            default: 500Mi
+            type: string
+        type: object
+    type: object
+dependencies:
+- dist: null
+  category: crd
+  component: redis
+providers: null

@@ -1,0 +1,20 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: crd
+metadata:
+  name: mariadb
+  description: CRD for mariadb
+options:
+  apply:
+    default: true
+    examples:
+    - true
+    type: boolean
+  release:
+    default: 0.0.11
+    examples:
+    - 0.0.11
+    type: string
+dependencies: []
+providers: null

@@ -1,0 +1,21 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: crd
+metadata:
+  name: secret-generator
+  description: CRD for Secret Generator
+options:
+  release:
+    default: 3.4.0
+    description: secret-generator version to use
+    examples:
+    - 3.4.0
+    type: string
+  apply:
+    default: true
+    examples:
+    - true
+    type: boolean
+dependencies: []
+providers: null

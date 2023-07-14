@@ -1,0 +1,44 @@
+# Source: redis-operator/templates/operator-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-operator
+  namespace: dbo-redis
+  labels:
+    control-plane: "redis-operator"
+    app.kubernetes.io/name: redis-operator
+    helm.sh/chart: redis-operator-0.15.3
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: redis-operator
+    app.kubernetes.io/version: 0.15.0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: redis-operator
+  template:
+    metadata:
+      annotations:
+      labels:
+        name: redis-operator
+    spec:
+      containers:
+      - name: "redis-operator"
+        image: "quay.io/opstree/redis-operator:v0.15.0"
+        imagePullPolicy: Always
+        command:
+        - /manager
+        args:
+        - --leader-elect
+        resources:
+          limits:
+            cpu: 500m
+            memory: 500Mi
+          requests:
+            cpu: 500m
+            memory: 500Mi
+      nodeSelector:
+      priorityClassName: 
+      tolerations:
+      serviceAccountName: "redis-operator"
+      serviceAccount: "redis-operator"

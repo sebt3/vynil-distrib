@@ -1,0 +1,29 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: cert-manager-letsencrypt
+  description: Configure cert-manager to use Let's Encrypt certificates.
+options:
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  mail:
+    default: contact@change-this-name.com
+    examples:
+    - contact@change-this-name.com
+    type: string
+dependencies:
+- dist: null
+  category: crd
+  component: cert-manager
+providers:
+  kubernetes: null
+  authentik: null
+  kubectl: true
+  postgresql: null
+  restapi: null
+  http: null

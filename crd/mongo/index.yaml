@@ -1,0 +1,20 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: crd
+metadata:
+  name: mongo
+  description: null
+options:
+  release:
+    default: 0.7.6
+    examples:
+    - 0.7.6
+    type: string
+  apply:
+    default: true
+    examples:
+    - true
+    type: boolean
+dependencies: []
+providers: null

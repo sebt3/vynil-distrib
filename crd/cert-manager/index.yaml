@@ -1,0 +1,21 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: crd
+metadata:
+  name: cert-manager
+  description: CRD for Cert Manager
+options:
+  release:
+    default: 1.12.1
+    description: cert-manager version to use
+    examples:
+    - 1.12.1
+    type: string
+  apply:
+    default: true
+    examples:
+    - true
+    type: boolean
+dependencies: []
+providers: null

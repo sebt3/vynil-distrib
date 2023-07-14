@@ -1,0 +1,126 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: vynil
+  description: Vynil is a package manager for the kubernetes operating system
+options:
+  resources:
+    default:
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
+    examples:
+    - limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
+    properties:
+      limits:
+        default:
+          cpu: 200m
+          memory: 256Mi
+        properties:
+          cpu:
+            default: 200m
+            type: string
+          memory:
+            default: 256Mi
+            type: string
+        type: object
+      requests:
+        default:
+          cpu: 50m
+          memory: 100Mi
+        properties:
+          cpu:
+            default: 50m
+            type: string
+          memory:
+            default: 100Mi
+            type: string
+        type: object
+    type: object
+  images:
+    default:
+      agent:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: sebt3/vynil-agent
+        tag: 0.2.0
+      operator:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: sebt3/vynil-operator
+        tag: 0.2.0
+    examples:
+    - agent:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: sebt3/vynil-agent
+        tag: 0.2.0
+      operator:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: sebt3/vynil-operator
+        tag: 0.2.0
+    properties:
+      agent:
+        default:
+          pullPolicy: IfNotPresent
+          registry: docker.io
+          repository: sebt3/vynil-agent
+          tag: 0.2.0
+        properties:
+          pullPolicy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: sebt3/vynil-agent
+            type: string
+          tag:
+            default: 0.2.0
+            description: vynil-agent version to use
+            type: string
+        type: object
+      operator:
+        default:
+          pullPolicy: IfNotPresent
+          registry: docker.io
+          repository: sebt3/vynil-operator
+          tag: 0.2.0
+        properties:
+          pullPolicy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: sebt3/vynil-operator
+            type: string
+          tag:
+            default: 0.2.0
+            description: vynil-operator version to use
+            type: string
+        type: object
+    type: object
+dependencies: []
+providers: null

@@ -1,0 +1,19 @@
+# Source: k8up/templates/prometheus/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: k8up-monitor
+  namespace: k8up
+  labels:
+    helm.sh/chart: k8up-4.3.0
+    app.kubernetes.io/name: k8up
+    app.kubernetes.io/instance: k8up
+    app.kubernetes.io/managed-by: Helm
+spec:
+  endpoints:
+    - port: http
+      interval: 60s
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: k8up
+      app.kubernetes.io/instance: k8up

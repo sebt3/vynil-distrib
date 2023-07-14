@@ -1,0 +1,17 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: resources-vynil
+rules:
+- apiGroups: ["vynil.solidite.fr"]
+  resources: ["installs", "installs/status"]
+  verbs: ["get", "watch", "list", "patch"]
+- apiGroups: ["vynil.solidite.fr"]
+  resources: ["distribs", "distribs/status"]
+  verbs: ["get", "watch", "list", "patch"]
+- apiGroups: ["events.k8s.io"]
+  resources: ["events"]
+  verbs: ["create"]
+- apiGroups: [""]
+  resources: ["namespaces"]
+  verbs: ["get", "watch", "list"]

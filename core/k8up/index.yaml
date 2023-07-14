@@ -1,0 +1,121 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: k8up
+  description: Vynil is a package manager for the kubernetes operating system
+options:
+  images:
+    default:
+      backup:
+        registry: ghcr.io
+        repository: k8up-io/k8up
+        tag: v2.7.1
+      operator:
+        pullPolicy: IfNotPresent
+        registry: ghcr.io
+        repository: k8up-io/k8up
+        tag: v2.7.1
+    examples:
+    - backup:
+        registry: ghcr.io
+        repository: k8up-io/k8up
+        tag: v2.7.1
+      operator:
+        pullPolicy: IfNotPresent
+        registry: ghcr.io
+        repository: k8up-io/k8up
+        tag: v2.7.1
+    properties:
+      backup:
+        default:
+          registry: ghcr.io
+          repository: k8up-io/k8up
+          tag: v2.7.1
+        properties:
+          registry:
+            default: ghcr.io
+            type: string
+          repository:
+            default: k8up-io/k8up
+            type: string
+          tag:
+            default: v2.7.1
+            type: string
+        type: object
+      operator:
+        default:
+          pullPolicy: IfNotPresent
+          registry: ghcr.io
+          repository: k8up-io/k8up
+          tag: v2.7.1
+        properties:
+          pullPolicy:
+            default: IfNotPresent
+            type: string
+          registry:
+            default: ghcr.io
+            type: string
+          repository:
+            default: k8up-io/k8up
+            type: string
+          tag:
+            default: v2.7.1
+            type: string
+        type: object
+    type: object
+  resources:
+    default:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 20m
+        memory: 128Mi
+    examples:
+    - limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 20m
+        memory: 128Mi
+    properties:
+      limits:
+        default:
+          cpu: 500m
+          memory: 256Mi
+        properties:
+          cpu:
+            default: 500m
+            type: string
+          memory:
+            default: 256Mi
+            type: string
+        type: object
+      requests:
+        default:
+          cpu: 20m
+          memory: 128Mi
+        properties:
+          cpu:
+            default: 20m
+            type: string
+          memory:
+            default: 128Mi
+            type: string
+        type: object
+    type: object
+  timezone:
+    default: Europe/Paris
+    examples:
+    - Europe/Paris
+    type: string
+dependencies:
+- dist: null
+  category: crd
+  component: prometheus
+- dist: null
+  category: crd
+  component: k8up
+providers: null

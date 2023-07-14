@@ -1,0 +1,54 @@
+# Main deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vynil-controller
+  namespace: default
+  labels:
+    app: vynil-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vynil-controller
+  template:
+    metadata:
+      labels:
+        app: vynil-controller
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9000"
+    spec:
+      serviceAccountName: vynil-controller
+      containers:
+      - name: vynil-controller
+        image: operator
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            cpu: 200m
+            memory: 256Mi
+          requests:
+            cpu: 50m
+            memory: 100Mi
+        ports:
+        - name: http
+          containerPort: 9000
+          protocol: TCP
+        env:
+        # We are pointing to tempo or grafana tracing agent's otlp grpc receiver port
+        #- name: OPENTELEMETRY_ENDPOINT_URL
+        #  value: "https://promstack-tempo.monitoring.svc.cluster.local:4317"
+        - name: RUST_BACKTRACE
+          value: "1"
+        - name: RUST_LOG
+          value: "info,controller=debug"
+          #value: "info,kube=debug,controller=debug"
+        - name: AGENT_IMAGE
+          value: "registry.media.home/agent:0.1.0"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 5

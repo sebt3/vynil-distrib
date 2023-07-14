@@ -1,0 +1,20 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: crd
+metadata:
+  name: redis
+  description: CRD for Redis Operator
+options:
+  release:
+    default: 0.14.3
+    examples:
+    - 0.14.3
+    type: string
+  apply:
+    default: true
+    examples:
+    - true
+    type: boolean
+dependencies: []
+providers: null

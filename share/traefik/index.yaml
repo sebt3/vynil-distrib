@@ -1,0 +1,55 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: share
+metadata:
+  name: traefik
+  description: Traefik is an open-source Edge Router that makes publishing your services a fun and easy experience. It receives requests on behalf of your system and finds out which components are responsible for handling them.
+options:
+  is-default:
+    default: 'true'
+    examples:
+    - 'true'
+    type: string
+  ingressClass:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  image:
+    default:
+      pullPolicy: IfNotPresent
+      registry: docker.io
+      repository: traefik
+      tag: v2.10.1
+    examples:
+    - pullPolicy: IfNotPresent
+      registry: docker.io
+      repository: traefik
+      tag: v2.10.1
+    properties:
+      pullPolicy:
+        default: IfNotPresent
+        enum:
+        - Always
+        - Never
+        - IfNotPresent
+        type: string
+      registry:
+        default: docker.io
+        type: string
+      repository:
+        default: traefik
+        type: string
+      tag:
+        default: v2.10.1
+        type: string
+    type: object
+dependencies:
+- dist: null
+  category: crd
+  component: traefik
+- dist: null
+  category: crd
+  component: prometheus
+providers: null
