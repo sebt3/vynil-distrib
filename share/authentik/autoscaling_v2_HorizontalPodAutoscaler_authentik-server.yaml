@@ -1,0 +1,26 @@
+# Source: authentik/templates/server-hpa.yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: authentik-server
+  labels:
+    helm.sh/chart: authentik-2023.6.3
+    app.kubernetes.io/name: authentik
+    app.kubernetes.io/instance: authentik
+    app.kubernetes.io/version: "2023.6.1"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: "server"
+spec:
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        averageUtilization: 50
+        type: Utilization
+    type: Resource
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: authentik-server
