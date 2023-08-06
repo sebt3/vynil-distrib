@@ -13,7 +13,7 @@ locals {
 data "kustomization_overlay" "data" {
   common_labels = local.common-labels
   namespace = var.namespace
-  resources = [for file in fileset(path.module, "*.yaml"): file if file != "index.yaml" && length(regexall("ClusterRole",file))<1 && length(regexall("admissionregistration.k8s.io_v1_",file))<1]
+  resources = [for file in fileset(path.module, "*.yaml"): file if file != "index.yaml" && length(regexall("ClusterRole",file))<1 && length(regexall("WebhookConfiguration",file))<1]
   patches {
     target {
       kind = "Deployment"
@@ -44,7 +44,7 @@ data "kustomization_overlay" "data" {
 
 data "kustomization_overlay" "data_no_ns" {
   common_labels = local.common-labels
-  resources = [for file in fileset(path.module, "*.yaml"): file if file != "index.yaml" && (length(regexall("ClusterRole",file))>0 || length(regexall("admissionregistration.k8s.io_v1_",file))>0)]
+  resources = [for file in fileset(path.module, "*.yaml"): file if file != "index.yaml" && (length(regexall("ClusterRole",file))>0 || length(regexall("WebhookConfiguration",file))>0)]
   patches {
     target {
       kind = "ClusterRoleBinding"
