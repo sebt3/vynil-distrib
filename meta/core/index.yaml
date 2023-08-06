@@ -6,161 +6,6 @@ metadata:
   name: core
   description: core meta-component installing all the core components
 options:
-  flux:
-    default:
-      enable: false
-      namespace: flux
-    examples:
-    - enable: false
-      namespace: flux
-    properties:
-      enable:
-        default: false
-        type: boolean
-      namespace:
-        default: flux
-        type: string
-    type: object
-  databases:
-    default:
-      mariadb:
-        enable: false
-      mongo:
-        enable: false
-      namespace: vynil-dbo
-      pg:
-        enable: true
-      postgresql:
-        enable: true
-      rabbitmq:
-        enable: false
-      redis:
-        enable: true
-    examples:
-    - mariadb:
-        enable: false
-      mongo:
-        enable: false
-      namespace: vynil-dbo
-      pg:
-        enable: true
-      postgresql:
-        enable: true
-      rabbitmq:
-        enable: false
-      redis:
-        enable: true
-    properties:
-      mariadb:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      mongo:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      namespace:
-        default: vynil-dbo
-        type: string
-      pg:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      postgresql:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      rabbitmq:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      redis:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-    type: object
-  security:
-    default:
-      cert-manager:
-        enable: true
-      letsencrypt:
-        enable: false
-      namespace: vynil-security
-      secret-generator:
-        enable: true
-      self-sign:
-        enable: false
-    examples:
-    - cert-manager:
-        enable: true
-      letsencrypt:
-        enable: false
-      namespace: vynil-security
-      secret-generator:
-        enable: true
-      self-sign:
-        enable: false
-    properties:
-      cert-manager:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      letsencrypt:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      namespace:
-        default: vynil-security
-        type: string
-      secret-generator:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      self-sign:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-    type: object
   crds:
     default:
       cert-manager:
@@ -298,21 +143,6 @@ options:
             type: boolean
         type: object
     type: object
-  traefik:
-    default:
-      enable: true
-      namespace: traefik
-    examples:
-    - enable: true
-      namespace: traefik
-    properties:
-      enable:
-        default: true
-        type: boolean
-      namespace:
-        default: traefik
-        type: string
-    type: object
   backup:
     default:
       k8up:
@@ -333,6 +163,176 @@ options:
         type: object
       namespace:
         default: vynil-backup
+        type: string
+    type: object
+  security:
+    default:
+      cert-manager:
+        enable: true
+      letsencrypt:
+        enable: false
+      namespace: vynil-security
+      secret-generator:
+        enable: true
+      self-sign:
+        enable: false
+    examples:
+    - cert-manager:
+        enable: true
+      letsencrypt:
+        enable: false
+      namespace: vynil-security
+      secret-generator:
+        enable: true
+      self-sign:
+        enable: false
+    properties:
+      cert-manager:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      letsencrypt:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      namespace:
+        default: vynil-security
+        type: string
+      secret-generator:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      self-sign:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+    type: object
+  traefik:
+    default:
+      enable: true
+      namespace: traefik
+    examples:
+    - enable: true
+      namespace: traefik
+    properties:
+      enable:
+        default: true
+        type: boolean
+      namespace:
+        default: traefik
+        type: string
+    type: object
+  databases:
+    default:
+      mariadb:
+        enable: false
+      mongo:
+        enable: false
+      namespace: vynil-dbo
+      pg:
+        enable: true
+      postgresql:
+        enable: true
+      rabbitmq:
+        enable: false
+      redis:
+        enable: true
+    examples:
+    - mariadb:
+        enable: false
+      mongo:
+        enable: false
+      namespace: vynil-dbo
+      pg:
+        enable: true
+      postgresql:
+        enable: true
+      rabbitmq:
+        enable: false
+      redis:
+        enable: true
+    properties:
+      mariadb:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      mongo:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      namespace:
+        default: vynil-dbo
+        type: string
+      pg:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      postgresql:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      rabbitmq:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      redis:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+    type: object
+  flux:
+    default:
+      enable: false
+      namespace: flux
+    examples:
+    - enable: false
+      namespace: flux
+    properties:
+      enable:
+        default: false
+        type: boolean
+      namespace:
+        default: flux
         type: string
     type: object
 dependencies: []

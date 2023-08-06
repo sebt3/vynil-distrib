@@ -186,7 +186,7 @@ resource "kubectl_manifest" "crd-mongo" {
   EOF
 }
 
-resource "kubectl_manifest" "crd-mongo" {
+resource "kubectl_manifest" "crd-pg" {
   count = (var.crds.pg.enable || var.databases.pg.enable)? 1 : 0
   yaml_body  = <<-EOF
     apiVersion: "vynil.solidite.fr/v1"
