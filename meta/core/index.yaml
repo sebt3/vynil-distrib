@@ -6,130 +6,20 @@ metadata:
   name: core
   description: core meta-component installing all the core components
 options:
-  crds:
+  flux:
     default:
-      cert-manager:
-        enable: false
-      flux:
-        enable: false
-      k8up:
-        enable: false
-      mariadb:
-        enable: false
-      mongo:
-        enable: false
-      prometheus:
-        enable: false
-      rabbitmq:
-        enable: false
-      redis:
-        enable: false
-      secret-generator:
-        enable: false
-      traefik:
-        enable: false
+      enable: false
+      namespace: flux
     examples:
-    - cert-manager:
-        enable: false
-      flux:
-        enable: false
-      k8up:
-        enable: false
-      mariadb:
-        enable: false
-      mongo:
-        enable: false
-      prometheus:
-        enable: false
-      rabbitmq:
-        enable: false
-      redis:
-        enable: false
-      secret-generator:
-        enable: false
-      traefik:
-        enable: false
+    - enable: false
+      namespace: flux
     properties:
-      cert-manager:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      flux:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      k8up:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      mariadb:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      mongo:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      prometheus:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      rabbitmq:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      redis:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      secret-generator:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      traefik:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
+      enable:
+        default: false
+        type: boolean
+      namespace:
+        default: flux
+        type: string
     type: object
   databases:
     default:
@@ -138,6 +28,8 @@ options:
       mongo:
         enable: false
       namespace: vynil-dbo
+      pg:
+        enable: true
       postgresql:
         enable: true
       rabbitmq:
@@ -150,6 +42,8 @@ options:
       mongo:
         enable: false
       namespace: vynil-dbo
+      pg:
+        enable: true
       postgresql:
         enable: true
       rabbitmq:
@@ -176,6 +70,14 @@ options:
       namespace:
         default: vynil-dbo
         type: string
+      pg:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
       postgresql:
         default:
           enable: true
@@ -200,21 +102,6 @@ options:
             default: true
             type: boolean
         type: object
-    type: object
-  flux:
-    default:
-      enable: false
-      namespace: flux
-    examples:
-    - enable: false
-      namespace: flux
-    properties:
-      enable:
-        default: false
-        type: boolean
-      namespace:
-        default: flux
-        type: string
     type: object
   security:
     default:
@@ -274,6 +161,143 @@ options:
             type: boolean
         type: object
     type: object
+  crds:
+    default:
+      cert-manager:
+        enable: false
+      flux:
+        enable: false
+      k8up:
+        enable: false
+      mariadb:
+        enable: false
+      mongo:
+        enable: false
+      pg:
+        enable: false
+      prometheus:
+        enable: false
+      rabbitmq:
+        enable: false
+      redis:
+        enable: false
+      secret-generator:
+        enable: false
+      traefik:
+        enable: false
+    examples:
+    - cert-manager:
+        enable: false
+      flux:
+        enable: false
+      k8up:
+        enable: false
+      mariadb:
+        enable: false
+      mongo:
+        enable: false
+      pg:
+        enable: false
+      prometheus:
+        enable: false
+      rabbitmq:
+        enable: false
+      redis:
+        enable: false
+      secret-generator:
+        enable: false
+      traefik:
+        enable: false
+    properties:
+      cert-manager:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      flux:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      k8up:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      mariadb:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      mongo:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      pg:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      prometheus:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      rabbitmq:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      redis:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      secret-generator:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      traefik:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+    type: object
   traefik:
     default:
       enable: true
@@ -319,3 +343,4 @@ providers:
   postgresql: null
   restapi: null
   http: null
+tfaddtype: null

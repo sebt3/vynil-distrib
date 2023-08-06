@@ -4,10 +4,11 @@ locals {
     rabbitmq = { for k, v in var.databases.rabbitmq : k => v if k!="enable" }
     mariadb = { for k, v in var.databases.mariadb : k => v if k!="enable" }
     mongo = { for k, v in var.databases.mongo : k => v if k!="enable" }
+    pg = { for k, v in var.databases.pg : k => v if k!="enable" }
 }
 
 resource "kubernetes_namespace_v1" "databases-ns" {
-  count = ( var.databases.postgresql.enable || var.databases.redis.enable || var.databases.rabbitmq.enable || var.databases.mariadb.enable || var.databases.mongo.enable )? 1 : 0
+  count = ( var.databases.postgresql.enable || var.databases.redis.enable || var.databases.rabbitmq.enable || var.databases.mariadb.enable || var.databases.mongo.enable || var.databases.pg.enable )? 1 : 0
   metadata {
     annotations = local.annotations
     labels = local.common-labels
@@ -102,5 +103,23 @@ resource "kubectl_manifest" "mongo" {
       category: "dbo"
       component: "mongo"
       options: ${jsonencode(local.mongo)}
+  EOF
+}
+
+resource "kubectl_manifest" "pg" {
+  count = var.databases.pg.enable? 1 : 0
+  depends_on = [kubernetes_namespace_v1.databases-ns, kubectl_manifest.crd-pg]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "dbo-pg"
+      namespace: "${var.databases.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "dbo"
+      component: "pg"
+      options: ${jsonencode(local.pg)}
   EOF
 }
