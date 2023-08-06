@@ -23,7 +23,7 @@ resource "kubectl_manifest" "dbo-postgresql" {
     apiVersion: "vynil.solidite.fr/v1"
     kind: "Install"
     metadata:
-      name: "dbo-pg"
+      name: "dbo-postgresql"
       namespace: "${var.databases.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:

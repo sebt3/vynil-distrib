@@ -6,6 +6,28 @@ metadata:
   name: core
   description: core meta-component installing all the core components
 options:
+  backup:
+    default:
+      k8up:
+        enable: true
+      namespace: vynil-backup
+    examples:
+    - k8up:
+        enable: true
+      namespace: vynil-backup
+    properties:
+      k8up:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      namespace:
+        default: vynil-backup
+        type: string
+    type: object
   crds:
     default:
       cert-manager:
@@ -143,26 +165,34 @@ options:
             type: boolean
         type: object
     type: object
-  backup:
+  flux:
     default:
-      k8up:
-        enable: true
-      namespace: vynil-backup
+      enable: false
+      namespace: flux
     examples:
-    - k8up:
-        enable: true
-      namespace: vynil-backup
+    - enable: false
+      namespace: flux
     properties:
-      k8up:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
+      enable:
+        default: false
+        type: boolean
       namespace:
-        default: vynil-backup
+        default: flux
+        type: string
+    type: object
+  traefik:
+    default:
+      enable: true
+      namespace: traefik
+    examples:
+    - enable: true
+      namespace: traefik
+    properties:
+      enable:
+        default: true
+        type: boolean
+      namespace:
+        default: traefik
         type: string
     type: object
   security:
@@ -222,21 +252,6 @@ options:
             default: false
             type: boolean
         type: object
-    type: object
-  traefik:
-    default:
-      enable: true
-      namespace: traefik
-    examples:
-    - enable: true
-      namespace: traefik
-    properties:
-      enable:
-        default: true
-        type: boolean
-      namespace:
-        default: traefik
-        type: string
     type: object
   databases:
     default:
@@ -319,21 +334,6 @@ options:
             default: true
             type: boolean
         type: object
-    type: object
-  flux:
-    default:
-      enable: false
-      namespace: flux
-    examples:
-    - enable: false
-      namespace: flux
-    properties:
-      enable:
-        default: false
-        type: boolean
-      namespace:
-        default: flux
-        type: string
     type: object
 dependencies: []
 providers:
