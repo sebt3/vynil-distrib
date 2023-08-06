@@ -6,11 +6,10 @@ locals {
     "vynil.solidite.fr/owner-category" = var.category
     "vynil.solidite.fr/owner-component" = var.component
     "app.kubernetes.io/managed-by" = "vynil"
-    "app.kubernetes.io/name" = var.component
+    "app.kubernetes.io/name" = "cloudnative-pg"
     "app.kubernetes.io/instance" = var.instance
   }
 }
-
 data "kustomization_overlay" "data" {
   common_labels = local.common-labels
   namespace = var.namespace
