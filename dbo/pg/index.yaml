@@ -6,35 +6,6 @@ metadata:
   name: pg
   description: CloudNativePG is an open source operator designed to manage PostgreSQL workloads on any supported Kubernetes cluster running in private, public, hybrid, or multi-cloud environments. CloudNativePG adheres to DevOps principles and concepts such as declarative configuration and immutable infrastructure.
 options:
-  image:
-    default:
-      pullPolicy: IfNotPresent
-      registry: ghcr.io
-      repository: cloudnative-pg/cloudnative-pg
-      tag: 1.20.2
-    examples:
-    - pullPolicy: IfNotPresent
-      registry: ghcr.io
-      repository: cloudnative-pg/cloudnative-pg
-      tag: 1.20.2
-    properties:
-      pullPolicy:
-        default: IfNotPresent
-        enum:
-        - Always
-        - Never
-        - IfNotPresent
-        type: string
-      registry:
-        default: ghcr.io
-        type: string
-      repository:
-        default: cloudnative-pg/cloudnative-pg
-        type: string
-      tag:
-        default: 1.20.2
-        type: string
-    type: object
   resources:
     default:
       limits:
@@ -75,6 +46,35 @@ options:
             default: 100Mi
             type: string
         type: object
+    type: object
+  image:
+    default:
+      pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: cloudnative-pg/cloudnative-pg
+      tag: 1.20.2
+    examples:
+    - pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: cloudnative-pg/cloudnative-pg
+      tag: 1.20.2
+    properties:
+      pullPolicy:
+        default: IfNotPresent
+        enum:
+        - Always
+        - Never
+        - IfNotPresent
+        type: string
+      registry:
+        default: ghcr.io
+        type: string
+      repository:
+        default: cloudnative-pg/cloudnative-pg
+        type: string
+      tag:
+        default: 1.20.2
+        type: string
     type: object
 dependencies:
 - dist: null
