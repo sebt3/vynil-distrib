@@ -31,7 +31,7 @@ fn pre_install() {
         "apiextensions.k8s.io_v1_CustomResourceDefinition_poolers.postgresql.cnpg.io.yaml",
         "apiextensions.k8s.io_v1_CustomResourceDefinition_scheduledbackups.postgresql.cnpg.io.yaml"
     ] {
-        shell(`kubectl apply -f ${file}`);
+        shell(`kubectl apply -f ${global::SRC}/${file}`);
     }
 }
 
