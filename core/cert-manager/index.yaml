@@ -8,12 +8,6 @@ metadata:
     Cloud native certificate management
     X.509 certificate management for Kubernetes
 options:
-  release:
-    default: 1.12.2
-    description: cert-manager version to use
-    examples:
-    - 1.12.2
-    type: string
   images:
     default:
       cainjector:
@@ -115,8 +109,15 @@ options:
             type: string
         type: object
     type: object
+  release:
+    default: 1.12.2
+    description: cert-manager version to use
+    examples:
+    - 1.12.2
+    type: string
 dependencies:
 - dist: null
   category: crd
   component: cert-manager
 providers: null
+tfaddtype: null

@@ -65,6 +65,11 @@ options:
             type: string
         type: object
     type: object
+  timezone:
+    default: Europe/Paris
+    examples:
+    - Europe/Paris
+    type: string
   resources:
     default:
       limits:
@@ -106,11 +111,6 @@ options:
             type: string
         type: object
     type: object
-  timezone:
-    default: Europe/Paris
-    examples:
-    - Europe/Paris
-    type: string
 dependencies:
 - dist: null
   category: crd
@@ -119,3 +119,4 @@ dependencies:
   category: crd
   component: k8up
 providers: null
+tfaddtype: null

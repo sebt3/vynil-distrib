@@ -27,7 +27,7 @@ resource "kustomization_resource" "main_no_ns" {
     update = "5m"
   }
 
-  depends_on = [kustomization_resource.pre]
+  depends_on = [kustomization_resource.pre_no_ns]
 }
 
 # finally, loop through resources in ids_prio[2]
@@ -41,5 +41,5 @@ resource "kustomization_resource" "post_no_ns" {
     : data.kustomization_overlay.data_no_ns.manifests[each.value]
   )
 
-  depends_on = [kustomization_resource.main]
+  depends_on = [kustomization_resource.main_no_ns]
 }
