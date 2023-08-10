@@ -1,3 +1,4 @@
+---
 # Expose the http port of the service
 apiVersion: v1
 kind: Service
