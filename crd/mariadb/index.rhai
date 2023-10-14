@@ -5,6 +5,6 @@ fn pre_install() {
         return;
     }
     for file in ["crds.yaml"] {
-        shell(`kubectl apply -f https://raw.githubusercontent.com/mariadb-operator/mariadb-operator/v${global::VERSION}/deploy/crds/${file}`);
+        shell(`kubectl create -f https://raw.githubusercontent.com/mariadb-operator/mariadb-operator/v${global::VERSION}/deploy/crds/${file}`);
     }
 }
