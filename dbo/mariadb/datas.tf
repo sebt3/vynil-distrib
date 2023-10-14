@@ -61,6 +61,8 @@ data "kustomization_overlay" "data" {
       kind: MutatingWebhookConfiguration
       metadata:
         name: mariadb-operator-webhook
+        annotations:
+          cert-manager.io/inject-ca-from: ${var.namespace}/mariadb-operator-webhook-cert
       webhooks:
       - name: mmariadb.kb.io
         clientConfig:
