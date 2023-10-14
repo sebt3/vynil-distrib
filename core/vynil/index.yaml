@@ -12,7 +12,7 @@ options:
         pullPolicy: IfNotPresent
         registry: docker.io
         repository: sebt3/vynil-agent
-        tag: 0.2.1
+        tag: 0.2.2
       operator:
         pullPolicy: IfNotPresent
         registry: docker.io
@@ -23,7 +23,7 @@ options:
         pullPolicy: IfNotPresent
         registry: docker.io
         repository: sebt3/vynil-agent
-        tag: 0.2.1
+        tag: 0.2.2
       operator:
         pullPolicy: IfNotPresent
         registry: docker.io
@@ -35,7 +35,7 @@ options:
           pullPolicy: IfNotPresent
           registry: docker.io
           repository: sebt3/vynil-agent
-          tag: 0.2.1
+          tag: 0.2.2
         properties:
           pullPolicy:
             default: IfNotPresent
@@ -51,7 +51,7 @@ options:
             default: sebt3/vynil-agent
             type: string
           tag:
-            default: 0.2.1
+            default: 0.2.2
             description: vynil-agent version to use
             type: string
         type: object
