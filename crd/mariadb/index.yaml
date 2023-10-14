@@ -12,9 +12,10 @@ options:
     - true
     type: boolean
   release:
-    default: 0.0.11
+    default: 0.0.22
     examples:
-    - 0.0.11
+    - 0.0.22
     type: string
 dependencies: []
 providers: null
+tfaddtype: null
