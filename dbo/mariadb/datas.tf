@@ -44,11 +44,29 @@ data "kustomization_overlay" "data" {
       apiVersion: monitoring.coreos.com/v1
       kind: ServiceMonitor
       metadata:
-        name: mariadb-operator-webhook
+        name: mariadb-operator
       spec:
         namespaceSelector:
           matchNames:
           - "${var.namespace}"
+    EOF
+  }
+  patches {
+    target {
+      kind = "MutatingWebhookConfiguration"
+      name = "mariadb-operator-webhook"
+    }
+    patch = <<-EOF
+      apiVersion: admissionregistration.k8s.io/v1
+      kind: MutatingWebhookConfiguration
+      metadata:
+        name: mariadb-operator-webhook
+      webhooks:
+      - name: mmariadb.kb.io
+        clientConfig:
+          service:
+            name: mariadb-operator-webhook
+            namespace: "${var.namespace}"
     EOF
   }
   patches {

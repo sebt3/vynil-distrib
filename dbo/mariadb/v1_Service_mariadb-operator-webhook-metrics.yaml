@@ -5,11 +5,11 @@ metadata:
   name: mariadb-operator-webhook-metrics
   labels:
     
-    helm.sh/chart: mariadb-operator-0.16.0
+    helm.sh/chart: mariadb-operator-0.22.0
     app.kubernetes.io/name: mariadb-operator-webhook
     app.kubernetes.io/instance: mariadb-operator
     
-    app.kubernetes.io/version: "v0.0.16"
+    app.kubernetes.io/version: "v0.0.22"
     
     app.kubernetes.io/managed-by: Helm
 spec:

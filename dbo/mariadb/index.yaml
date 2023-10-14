@@ -17,3 +17,4 @@ dependencies:
   category: crd
   component: mariadb
 providers: null
+tfaddtype: null

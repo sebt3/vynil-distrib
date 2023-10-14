@@ -5,10 +5,10 @@ metadata:
   name: mariadb-operator
   labels:
     
-    helm.sh/chart: mariadb-operator-0.16.0
+    helm.sh/chart: mariadb-operator-0.22.0
     app.kubernetes.io/name: mariadb-operator
     app.kubernetes.io/instance: mariadb-operator
-    app.kubernetes.io/version: "v0.0.16"
+    app.kubernetes.io/version: "v0.0.22"
     app.kubernetes.io/managed-by: Helm
 spec:
   
@@ -33,7 +33,7 @@ spec:
       
       
       containers:
-        - image: "ghcr.io/mariadb-operator/mariadb-operator:v0.0.16"
+        - image: "ghcr.io/mariadb-operator/mariadb-operator:v0.0.22"
           imagePullPolicy: IfNotPresent
           name: controller
           args:
@@ -57,3 +57,20 @@ spec:
                   fieldPath: metadata.namespace
             - name: MARIADB_OPERATOR_SA_PATH
               value: /var/run/secrets/kubernetes.io/serviceaccount/token
+          
+          
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          startupProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
