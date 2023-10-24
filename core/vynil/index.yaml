@@ -6,6 +6,47 @@ metadata:
   name: vynil
   description: Vynil is a package manager for the kubernetes operating system
 options:
+  resources:
+    default:
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
+    examples:
+    - limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 100Mi
+    properties:
+      limits:
+        default:
+          cpu: 200m
+          memory: 256Mi
+        properties:
+          cpu:
+            default: 200m
+            type: string
+          memory:
+            default: 256Mi
+            type: string
+        type: object
+      requests:
+        default:
+          cpu: 50m
+          memory: 100Mi
+        properties:
+          cpu:
+            default: 50m
+            type: string
+          memory:
+            default: 100Mi
+            type: string
+        type: object
+    type: object
   images:
     default:
       agent:
@@ -78,47 +119,6 @@ options:
           tag:
             default: 0.2.1
             description: vynil-operator version to use
-            type: string
-        type: object
-    type: object
-  resources:
-    default:
-      limits:
-        cpu: 200m
-        memory: 256Mi
-      requests:
-        cpu: 50m
-        memory: 100Mi
-    examples:
-    - limits:
-        cpu: 200m
-        memory: 256Mi
-      requests:
-        cpu: 50m
-        memory: 100Mi
-    properties:
-      limits:
-        default:
-          cpu: 200m
-          memory: 256Mi
-        properties:
-          cpu:
-            default: 200m
-            type: string
-          memory:
-            default: 256Mi
-            type: string
-        type: object
-      requests:
-        default:
-          cpu: 50m
-          memory: 100Mi
-        properties:
-          cpu:
-            default: 50m
-            type: string
-          memory:
-            default: 100Mi
             type: string
         type: object
     type: object
