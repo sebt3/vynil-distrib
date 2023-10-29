@@ -10,13 +10,13 @@ options:
     default:
       pullPolicy: IfNotPresent
       registry: ghcr.io
-      repository: stakater/reloader
-      tag: v1.0.48
+      repository: nccloud/mayfly
+      tag: 0.1.3
     examples:
     - pullPolicy: IfNotPresent
       registry: ghcr.io
-      repository: stakater/reloader
-      tag: v1.0.48
+      repository: nccloud/mayfly
+      tag: 0.1.3
     properties:
       pullPolicy:
         default: IfNotPresent
@@ -25,10 +25,10 @@ options:
         default: ghcr.io
         type: string
       repository:
-        default: stakater/reloader
+        default: nccloud/mayfly
         type: string
       tag:
-        default: v1.0.48
+        default: 0.1.3
         type: string
     type: object
 dependencies: []
