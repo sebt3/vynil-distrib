@@ -43,6 +43,9 @@ spec:
               memory: 1Gi
           securityContext:
             allowPrivilegeEscalation: false
+          env:
+            - name: null
+              value: null
       serviceAccountName: mayfly
       securityContext:
         runAsNonRoot: true

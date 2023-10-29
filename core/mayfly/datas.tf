@@ -31,6 +31,9 @@ data "kustomization_overlay" "data" {
             - name: manager
               image: "${var.image.registry}/${var.image.repository}:${var.image.tag}"
               imagePullPolicy: "${var.image.pullPolicy}"
+              env:
+              - name: RESOURCES
+                value: "${var.targets}"
     EOF
   }
   patches {
