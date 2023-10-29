@@ -1,0 +1,49 @@
+# Source: mayfly/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mayfly
+  namespace: vynil-tools
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mayfly
+  template:
+    metadata:
+      labels:
+        app: mayfly
+    spec:
+      containers:
+        - name: manager
+          command: ["/app/manager"]
+          image: ghcr.io/nccloud/mayfly:latest
+          ports:
+          - name: metric
+            containerPort: 8082
+            protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8083
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8083
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            limits:
+              cpu: 500m
+              memory: 2Gi
+            requests:
+              cpu: 250m
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+      serviceAccountName: mayfly
+      securityContext:
+        runAsNonRoot: true
+      imagePullSecrets:

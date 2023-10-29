@@ -1,0 +1,36 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: reloader
+  description: null
+options:
+  image:
+    default:
+      pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: nccloud/mayfly
+      tag: 0.1.3
+    examples:
+    - pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: nccloud/mayfly
+      tag: 0.1.3
+    properties:
+      pullPolicy:
+        default: IfNotPresent
+        type: string
+      registry:
+        default: ghcr.io
+        type: string
+      repository:
+        default: nccloud/mayfly
+        type: string
+      tag:
+        default: 0.1.3
+        type: string
+    type: object
+dependencies: []
+providers: null
+tfaddtype: null
