@@ -1,0 +1,43 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: dbo
+metadata:
+  name: ndb
+  description: null
+options:
+  image:
+    default:
+      pullPolicy: IfNotPresent
+      registry: container-registry.oracle.com
+      repository: mysql/community-ndb-operator
+      tag: 8.2.0-1.2.0
+    examples:
+    - pullPolicy: IfNotPresent
+      registry: container-registry.oracle.com
+      repository: mysql/community-ndb-operator
+      tag: 8.2.0-1.2.0
+    properties:
+      properties:
+        default: null
+        pullPolicy:
+          enum:
+          - Always
+          - Never
+          - IfNotPresent
+      pullPolicy:
+        default: IfNotPresent
+        type: string
+      registry:
+        default: container-registry.oracle.com
+        type: string
+      repository:
+        default: mysql/community-ndb-operator
+        type: string
+      tag:
+        default: 8.2.0-1.2.0
+        type: string
+    type: object
+dependencies: []
+providers: null
+tfaddtype: null

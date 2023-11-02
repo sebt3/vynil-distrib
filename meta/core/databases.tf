@@ -3,6 +3,7 @@ locals {
     redis = { for k, v in var.databases.redis : k => v if k!="enable" }
     rabbitmq = { for k, v in var.databases.rabbitmq : k => v if k!="enable" }
     mariadb = { for k, v in var.databases.mariadb : k => v if k!="enable" }
+    ndb = { for k, v in var.databases.ndb : k => v if k!="enable" }
     mongo = { for k, v in var.databases.mongo : k => v if k!="enable" }
     pg = { for k, v in var.databases.pg : k => v if k!="enable" }
 }
@@ -85,6 +86,24 @@ resource "kubectl_manifest" "mariadb" {
       category: "dbo"
       component: "mariadb"
       options: ${jsonencode(local.mariadb)}
+  EOF
+}
+
+resource "kubectl_manifest" "ndb" {
+  count = var.databases.ndb.enable? 1 : 0
+  depends_on = [kubernetes_namespace_v1.databases-ns, kubectl_manifest.crd-ndb]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "dbo-ndb"
+      namespace: "${var.databases.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "dbo"
+      component: "ndb"
+      options: ${jsonencode(local.ndb)}
   EOF
 }
 

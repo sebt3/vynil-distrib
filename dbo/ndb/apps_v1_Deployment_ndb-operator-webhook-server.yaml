@@ -1,0 +1,41 @@
+# Source: ndb-operator/templates/deployments.yaml
+# Deploy the webhook server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ndb-operator-webhook-server
+  namespace: vynil-dbo
+  labels:
+    release: 8.2.0-1.2.0
+    app: ndb-operator-webhook-deployment
+spec:
+  selector:
+    matchLabels:
+      app: ndb-operator-webhook-server
+  template:
+    metadata:
+      labels:
+        app: ndb-operator-webhook-server
+    spec:
+      # use the account created above to run the server
+      serviceAccountName: ndb-operator-webhook-sa
+      containers:
+        - name: ndb-operator-webhook
+          image: container-registry.oracle.com/mysql/community-ndb-operator:8.2.0-1.2.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            # expose the web server port
+            - containerPort: 9443
+          command:
+            - ndb-operator-webhook
+          args:
+            - -service=ndb-operator-webhook-service
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 9443
+              scheme: HTTPS
+  # set maxUnavailable to 0 so that helm will wait for the pod to become ready
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0

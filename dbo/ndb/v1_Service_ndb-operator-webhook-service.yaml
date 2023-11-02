@@ -1,0 +1,12 @@
+# Source: ndb-operator/templates/services.yaml
+# Service to expose the webhook
+apiVersion: v1
+kind: Service
+metadata:
+  name: ndb-operator-webhook-service
+  namespace: vynil-dbo
+spec:
+  ports:
+    - port: 9443
+  selector:
+    app: ndb-operator-webhook-server
