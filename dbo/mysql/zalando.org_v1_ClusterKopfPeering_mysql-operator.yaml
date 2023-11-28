@@ -1,0 +1,5 @@
+# Source: mysql-operator/templates/cluster_kopf_keepering.yaml
+apiVersion: zalando.org/v1
+kind: ClusterKopfPeering
+metadata:
+  name: mysql-operator

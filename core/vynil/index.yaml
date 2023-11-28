@@ -6,6 +6,81 @@ metadata:
   name: vynil
   description: Vynil is a package manager for the kubernetes operating system
 options:
+  images:
+    default:
+      agent:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: sebt3/vynil-agent
+        tag: 0.2.5
+      operator:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: sebt3/vynil-operator
+        tag: 0.2.5
+    examples:
+    - agent:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: sebt3/vynil-agent
+        tag: 0.2.5
+      operator:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: sebt3/vynil-operator
+        tag: 0.2.5
+    properties:
+      agent:
+        default:
+          pullPolicy: IfNotPresent
+          registry: docker.io
+          repository: sebt3/vynil-agent
+          tag: 0.2.5
+        properties:
+          pullPolicy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: sebt3/vynil-agent
+            type: string
+          tag:
+            default: 0.2.5
+            description: vynil-agent version to use
+            type: string
+        type: object
+      operator:
+        default:
+          pullPolicy: IfNotPresent
+          registry: docker.io
+          repository: sebt3/vynil-operator
+          tag: 0.2.5
+        properties:
+          pullPolicy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: sebt3/vynil-operator
+            type: string
+          tag:
+            default: 0.2.5
+            description: vynil-operator version to use
+            type: string
+        type: object
+    type: object
   resources:
     default:
       limits:
@@ -44,81 +119,6 @@ options:
             type: string
           memory:
             default: 100Mi
-            type: string
-        type: object
-    type: object
-  images:
-    default:
-      agent:
-        pullPolicy: IfNotPresent
-        registry: docker.io
-        repository: sebt3/vynil-agent
-        tag: 0.2.2
-      operator:
-        pullPolicy: IfNotPresent
-        registry: docker.io
-        repository: sebt3/vynil-operator
-        tag: 0.2.1
-    examples:
-    - agent:
-        pullPolicy: IfNotPresent
-        registry: docker.io
-        repository: sebt3/vynil-agent
-        tag: 0.2.2
-      operator:
-        pullPolicy: IfNotPresent
-        registry: docker.io
-        repository: sebt3/vynil-operator
-        tag: 0.2.1
-    properties:
-      agent:
-        default:
-          pullPolicy: IfNotPresent
-          registry: docker.io
-          repository: sebt3/vynil-agent
-          tag: 0.2.2
-        properties:
-          pullPolicy:
-            default: IfNotPresent
-            enum:
-            - Always
-            - Never
-            - IfNotPresent
-            type: string
-          registry:
-            default: docker.io
-            type: string
-          repository:
-            default: sebt3/vynil-agent
-            type: string
-          tag:
-            default: 0.2.2
-            description: vynil-agent version to use
-            type: string
-        type: object
-      operator:
-        default:
-          pullPolicy: IfNotPresent
-          registry: docker.io
-          repository: sebt3/vynil-operator
-          tag: 0.2.1
-        properties:
-          pullPolicy:
-            default: IfNotPresent
-            enum:
-            - Always
-            - Never
-            - IfNotPresent
-            type: string
-          registry:
-            default: docker.io
-            type: string
-          repository:
-            default: sebt3/vynil-operator
-            type: string
-          tag:
-            default: 0.2.1
-            description: vynil-operator version to use
             type: string
         type: object
     type: object

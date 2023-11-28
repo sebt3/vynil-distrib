@@ -11,14 +11,18 @@ locals {
     crd-flux = { for k, v in var.crds.flux : k => v if k!="enable" }
     crd-redis = { for k, v in var.crds.redis : k => v if k!="enable" }
     crd-mariadb = { for k, v in var.crds.mariadb : k => v if k!="enable" }
+<<<<<<< Updated upstream
+    crd-mysql = { for k, v in var.crds.mysql : k => v if k!="enable" }
+=======
     crd-ndb = { for k, v in var.crds.ndb : k => v if k!="enable" }
+>>>>>>> Stashed changes
     crd-rabbitmq = { for k, v in var.crds.rabbitmq : k => v if k!="enable" }
     crd-mongo = { for k, v in var.crds.mongo : k => v if k!="enable" }
     crd-pg = { for k, v in var.crds.pg : k => v if k!="enable" }
 }
 
 resource "kubectl_manifest" "crd-prometheus" {
-  count = (var.crds.prometheus.enable || var.databases.mariadb.enable || var.traefik.enable) ? 1 : 0
+  count = (var.crds.prometheus.enable || var.databases.mariadb.enable || var.databases.mysql.enable || var.traefik.enable) ? 1 : 0
   yaml_body  = <<-EOF
     apiVersion: "vynil.solidite.fr/v1"
     kind: "Install"
@@ -153,20 +157,20 @@ resource "kubectl_manifest" "crd-mariadb" {
   EOF
 }
 
-resource "kubectl_manifest" "crd-ndb" {
-  count = (var.crds.ndb.enable || var.databases.ndb.enable)? 1 : 0
+resource "kubectl_manifest" "crd-mysql" {
+  count = (var.crds.mysql.enable || var.databases.mysql.enable)? 1 : 0
   yaml_body  = <<-EOF
     apiVersion: "vynil.solidite.fr/v1"
     kind: "Install"
     metadata:
-      name: "crd-ndb"
+      name: "crd-mysql"
       namespace: "${var.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
       distrib: "core"
       category: "crd"
-      component: "ndb"
-      options: ${jsonencode(local.crd-ndb)}
+      component: "mysql"
+      options: ${jsonencode(local.crd-mysql)}
   EOF
 }
 

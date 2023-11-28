@@ -1,0 +1,61 @@
+# Source: mysql-operator/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-operator
+  namespace: dbo-mysql
+  labels:
+    version: "8.2.0-2.1.1"
+    app.kubernetes.io/name: mysql-operator
+    app.kubernetes.io/instance: mysql-operator
+    app.kubernetes.io/version: "8.2.0-2.1.1"
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/managed-by: helm
+    app.kubernetes.io/created-by: helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: mysql-operator
+  template:
+    metadata:
+      labels:
+        name: mysql-operator
+    spec:
+      containers:
+        - name: mysql-operator
+          image: container-registry.oracle.com/mysql/community-operator:8.2.0-2.1.1
+          imagePullPolicy: IfNotPresent
+          args: ["mysqlsh", "--log-level=@INFO", "--pym", "mysqloperator", "operator"]
+          env:
+          - name: MYSQLSH_USER_CONFIG_HOME
+            value: /mysqlsh
+          - name: MYSQLSH_CREDENTIAL_STORE_SAVE_PASSWORDS
+            value: never
+          
+          - name: MYSQL_OPERATOR_IMAGE_PULL_POLICY
+            value: IfNotPresent
+          
+          readinessProbe:
+            exec:
+              command:
+              - cat
+              - /tmp/mysql-operator-ready
+            initialDelaySeconds: 1
+            periodSeconds: 3
+          volumeMounts:
+            - name: mysqlsh-home
+              mountPath: /mysqlsh
+            - name: tmpdir
+              mountPath: /tmp
+          securityContext:
+            runAsUser: 2
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: true
+      volumes:
+        - name: mysqlsh-home
+          emptyDir: {}
+        - name: tmpdir
+          emptyDir: {}
+      serviceAccountName: mysql-operator-sa
