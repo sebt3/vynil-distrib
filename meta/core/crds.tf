@@ -11,11 +11,7 @@ locals {
     crd-flux = { for k, v in var.crds.flux : k => v if k!="enable" }
     crd-redis = { for k, v in var.crds.redis : k => v if k!="enable" }
     crd-mariadb = { for k, v in var.crds.mariadb : k => v if k!="enable" }
-<<<<<<< Updated upstream
     crd-mysql = { for k, v in var.crds.mysql : k => v if k!="enable" }
-=======
-    crd-ndb = { for k, v in var.crds.ndb : k => v if k!="enable" }
->>>>>>> Stashed changes
     crd-rabbitmq = { for k, v in var.crds.rabbitmq : k => v if k!="enable" }
     crd-mongo = { for k, v in var.crds.mongo : k => v if k!="enable" }
     crd-pg = { for k, v in var.crds.pg : k => v if k!="enable" }

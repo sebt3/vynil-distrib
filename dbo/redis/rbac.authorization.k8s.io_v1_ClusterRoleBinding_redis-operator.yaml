@@ -4,12 +4,13 @@ kind: ClusterRoleBinding
 metadata:
   name: redis-operator
   labels:
-    control-plane: "redis-operator"
-    app.kubernetes.io/name: redis-operator
-    helm.sh/chart: redis-operator-0.15.3
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/instance: redis-operator
-    app.kubernetes.io/version: 0.15.0
+    app.kubernetes.io/name : redis-operator
+    helm.sh/chart : redis-operator-0.15.9
+    app.kubernetes.io/managed-by : Helm
+    app.kubernetes.io/instance : redis-operator
+    app.kubernetes.io/version : 0.15.1
+    app.kubernetes.io/component: role-binding
+    app.kubernetes.io/part-of : redis-operator
 subjects:
 - kind: ServiceAccount
   name: redis-operator
