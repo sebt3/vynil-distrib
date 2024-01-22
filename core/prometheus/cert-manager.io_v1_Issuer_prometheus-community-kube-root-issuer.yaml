@@ -1,0 +1,10 @@
+# Source: kube-prometheus-stack/templates/prometheus-operator/certmanager.yaml
+# Create an Issuer that uses the above generated CA certificate to issue certs
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: prometheus-community-kube-root-issuer
+  namespace: vynil-monitor
+spec:
+  ca:
+    secretName: prometheus-community-kube-root-cert

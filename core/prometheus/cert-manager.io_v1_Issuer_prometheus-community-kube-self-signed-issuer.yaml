@@ -1,0 +1,10 @@
+# Source: kube-prometheus-stack/templates/prometheus-operator/certmanager.yaml
+# Create a selfsigned Issuer, in order to create a root CA certificate for
+# signing webhook serving certificates
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: prometheus-community-kube-self-signed-issuer
+  namespace: vynil-monitor
+spec:
+  selfSigned: {}

@@ -1,0 +1,15 @@
+# Source: kube-prometheus-stack/templates/prometheus-operator/certmanager.yaml
+# generate a server certificate for the apiservices to use
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: prometheus-community-kube-admission
+  namespace: vynil-monitor
+spec:
+  secretName: prometheus-community-kube-admission
+  duration: "8760h0m0s"
+  issuerRef:
+    name: prometheus-community-kube-root-issuer
+  dnsNames:
+    - prometheus-community-kube-operator
+    - prometheus-community-kube-operator.vynil-monitor.svc

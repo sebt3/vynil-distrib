@@ -1,0 +1,57 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: prometheus
+  description: Prometheus operator
+options:
+  images:
+    default:
+      operator:
+        pullPolicy: IfNotPresent
+        registry: quay.io
+        repository: prometheus-operator/prometheus-operator
+        tag: v0.71.0
+    examples:
+    - operator:
+        pullPolicy: IfNotPresent
+        registry: quay.io
+        repository: prometheus-operator/prometheus-operator
+        tag: v0.71.0
+    properties:
+      operator:
+        default:
+          pullPolicy: IfNotPresent
+          registry: quay.io
+          repository: prometheus-operator/prometheus-operator
+          tag: v0.71.0
+        properties:
+          pullPolicy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: quay.io
+            type: string
+          repository:
+            default: prometheus-operator/prometheus-operator
+            type: string
+          tag:
+            default: v0.71.0
+            type: string
+        type: object
+    type: object
+dependencies: []
+providers:
+  kubernetes: true
+  authentik: null
+  kubectl: true
+  postgresql: null
+  restapi: null
+  http: null
+  gitea: null
+tfaddtype: null

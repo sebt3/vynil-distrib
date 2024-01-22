@@ -1,0 +1,14 @@
+# Source: kube-prometheus-stack/templates/prometheus-operator/certmanager.yaml
+# Generate a CA Certificate used to sign certificates for the webhook
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: prometheus-community-kube-root-cert
+  namespace: vynil-monitor
+spec:
+  secretName: prometheus-community-kube-root-cert
+  duration: "43800h0m0s"
+  issuerRef:
+    name: prometheus-community-kube-self-signed-issuer
+  commonName: "ca.webhook.kube-prometheus-stack"
+  isCA: true
