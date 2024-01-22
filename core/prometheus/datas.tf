@@ -32,7 +32,7 @@ data "kustomization_overlay" "data" {
     }
     patch = <<-EOF
     - op: replace
-      path: /spec/template/spec/0/imagePullPolicy
+      path: /spec/template/spec/containers/0/imagePullPolicy
       value: "${var.images.operator.pullPolicy}"
     EOF
   }
