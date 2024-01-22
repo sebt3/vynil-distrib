@@ -84,41 +84,41 @@ options:
   resources:
     default:
       limits:
-        cpu: 200m
-        memory: 256Mi
+        cpu: 500m
+        memory: 512Mi
       requests:
         cpu: 50m
-        memory: 100Mi
+        memory: 256Mi
     examples:
     - limits:
-        cpu: 200m
-        memory: 256Mi
+        cpu: 500m
+        memory: 512Mi
       requests:
         cpu: 50m
-        memory: 100Mi
+        memory: 256Mi
     properties:
       limits:
         default:
-          cpu: 200m
-          memory: 256Mi
+          cpu: 500m
+          memory: 512Mi
         properties:
           cpu:
-            default: 200m
+            default: 500m
             type: string
           memory:
-            default: 256Mi
+            default: 512Mi
             type: string
         type: object
       requests:
         default:
           cpu: 50m
-          memory: 100Mi
+          memory: 256Mi
         properties:
           cpu:
             default: 50m
             type: string
           memory:
-            default: 100Mi
+            default: 256Mi
             type: string
         type: object
     type: object
