@@ -6,17 +6,83 @@ metadata:
   name: core
   description: core meta-component installing all the core components
 options:
-  backup:
+  security:
     default:
-      k8up:
+      cert-manager:
         enable: true
-      namespace: vynil-backup
+      letsencrypt:
+        enable: false
+      namespace: vynil-security
+      secret-generator:
+        enable: true
+      self-sign:
+        enable: false
     examples:
-    - k8up:
+    - cert-manager:
         enable: true
-      namespace: vynil-backup
+      letsencrypt:
+        enable: false
+      namespace: vynil-security
+      secret-generator:
+        enable: true
+      self-sign:
+        enable: false
     properties:
-      k8up:
+      cert-manager:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      letsencrypt:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      namespace:
+        default: vynil-security
+        type: string
+      secret-generator:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      self-sign:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+    type: object
+  tools:
+    default:
+      mayfly:
+        enable: true
+      namespace: vynil-tools
+      prometheus:
+        enable: true
+      reloader:
+        enable: true
+    examples:
+    - mayfly:
+        enable: true
+      namespace: vynil-tools
+      prometheus:
+        enable: true
+      reloader:
+        enable: true
+    properties:
+      mayfly:
         default:
           enable: true
         properties:
@@ -25,8 +91,24 @@ options:
             type: boolean
         type: object
       namespace:
-        default: vynil-backup
+        default: vynil-tools
         type: string
+      prometheus:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      reloader:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
     type: object
   crds:
     default:
@@ -177,6 +259,21 @@ options:
             type: boolean
         type: object
     type: object
+  traefik:
+    default:
+      enable: true
+      namespace: traefik
+    examples:
+    - enable: true
+      namespace: traefik
+    properties:
+      enable:
+        default: true
+        type: boolean
+      namespace:
+        default: traefik
+        type: string
+    type: object
   databases:
     default:
       mariadb:
@@ -283,113 +380,6 @@ options:
             type: boolean
         type: object
     type: object
-  security:
-    default:
-      cert-manager:
-        enable: true
-      letsencrypt:
-        enable: false
-      namespace: vynil-security
-      secret-generator:
-        enable: true
-      self-sign:
-        enable: false
-    examples:
-    - cert-manager:
-        enable: true
-      letsencrypt:
-        enable: false
-      namespace: vynil-security
-      secret-generator:
-        enable: true
-      self-sign:
-        enable: false
-    properties:
-      cert-manager:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      letsencrypt:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      namespace:
-        default: vynil-security
-        type: string
-      secret-generator:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      self-sign:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-    type: object
-  tools:
-    default:
-      mayfly:
-        enable: true
-      namespace: vynil-tools
-      reloader:
-        enable: true
-    examples:
-    - mayfly:
-        enable: true
-      namespace: vynil-tools
-      reloader:
-        enable: true
-    properties:
-      mayfly:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      namespace:
-        default: vynil-tools
-        type: string
-      reloader:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-    type: object
-  traefik:
-    default:
-      enable: true
-      namespace: traefik
-    examples:
-    - enable: true
-      namespace: traefik
-    properties:
-      enable:
-        default: true
-        type: boolean
-      namespace:
-        default: traefik
-        type: string
-    type: object
   flux:
     default:
       enable: false
@@ -403,6 +393,28 @@ options:
         type: boolean
       namespace:
         default: flux
+        type: string
+    type: object
+  backup:
+    default:
+      k8up:
+        enable: true
+      namespace: vynil-backup
+    examples:
+    - k8up:
+        enable: true
+      namespace: vynil-backup
+    properties:
+      k8up:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      namespace:
+        default: vynil-backup
         type: string
     type: object
 dependencies: []
