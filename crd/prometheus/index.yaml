@@ -7,9 +7,9 @@ metadata:
   description: CRD for Prometheus Operator
 options:
   release:
-    default: 0.65.1
+    default: 0.71.0
     examples:
-    - 0.65.1
+    - 0.71.0
     type: string
   apply:
     default: true
@@ -18,3 +18,4 @@ options:
     type: boolean
 dependencies: []
 providers: null
+tfaddtype: null
