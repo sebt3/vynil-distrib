@@ -3,6 +3,7 @@ locals {
       "vynil.solidite.fr/meta" = "core"
       "vynil.solidite.fr/name" = var.namespace
     }
+    crd-opentelemetry = { for k, v in var.crds.opentelemetry : k => v if k!="enable" }
     crd-prometheus = { for k, v in var.crds.prometheus : k => v if k!="enable" }
     crd-k8up = { for k, v in var.crds.k8up : k => v if k!="enable" }
     crd-secret-generator = { for k, v in var.crds.secret-generator : k => v if k!="enable" }
@@ -17,8 +18,25 @@ locals {
     crd-pg = { for k, v in var.crds.pg : k => v if k!="enable" }
 }
 
+resource "kubectl_manifest" "crd-opentelemetry" {
+  count = (var.crds.opentelemetry.enable || var.tools.opentelemetry.enable) ? 1 : 0
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-opentelemetry"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "crd"
+      component: "opentelemetry"
+      options: ${jsonencode(local.crd-opentelemetry)}
+  EOF
+}
+
 resource "kubectl_manifest" "crd-prometheus" {
-  count = (var.crds.prometheus.enable || var.databases.mariadb.enable || var.databases.mysql.enable || var.traefik.enable) ? 1 : 0
+  count = (var.crds.prometheus.enable || var.tools.prometheus.enable) ? 1 : 0
   yaml_body  = <<-EOF
     apiVersion: "vynil.solidite.fr/v1"
     kind: "Install"

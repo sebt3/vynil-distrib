@@ -1,0 +1,362 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: opentelemetry
+  description: null
+options:
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
+  images:
+    default:
+      operator:
+        pullPolicy: IfNotPresent
+        registry: ghcr.io
+        repository: open-telemetry/opentelemetry-operator/opentelemetry-operator
+        tag: 0.92.1
+      rbac_proxy:
+        pullPolicy: IfNotPresent
+        registry: quay.io
+        repository: brancz/kube-rbac-proxy
+        tag: v0.15.0
+    examples:
+    - operator:
+        pullPolicy: IfNotPresent
+        registry: ghcr.io
+        repository: open-telemetry/opentelemetry-operator/opentelemetry-operator
+        tag: 0.92.1
+      rbac_proxy:
+        pullPolicy: IfNotPresent
+        registry: quay.io
+        repository: brancz/kube-rbac-proxy
+        tag: v0.15.0
+    properties:
+      operator:
+        default:
+          pullPolicy: IfNotPresent
+          registry: ghcr.io
+          repository: open-telemetry/opentelemetry-operator/opentelemetry-operator
+          tag: 0.92.1
+        properties:
+          pullPolicy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: ghcr.io
+            type: string
+          repository:
+            default: open-telemetry/opentelemetry-operator/opentelemetry-operator
+            type: string
+          tag:
+            default: 0.92.1
+            type: string
+        type: object
+      rbac_proxy:
+        default:
+          pullPolicy: IfNotPresent
+          registry: quay.io
+          repository: brancz/kube-rbac-proxy
+          tag: v0.15.0
+        properties:
+          pullPolicy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: quay.io
+            type: string
+          repository:
+            default: brancz/kube-rbac-proxy
+            type: string
+          tag:
+            default: v0.15.0
+            type: string
+        type: object
+    type: object
+  hpa:
+    default:
+      avg-cpu: 50
+      max-replicas: 5
+      min-replicas: 1
+    examples:
+    - avg-cpu: 50
+      max-replicas: 5
+      min-replicas: 1
+    properties:
+      avg-cpu:
+        default: 50
+        type: integer
+      max-replicas:
+        default: 5
+        type: integer
+      min-replicas:
+        default: 1
+        type: integer
+    type: object
+  sso_vynil:
+    default: true
+    examples:
+    - true
+    type: boolean
+  language:
+    default: fr_FR
+    examples:
+    - fr_FR
+    type: string
+  issuer:
+    default: letsencrypt-prod
+    examples:
+    - letsencrypt-prod
+    type: string
+  storage:
+    default:
+      postgres:
+        size: 10Gi
+      redis:
+        size: 2Gi
+      volume:
+        accessMode: ReadWriteOnce
+        class: ''
+        size: 1Gi
+        type: Filesystem
+    description: Configure this app storage
+    examples:
+    - postgres:
+        size: 10Gi
+      redis:
+        size: 2Gi
+      volume:
+        accessMode: ReadWriteOnce
+        class: ''
+        size: 1Gi
+        type: Filesystem
+    properties:
+      postgres:
+        default:
+          size: 10Gi
+        properties:
+          size:
+            default: 10Gi
+            type: string
+        type: object
+      redis:
+        default:
+          size: 2Gi
+        properties:
+          size:
+            default: 2Gi
+            type: string
+        type: object
+      volume:
+        default:
+          accessMode: ReadWriteOnce
+          class: ''
+          size: 1Gi
+          type: Filesystem
+        properties:
+          accessMode:
+            default: ReadWriteOnce
+            enum:
+            - ReadWriteOnce
+            - ReadOnlyMany
+            - ReadWriteMany
+            type: string
+          class:
+            default: ''
+            type: string
+          size:
+            default: 1Gi
+            type: string
+          type:
+            default: Filesystem
+            enum:
+            - Filesystem
+            - Block
+            type: string
+        type: object
+    type: object
+  redis:
+    default:
+      exporter:
+        enabled: true
+    examples:
+    - exporter:
+        enabled: true
+    properties:
+      exporter:
+        default:
+          enabled: true
+        properties:
+          enabled:
+            default: true
+            type: boolean
+        type: object
+    type: object
+  backups:
+    default:
+      enable: false
+      endpoint: ''
+      key_id_key: s3-id
+      restic_key: bck-password
+      retention:
+        db: 30d
+        keepDaily: 14
+        keepMonthly: 12
+        keepWeekly: 6
+        keepYearly: 12
+      schedule:
+        backup: 10 3 * * *
+        check: 10 5 * * 1
+        db: 10 3 * * *
+        prune: 10 1 * * 0
+      secret_key: s3-secret
+      secret_name: backup-settings
+      use_barman: false
+    examples:
+    - enable: false
+      endpoint: ''
+      key_id_key: s3-id
+      restic_key: bck-password
+      retention:
+        db: 30d
+        keepDaily: 14
+        keepMonthly: 12
+        keepWeekly: 6
+        keepYearly: 12
+      schedule:
+        backup: 10 3 * * *
+        check: 10 5 * * 1
+        db: 10 3 * * *
+        prune: 10 1 * * 0
+      secret_key: s3-secret
+      secret_name: backup-settings
+      use_barman: false
+    properties:
+      enable:
+        default: false
+        type: boolean
+      endpoint:
+        default: ''
+        type: string
+      key_id_key:
+        default: s3-id
+        type: string
+      restic_key:
+        default: bck-password
+        type: string
+      retention:
+        default:
+          db: 30d
+          keepDaily: 14
+          keepMonthly: 12
+          keepWeekly: 6
+          keepYearly: 12
+        properties:
+          db:
+            default: 30d
+            type: string
+          keepDaily:
+            default: 14
+            type: integer
+          keepMonthly:
+            default: 12
+            type: integer
+          keepWeekly:
+            default: 6
+            type: integer
+          keepYearly:
+            default: 12
+            type: integer
+        type: object
+      schedule:
+        default:
+          backup: 10 3 * * *
+          check: 10 5 * * 1
+          db: 10 3 * * *
+          prune: 10 1 * * 0
+        properties:
+          backup:
+            default: 10 3 * * *
+            type: string
+          check:
+            default: 10 5 * * 1
+            type: string
+          db:
+            default: 10 3 * * *
+            type: string
+          prune:
+            default: 10 1 * * 0
+            type: string
+        type: object
+      secret_key:
+        default: s3-secret
+        type: string
+      secret_name:
+        default: backup-settings
+        type: string
+      use_barman:
+        default: false
+        type: boolean
+    type: object
+  ingress_class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
+  sub_domain:
+    default: to-be-set
+    examples:
+    - to-be-set
+    type: string
+  timezone:
+    default: Europe/Paris
+    examples:
+    - Europe/Paris
+    type: string
+  domain_name:
+    default: your-company.com
+    examples:
+    - your-company.com
+    type: string
+  replicas:
+    default: 1
+    examples:
+    - 1
+    type: integer
+  postgres:
+    default:
+      replicas: 1
+    examples:
+    - replicas: 1
+    properties:
+      replicas:
+        default: 1
+        type: integer
+    type: object
+  app_group:
+    default: apps
+    examples:
+    - apps
+    type: string
+dependencies: []
+providers:
+  kubernetes: true
+  authentik: true
+  kubectl: true
+  postgresql: null
+  mysql: null
+  restapi: true
+  http: true
+  gitea: null
+tfaddtype: null

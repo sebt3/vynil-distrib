@@ -1,0 +1,20 @@
+---
+# Source: opentelemetry-operator/templates/pdb.yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  labels:
+    helm.sh/chart: opentelemetry-operator-0.46.0
+    app.kubernetes.io/name: opentelemetry-operator
+    app.kubernetes.io/version: "0.92.1"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: open-telemetry
+    app.kubernetes.io/component: controller-manager
+  name: open-telemetry-opentelemetry-operator
+  namespace: vynil-monitor
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: opentelemetry-operator
+      app.kubernetes.io/component: controller-manager

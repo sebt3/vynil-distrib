@@ -1,0 +1,24 @@
+# Source: opentelemetry-operator/templates/certmanager.yaml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  labels:
+    helm.sh/chart: opentelemetry-operator-0.46.0
+    app.kubernetes.io/name: opentelemetry-operator
+    app.kubernetes.io/version: "0.92.1"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: open-telemetry
+    app.kubernetes.io/component: webhook
+  name: open-telemetry-opentelemetry-operator-serving-cert
+  namespace: vynil-monitor
+spec:
+  dnsNames:
+    - open-telemetry-opentelemetry-operator-webhook.vynil-monitor.svc
+    - open-telemetry-opentelemetry-operator-webhook.vynil-monitor.svc.cluster.local
+  issuerRef:
+    kind: Issuer
+    name: open-telemetry-opentelemetry-operator-selfsigned-issuer
+  secretName: open-telemetry-opentelemetry-operator-controller-manager-service-cert
+  subject:
+    organizationalUnits:
+      - open-telemetry-opentelemetry-operator
