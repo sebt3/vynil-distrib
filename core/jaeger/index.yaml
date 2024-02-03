@@ -3,63 +3,44 @@ apiVersion: vinyl.solidite.fr/v1beta1
 kind: Component
 category: core
 metadata:
-  name: opentelemetry
+  name: jaeger
   description: null
 options:
+  replicas:
+    default: 1
+    examples:
+    - 1
+    type: integer
   images:
     default:
       operator:
         pullPolicy: IfNotPresent
-        registry: ghcr.io
-        repository: open-telemetry/opentelemetry-operator/opentelemetry-operator
-        tag: 0.92.1
+        registry: quay.io
+        repository: jaegertracing/jaeger-operator
+        tag: 1.53.0
       rbac_proxy:
         pullPolicy: IfNotPresent
-        registry: quay.io
-        repository: brancz/kube-rbac-proxy
-        tag: v0.15.0
+        registry: gcr.io
+        repository: kubebuilder/kube-rbac-proxy
+        tag: v0.13.1
     examples:
     - operator:
         pullPolicy: IfNotPresent
-        registry: ghcr.io
-        repository: open-telemetry/opentelemetry-operator/opentelemetry-operator
-        tag: 0.92.1
+        registry: quay.io
+        repository: jaegertracing/jaeger-operator
+        tag: 1.53.0
       rbac_proxy:
         pullPolicy: IfNotPresent
-        registry: quay.io
-        repository: brancz/kube-rbac-proxy
-        tag: v0.15.0
+        registry: gcr.io
+        repository: kubebuilder/kube-rbac-proxy
+        tag: v0.13.1
     properties:
       operator:
         default:
           pullPolicy: IfNotPresent
-          registry: ghcr.io
-          repository: open-telemetry/opentelemetry-operator/opentelemetry-operator
-          tag: 0.92.1
-        properties:
-          pullPolicy:
-            default: IfNotPresent
-            enum:
-            - Always
-            - Never
-            - IfNotPresent
-            type: string
-          registry:
-            default: ghcr.io
-            type: string
-          repository:
-            default: open-telemetry/opentelemetry-operator/opentelemetry-operator
-            type: string
-          tag:
-            default: 0.92.1
-            type: string
-        type: object
-      rbac_proxy:
-        default:
-          pullPolicy: IfNotPresent
           registry: quay.io
-          repository: brancz/kube-rbac-proxy
-          tag: v0.15.0
+          repository: jaegertracing/jaeger-operator
+          tag: 1.53.0
         properties:
           pullPolicy:
             default: IfNotPresent
@@ -72,22 +53,41 @@ options:
             default: quay.io
             type: string
           repository:
-            default: brancz/kube-rbac-proxy
+            default: jaegertracing/jaeger-operator
             type: string
           tag:
-            default: v0.15.0
+            default: 1.53.0
+            type: string
+        type: object
+      rbac_proxy:
+        default:
+          pullPolicy: IfNotPresent
+          registry: gcr.io
+          repository: kubebuilder/kube-rbac-proxy
+          tag: v0.13.1
+        properties:
+          pullPolicy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: gcr.io
+            type: string
+          repository:
+            default: kubebuilder/kube-rbac-proxy
+            type: string
+          tag:
+            default: v0.13.1
             type: string
         type: object
     type: object
-  replicas:
-    default: 1
-    examples:
-    - 1
-    type: integer
 dependencies:
 - dist: null
   category: crd
-  component: opentelemetry
+  component: jaeger
 providers:
   kubernetes: true
   authentik: null

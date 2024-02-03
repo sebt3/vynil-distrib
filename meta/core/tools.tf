@@ -3,6 +3,7 @@ locals {
     reloader = { for k, v in var.tools.reloader : k => v if k!="enable" }
     prometheus = { for k, v in var.tools.prometheus : k => v if k!="enable" }
     opentelemetry = { for k, v in var.tools.opentelemetry : k => v if k!="enable" }
+    jaeger = { for k, v in var.tools.jaeger : k => v if k!="enable" }
 }
 
 resource "kubernetes_namespace_v1" "tools-ns" {
@@ -83,5 +84,23 @@ resource "kubectl_manifest" "opentelemetry" {
       category: "core"
       component: "opentelemetry"
       options: ${jsonencode(local.opentelemetry)}
+  EOF
+}
+
+resource "kubectl_manifest" "jaeger" {
+  count = var.tools.jaeger.enable ? 1 : 0
+  depends_on = [kubernetes_namespace_v1.tools-ns]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "jaeger"
+      namespace: "${var.tools.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "core"
+      component: "jaeger"
+      options: ${jsonencode(local.jaeger)}
   EOF
 }

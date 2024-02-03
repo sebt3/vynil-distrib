@@ -4,6 +4,7 @@ locals {
       "vynil.solidite.fr/name" = var.namespace
     }
     crd-opentelemetry = { for k, v in var.crds.opentelemetry : k => v if k!="enable" }
+    crd-jaeger = { for k, v in var.crds.jaeger : k => v if k!="enable" }
     crd-prometheus = { for k, v in var.crds.prometheus : k => v if k!="enable" }
     crd-k8up = { for k, v in var.crds.k8up : k => v if k!="enable" }
     crd-secret-generator = { for k, v in var.crds.secret-generator : k => v if k!="enable" }
@@ -16,6 +17,23 @@ locals {
     crd-rabbitmq = { for k, v in var.crds.rabbitmq : k => v if k!="enable" }
     crd-mongo = { for k, v in var.crds.mongo : k => v if k!="enable" }
     crd-pg = { for k, v in var.crds.pg : k => v if k!="enable" }
+}
+
+resource "kubectl_manifest" "crd-jaeger" {
+  count = (var.crds.jaeger.enable || var.tools.jaeger.enable) ? 1 : 0
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-jaeger"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "crd"
+      component: "jaeger"
+      options: ${jsonencode(local.crd-jaeger)}
+  EOF
 }
 
 resource "kubectl_manifest" "crd-opentelemetry" {
