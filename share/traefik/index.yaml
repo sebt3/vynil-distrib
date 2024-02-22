@@ -11,22 +11,17 @@ options:
     examples:
     - 'true'
     type: string
-  ingressClass:
-    default: traefik
-    examples:
-    - traefik
-    type: string
   image:
     default:
       pullPolicy: IfNotPresent
       registry: docker.io
       repository: traefik
-      tag: v2.10.1
+      tag: v2.11.0
     examples:
     - pullPolicy: IfNotPresent
       registry: docker.io
       repository: traefik
-      tag: v2.10.1
+      tag: v2.11.0
     properties:
       pullPolicy:
         default: IfNotPresent
@@ -42,9 +37,14 @@ options:
         default: traefik
         type: string
       tag:
-        default: v2.10.1
+        default: v2.11.0
         type: string
     type: object
+  ingressClass:
+    default: traefik
+    examples:
+    - traefik
+    type: string
 dependencies:
 - dist: null
   category: crd
@@ -53,3 +53,4 @@ dependencies:
   category: crd
   component: prometheus
 providers: null
+tfaddtype: null

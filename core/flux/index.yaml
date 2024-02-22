@@ -4,15 +4,16 @@ kind: Component
 category: core
 metadata:
   name: flux
-  description: FluxCD
+  description: 'FluxCD: Open and extensible Continuous Delivery solution for Kubernetes.'
 options:
   release:
-    default: 2.0.0-rc.5
+    default: 2.2.3
     examples:
-    - 2.0.0-rc.5
+    - 2.2.3
     type: string
 dependencies:
 - dist: null
   category: crd
   component: flux
 providers: null
+tfaddtype: null

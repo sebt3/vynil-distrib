@@ -52,12 +52,12 @@ options:
       pullPolicy: IfNotPresent
       registry: ghcr.io
       repository: cloudnative-pg/cloudnative-pg
-      tag: 1.20.2
+      tag: 1.22.1
     examples:
     - pullPolicy: IfNotPresent
       registry: ghcr.io
       repository: cloudnative-pg/cloudnative-pg
-      tag: 1.20.2
+      tag: 1.22.1
     properties:
       pullPolicy:
         default: IfNotPresent
@@ -73,7 +73,7 @@ options:
         default: cloudnative-pg/cloudnative-pg
         type: string
       tag:
-        default: 1.20.2
+        default: 1.22.1
         type: string
     type: object
 dependencies:

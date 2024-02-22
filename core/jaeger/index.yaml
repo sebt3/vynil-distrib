@@ -4,13 +4,8 @@ kind: Component
 category: core
 metadata:
   name: jaeger
-  description: null
+  description: Operator to deploy Jaeger, a distributed tracing plateform. Monitor and troubleshoot workflows in complex distributed systems
 options:
-  replicas:
-    default: 1
-    examples:
-    - 1
-    type: integer
   images:
     default:
       operator:
@@ -84,6 +79,11 @@ options:
             type: string
         type: object
     type: object
+  replicas:
+    default: 1
+    examples:
+    - 1
+    type: integer
 dependencies:
 - dist: null
   category: crd

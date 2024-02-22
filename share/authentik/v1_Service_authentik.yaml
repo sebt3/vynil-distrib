@@ -4,10 +4,10 @@ kind: Service
 metadata:
   name: authentik
   labels:
-    helm.sh/chart: authentik-2023.6.3
+    helm.sh/chart: authentik-2023.10.7
     app.kubernetes.io/name: authentik
     app.kubernetes.io/instance: authentik
-    app.kubernetes.io/version: "2023.6.1"
+    app.kubernetes.io/version: "2023.10.7"
     app.kubernetes.io/managed-by: Helm
 spec:
   type: ClusterIP

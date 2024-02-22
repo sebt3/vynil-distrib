@@ -7,7 +7,7 @@ metadata:
   labels:
     app.kubernetes.io/name: traefik
     app.kubernetes.io/instance: traefik-traefik
-    helm.sh/chart: traefik-23.1.0
+    helm.sh/chart: traefik-25.0.0
     app.kubernetes.io/managed-by: Helm
   annotations:
 spec:
@@ -30,14 +30,14 @@ spec:
       labels:
         app.kubernetes.io/name: traefik
         app.kubernetes.io/instance: traefik-traefik
-        helm.sh/chart: traefik-23.1.0
+        helm.sh/chart: traefik-25.0.0
         app.kubernetes.io/managed-by: Helm
     spec:
       serviceAccountName: traefik
       terminationGracePeriodSeconds: 60
       hostNetwork: false
       containers:
-      - image: docker.io/traefik:v2.10.1
+      - image: docker.io/traefik:v2.10.5
         imagePullPolicy: IfNotPresent
         name: traefik
         resources:
@@ -76,6 +76,7 @@ spec:
           containerPort: 8443
           protocol: "TCP"
         securityContext:
+          allowPrivilegeEscalation: false
           capabilities:
             drop:
             - ALL

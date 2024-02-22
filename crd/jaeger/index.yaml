@@ -4,7 +4,7 @@ kind: Component
 category: crd
 metadata:
   name: jaeger
-  description: null
+  description: CRD for the Jaeger operator
 options:
   apply:
     default: true

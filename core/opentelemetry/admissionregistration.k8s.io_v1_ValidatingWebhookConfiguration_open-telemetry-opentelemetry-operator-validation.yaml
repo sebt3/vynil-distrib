@@ -5,9 +5,9 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: vynil-monitor/open-telemetry-opentelemetry-operator-serving-cert
   labels:
-    helm.sh/chart: opentelemetry-operator-0.46.0
+    helm.sh/chart: opentelemetry-operator-0.47.0
     app.kubernetes.io/name: opentelemetry-operator
-    app.kubernetes.io/version: "0.92.1"
+    app.kubernetes.io/version: "0.93.0"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/instance: open-telemetry
     app.kubernetes.io/component: webhook

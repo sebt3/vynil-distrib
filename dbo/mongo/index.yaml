@@ -7,10 +7,11 @@ metadata:
   description: MongoDB database operator
 options:
   release:
-    default: 0.7.6
+    default: 0.9.0
     description: postgres-operator version to use
     examples:
-    - 0.7.6
+    - 0.9.0
     type: string
 dependencies: []
 providers: null
+tfaddtype: null

@@ -4,17 +4,18 @@ kind: Component
 category: crd
 metadata:
   name: k8up
-  description: CRD for k8up
+  description: CRD for k8up, the kubernetes backup operator
 options:
+  release:
+    default: 2.7.2
+    examples:
+    - 2.7.2
+    type: string
   apply:
     default: true
     examples:
     - true
     type: boolean
-  release:
-    default: 2.7.1
-    examples:
-    - 2.7.1
-    type: string
 dependencies: []
 providers: null
+tfaddtype: null

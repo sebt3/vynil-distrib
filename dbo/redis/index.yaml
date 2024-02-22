@@ -52,12 +52,12 @@ options:
       pullPolicy: IfNotPresent
       registry: quay.io
       repository: opstree/redis-operator
-      tag: v0.14.0
+      tag: v0.15.1
     examples:
     - pullPolicy: IfNotPresent
       registry: quay.io
       repository: opstree/redis-operator
-      tag: v0.14.0
+      tag: v0.15.1
     properties:
       pullPolicy:
         default: IfNotPresent
@@ -73,7 +73,7 @@ options:
         default: opstree/redis-operator
         type: string
       tag:
-        default: v0.14.0
+        default: v0.15.1
         type: string
     type: object
 dependencies:

@@ -6,6 +6,51 @@ metadata:
   name: authentik
   description: authentik is an open-source Identity Provider focused on flexibility and versatility
 options:
+  admin:
+    default:
+      email: auth-admin
+    examples:
+    - email: auth-admin
+    properties:
+      email:
+        default: auth-admin
+        type: string
+    type: object
+  geoip:
+    default: /geoip/GeoLite2-City.mmdb
+    examples:
+    - /geoip/GeoLite2-City.mmdb
+    type: string
+  email:
+    default:
+      port: 587
+      timeout: 30
+      use_ssl: false
+      use_tls: false
+    examples:
+    - port: 587
+      timeout: 30
+      use_ssl: false
+      use_tls: false
+    properties:
+      port:
+        default: 587
+        type: integer
+      timeout:
+        default: 30
+        type: integer
+      use_ssl:
+        default: false
+        type: boolean
+      use_tls:
+        default: false
+        type: boolean
+    type: object
+  ingress-class:
+    default: traefik
+    examples:
+    - traefik
+    type: string
   error_reporting:
     default:
       enabled: false
@@ -26,36 +71,41 @@ options:
         default: false
         type: boolean
     type: object
-  admin:
-    default:
-      email: auth-admin
-    examples:
-    - email: auth-admin
-    properties:
-      email:
-        default: auth-admin
-        type: string
-    type: object
-  ingress-class:
-    default: traefik
-    examples:
-    - traefik
-    type: string
   issuer:
     default: letsencrypt-prod
     examples:
     - letsencrypt-prod
     type: string
-  domain:
-    default: your-company
+  loglevel:
+    default: info
     examples:
-    - your-company
+    - info
     type: string
   domain-name:
     default: your_company.com
     examples:
     - your_company.com
     type: string
+  postgres:
+    default:
+      replicas: 1
+      storage: 8Gi
+      version: '14'
+    examples:
+    - replicas: 1
+      storage: 8Gi
+      version: '14'
+    properties:
+      replicas:
+        default: 1
+        type: integer
+      storage:
+        default: 8Gi
+        type: string
+      version:
+        default: '14'
+        type: string
+    type: object
   redis:
     default:
       exporter:
@@ -94,61 +144,6 @@ options:
     examples:
     - auth
     type: string
-  geoip:
-    default: /geoip/GeoLite2-City.mmdb
-    examples:
-    - /geoip/GeoLite2-City.mmdb
-    type: string
-  loglevel:
-    default: info
-    examples:
-    - info
-    type: string
-  postgres:
-    default:
-      replicas: 1
-      storage: 8Gi
-      version: '14'
-    examples:
-    - replicas: 1
-      storage: 8Gi
-      version: '14'
-    properties:
-      replicas:
-        default: 1
-        type: integer
-      storage:
-        default: 8Gi
-        type: string
-      version:
-        default: '14'
-        type: string
-    type: object
-  email:
-    default:
-      port: 587
-      timeout: 30
-      use_ssl: false
-      use_tls: false
-    examples:
-    - port: 587
-      timeout: 30
-      use_ssl: false
-      use_tls: false
-    properties:
-      port:
-        default: 587
-        type: integer
-      timeout:
-        default: 30
-        type: integer
-      use_ssl:
-        default: false
-        type: boolean
-      use_tls:
-        default: false
-        type: boolean
-    type: object
   image:
     default:
       project: goauthentik
@@ -179,6 +174,11 @@ options:
         default: 2023.5.4
         type: string
     type: object
+  domain:
+    default: your-company
+    examples:
+    - your-company
+    type: string
 dependencies:
 - dist: null
   category: core
@@ -203,5 +203,8 @@ providers:
   authentik: true
   kubectl: true
   postgresql: null
+  mysql: null
   restapi: null
   http: null
+  gitea: null
+tfaddtype: null

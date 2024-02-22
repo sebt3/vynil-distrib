@@ -13,42 +13,42 @@ options:
       cainjector:
         registry: quay.io
         repository: jetstack/cert-manager-cainjector
-        tag: v1.12.2
+        tag: v1.14.2
       controller:
         registry: quay.io
         repository: jetstack/cert-manager-controller
-        tag: v1.12.2
+        tag: v1.14.2
       startupapicheck:
         registry: quay.io
         repository: jetstack/cert-manager-ctl
-        tag: v1.12.2
+        tag: v1.14.2
       webhook:
         registry: quay.io
         repository: jetstack/cert-manager-webhook
-        tag: v1.12.2
+        tag: v1.14.2
     examples:
     - cainjector:
         registry: quay.io
         repository: jetstack/cert-manager-cainjector
-        tag: v1.12.2
+        tag: v1.14.2
       controller:
         registry: quay.io
         repository: jetstack/cert-manager-controller
-        tag: v1.12.2
+        tag: v1.14.2
       startupapicheck:
         registry: quay.io
         repository: jetstack/cert-manager-ctl
-        tag: v1.12.2
+        tag: v1.14.2
       webhook:
         registry: quay.io
         repository: jetstack/cert-manager-webhook
-        tag: v1.12.2
+        tag: v1.14.2
     properties:
       cainjector:
         default:
           registry: quay.io
           repository: jetstack/cert-manager-cainjector
-          tag: v1.12.2
+          tag: v1.14.2
         properties:
           registry:
             default: quay.io
@@ -57,14 +57,14 @@ options:
             default: jetstack/cert-manager-cainjector
             type: string
           tag:
-            default: v1.12.2
+            default: v1.14.2
             type: string
         type: object
       controller:
         default:
           registry: quay.io
           repository: jetstack/cert-manager-controller
-          tag: v1.12.2
+          tag: v1.14.2
         properties:
           registry:
             default: quay.io
@@ -73,14 +73,14 @@ options:
             default: jetstack/cert-manager-controller
             type: string
           tag:
-            default: v1.12.2
+            default: v1.14.2
             type: string
         type: object
       startupapicheck:
         default:
           registry: quay.io
           repository: jetstack/cert-manager-ctl
-          tag: v1.12.2
+          tag: v1.14.2
         properties:
           registry:
             default: quay.io
@@ -89,14 +89,14 @@ options:
             default: jetstack/cert-manager-ctl
             type: string
           tag:
-            default: v1.12.2
+            default: v1.14.2
             type: string
         type: object
       webhook:
         default:
           registry: quay.io
           repository: jetstack/cert-manager-webhook
-          tag: v1.12.2
+          tag: v1.14.2
         properties:
           registry:
             default: quay.io
@@ -105,15 +105,15 @@ options:
             default: jetstack/cert-manager-webhook
             type: string
           tag:
-            default: v1.12.2
+            default: v1.14.2
             type: string
         type: object
     type: object
   release:
-    default: 1.12.2
+    default: 1.14.2
     description: cert-manager version to use
     examples:
-    - 1.12.2
+    - 1.14.2
     type: string
 dependencies:
 - dist: null

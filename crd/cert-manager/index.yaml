@@ -7,10 +7,10 @@ metadata:
   description: CRD for Cert Manager
 options:
   release:
-    default: 1.12.1
+    default: 1.14.2
     description: cert-manager version to use
     examples:
-    - 1.12.1
+    - 1.14.2
     type: string
   apply:
     default: true
@@ -19,3 +19,4 @@ options:
     type: boolean
 dependencies: []
 providers: null
+tfaddtype: null

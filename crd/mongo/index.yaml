@@ -4,12 +4,12 @@ kind: Component
 category: crd
 metadata:
   name: mongo
-  description: null
+  description: CRD for the MongoDBCommunity operator
 options:
   release:
-    default: 0.7.6
+    default: 0.9.0
     examples:
-    - 0.7.6
+    - 0.9.0
     type: string
   apply:
     default: true
@@ -18,3 +18,4 @@ options:
     type: boolean
 dependencies: []
 providers: null
+tfaddtype: null

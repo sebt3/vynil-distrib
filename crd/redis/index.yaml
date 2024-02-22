@@ -6,15 +6,16 @@ metadata:
   name: redis
   description: CRD for Redis Operator
 options:
-  release:
-    default: 0.14.3
-    examples:
-    - 0.14.3
-    type: string
   apply:
     default: true
     examples:
     - true
     type: boolean
+  release:
+    default: 0.15.9
+    examples:
+    - 0.15.9
+    type: string
 dependencies: []
 providers: null
+tfaddtype: null
