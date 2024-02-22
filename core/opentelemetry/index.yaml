@@ -6,6 +6,11 @@ metadata:
   name: opentelemetry
   description: Kubernetes Operator for OpenTelemetry Collector
 options:
+  replicas:
+    default: 1
+    examples:
+    - 1
+    type: integer
   images:
     default:
       operator:
@@ -79,11 +84,6 @@ options:
             type: string
         type: object
     type: object
-  replicas:
-    default: 1
-    examples:
-    - 1
-    type: integer
 dependencies:
 - dist: null
   category: crd

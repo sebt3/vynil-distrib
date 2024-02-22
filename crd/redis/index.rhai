@@ -10,6 +10,6 @@ fn pre_install() {
         "redis-replication.yaml",
         "redis-cluster.yaml"
     ] {
-        shell(`kubectl apply -f https://raw.githubusercontent.com/OT-CONTAINER-KIT/helm-charts/redis-operator-${global::VERSION}/charts/redis-operator/crds/${file}`);
+        shell(`kubectl replace -f https://raw.githubusercontent.com/OT-CONTAINER-KIT/helm-charts/redis-operator-${global::VERSION}/charts/redis-operator/crds/${file} || kubectl create -f https://raw.githubusercontent.com/OT-CONTAINER-KIT/helm-charts/redis-operator-${global::VERSION}/charts/redis-operator/crds/${file}`);
     }
 }
