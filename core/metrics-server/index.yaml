@@ -1,0 +1,11 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: metrics-server
+  description: Scalable and efficient source of container resource metrics for Kubernetes built-in autoscaling pipelines.
+options: {}
+dependencies: []
+providers: null
+tfaddtype: null

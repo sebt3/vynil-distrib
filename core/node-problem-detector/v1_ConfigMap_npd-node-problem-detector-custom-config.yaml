@@ -1,0 +1,13 @@
+# Source: node-problem-detector/templates/custom-config-configmap.yaml
+apiVersion: v1
+data:
+  {}
+kind: ConfigMap
+metadata:
+  name: npd-node-problem-detector-custom-config
+  labels:
+    app.kubernetes.io/name: node-problem-detector
+    helm.sh/chart: node-problem-detector-2.3.12
+    app.kubernetes.io/instance: npd
+    app.kubernetes.io/managed-by: Helm
+  namespace: vynil-tools

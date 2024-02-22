@@ -1,0 +1,50 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: node-problem-detector
+  description: node-problem-detector aims to make various node problems visible to the upstream layers in the cluster management stack.
+options:
+  images:
+    default:
+      node-problem-detector:
+        pull_policy: IfNotPresent
+        registry: registry.k8s.io
+        repository: node-problem-detector/node-problem-detector
+        tag: v0.8.15
+    examples:
+    - node-problem-detector:
+        pull_policy: IfNotPresent
+        registry: registry.k8s.io
+        repository: node-problem-detector/node-problem-detector
+        tag: v0.8.15
+    properties:
+      node-problem-detector:
+        default:
+          pull_policy: IfNotPresent
+          registry: registry.k8s.io
+          repository: node-problem-detector/node-problem-detector
+          tag: v0.8.15
+        properties:
+          pull_policy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: registry.k8s.io
+            type: string
+          repository:
+            default: node-problem-detector/node-problem-detector
+            type: string
+          tag:
+            default: v0.8.15
+            type: string
+        type: object
+    type: object
+dependencies: []
+providers: null
+tfaddtype: null
