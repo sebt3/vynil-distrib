@@ -18,12 +18,20 @@ locals {
 data "kustomization_overlay" "data" {
   namespace = var.namespace
   common_labels = local.common-labels
-  resources = [for file in fileset(path.module, "*.yaml"): file if file != "index.yaml" && length(regexall("APIService",file))<1 && length(regexall("ClusterRole",file))<1 ]
+  resources = [for file in fileset(path.module, "*.yaml"): file if file != "index.yaml" && length(regexall("APIService",file))<1 && length(regexall("Role",file))<1 ]
 }
 
 data "kustomization_overlay" "data_no_ns" {
   common_labels = local.common-labels
-  resources = [for file in fileset(path.module, "*.yaml"): file if file != "index.yaml" && (length(regexall("APIService",file))>0 || length(regexall("ClusterRole",file))>0) ]
+  resources = [for file in fileset(path.module, "*.yaml"): file if file != "index.yaml" && (length(regexall("APIService",file))>0 || length(regexall("Role",file))>0) ]
+  patches {
+    target {
+      kind = "RoleBinding"
+      name = "metrics-server-auth-reader"
+      namespace = "kube-system"
+    }
+    patch = local.rb-patch
+  }
   patches {
     target {
       kind = "ClusterRoleBinding"
