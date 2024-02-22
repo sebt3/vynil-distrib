@@ -6,6 +6,11 @@ metadata:
   name: mayfly
   description: An operator to manage ephemeral Kubernetes resources
 options:
+  targets:
+    default: v1;Pod,batch/v1;Job
+    examples:
+    - v1;Pod,batch/v1;Job
+    type: string
   image:
     default:
       pullPolicy: IfNotPresent
@@ -31,11 +36,9 @@ options:
         default: 0.1.6
         type: string
     type: object
-  targets:
-    default: v1;Pod,batch/v1;Job
-    examples:
-    - v1;Pod,batch/v1;Job
-    type: string
-dependencies: []
+dependencies:
+- dist: null
+  category: crd
+  component: mayfly
 providers: null
 tfaddtype: null

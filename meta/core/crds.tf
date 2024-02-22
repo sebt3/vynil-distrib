@@ -17,6 +17,24 @@ locals {
     crd-rabbitmq = { for k, v in var.crds.rabbitmq : k => v if k!="enable" }
     crd-mongo = { for k, v in var.crds.mongo : k => v if k!="enable" }
     crd-pg = { for k, v in var.crds.pg : k => v if k!="enable" }
+    crd-mayfly = { for k, v in var.crds.mayfly : k => v if k!="enable" }
+}
+
+resource "kubectl_manifest" "crd-jmayflyaeger" {
+  count = (var.crds.mayfly.enable || var.tools.mayfly.enable) ? 1 : 0
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-mayfly"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "crd"
+      component: "mayfly"
+      options: ${jsonencode(local.crd-mayfly)}
+  EOF
 }
 
 resource "kubectl_manifest" "crd-jaeger" {

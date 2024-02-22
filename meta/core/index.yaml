@@ -6,130 +6,6 @@ metadata:
   name: core
   description: core meta-component installing all the core components
 options:
-  tools:
-    default:
-      jaeger:
-        enable: false
-      mayfly:
-        enable: true
-      metrics_server:
-        enable: true
-      namespace: vynil-tools
-      node_problem_detector:
-        enable: true
-      opentelemetry:
-        enable: false
-      prometheus:
-        enable: true
-      reloader:
-        enable: true
-    examples:
-    - jaeger:
-        enable: false
-      mayfly:
-        enable: true
-      metrics_server:
-        enable: true
-      namespace: vynil-tools
-      node_problem_detector:
-        enable: true
-      opentelemetry:
-        enable: false
-      prometheus:
-        enable: true
-      reloader:
-        enable: true
-    properties:
-      jaeger:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      mayfly:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      metrics_server:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      namespace:
-        default: vynil-tools
-        type: string
-      node_problem_detector:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      opentelemetry:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      prometheus:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      reloader:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-    type: object
-  traefik:
-    default:
-      enable: true
-      namespace: traefik
-    examples:
-    - enable: true
-      namespace: traefik
-    properties:
-      enable:
-        default: true
-        type: boolean
-      namespace:
-        default: traefik
-        type: string
-    type: object
-  flux:
-    default:
-      enable: false
-      namespace: flux
-    examples:
-    - enable: false
-      namespace: flux
-    properties:
-      enable:
-        default: false
-        type: boolean
-      namespace:
-        default: flux
-        type: string
-    type: object
   databases:
     default:
       mariadb:
@@ -258,6 +134,221 @@ options:
         default: vynil-backup
         type: string
     type: object
+  traefik:
+    default:
+      enable: true
+      namespace: traefik
+    examples:
+    - enable: true
+      namespace: traefik
+    properties:
+      enable:
+        default: true
+        type: boolean
+      namespace:
+        default: traefik
+        type: string
+    type: object
+  crds:
+    default:
+      cert-manager:
+        enable: false
+      flux:
+        enable: false
+      jaeger:
+        enable: false
+      k8up:
+        enable: false
+      mariadb:
+        enable: false
+      mayfly:
+        enable: false
+      mongo:
+        enable: false
+      mysql:
+        enable: false
+      opentelemetry:
+        enable: false
+      pg:
+        enable: false
+      prometheus:
+        enable: false
+      rabbitmq:
+        enable: false
+      redis:
+        enable: false
+      secret-generator:
+        enable: false
+      traefik:
+        enable: false
+    examples:
+    - cert-manager:
+        enable: false
+      flux:
+        enable: false
+      jaeger:
+        enable: false
+      k8up:
+        enable: false
+      mariadb:
+        enable: false
+      mayfly:
+        enable: false
+      mongo:
+        enable: false
+      mysql:
+        enable: false
+      opentelemetry:
+        enable: false
+      pg:
+        enable: false
+      prometheus:
+        enable: false
+      rabbitmq:
+        enable: false
+      redis:
+        enable: false
+      secret-generator:
+        enable: false
+      traefik:
+        enable: false
+    properties:
+      cert-manager:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      flux:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      jaeger:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      k8up:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      mariadb:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      mayfly:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      mongo:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      mysql:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      opentelemetry:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      pg:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      prometheus:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      rabbitmq:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      redis:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      secret-generator:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      traefik:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+    type: object
+  flux:
+    default:
+      enable: false
+      namespace: flux
+    examples:
+    - enable: false
+      namespace: flux
+    properties:
+      enable:
+        default: false
+        type: boolean
+      namespace:
+        default: flux
+        type: string
+    type: object
   security:
     default:
       cert-manager:
@@ -316,82 +407,40 @@ options:
             type: boolean
         type: object
     type: object
-  crds:
+  tools:
     default:
-      cert-manager:
-        enable: false
-      flux:
-        enable: false
       jaeger:
         enable: false
-      k8up:
+      mayfly:
+        enable: true
+      metrics_server:
         enable: false
-      mariadb:
-        enable: false
-      mongo:
-        enable: false
-      mysql:
+      namespace: vynil-tools
+      node_problem_detector:
         enable: false
       opentelemetry:
         enable: false
-      pg:
-        enable: false
       prometheus:
-        enable: false
-      rabbitmq:
-        enable: false
-      redis:
-        enable: false
-      secret-generator:
-        enable: false
-      traefik:
-        enable: false
+        enable: true
+      reloader:
+        enable: true
     examples:
-    - cert-manager:
+    - jaeger:
         enable: false
-      flux:
+      mayfly:
+        enable: true
+      metrics_server:
         enable: false
-      jaeger:
-        enable: false
-      k8up:
-        enable: false
-      mariadb:
-        enable: false
-      mongo:
-        enable: false
-      mysql:
+      namespace: vynil-tools
+      node_problem_detector:
         enable: false
       opentelemetry:
         enable: false
-      pg:
-        enable: false
       prometheus:
-        enable: false
-      rabbitmq:
-        enable: false
-      redis:
-        enable: false
-      secret-generator:
-        enable: false
-      traefik:
-        enable: false
+        enable: true
+      reloader:
+        enable: true
     properties:
-      cert-manager:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      flux:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
       jaeger:
         default:
           enable: false
@@ -400,7 +449,15 @@ options:
             default: false
             type: boolean
         type: object
-      k8up:
+      mayfly:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      metrics_server:
         default:
           enable: false
         properties:
@@ -408,23 +465,10 @@ options:
             default: false
             type: boolean
         type: object
-      mariadb:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      mongo:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      mysql:
+      namespace:
+        default: vynil-tools
+        type: string
+      node_problem_detector:
         default:
           enable: false
         properties:
@@ -440,52 +484,20 @@ options:
             default: false
             type: boolean
         type: object
-      pg:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
       prometheus:
         default:
-          enable: false
+          enable: true
         properties:
           enable:
-            default: false
+            default: true
             type: boolean
         type: object
-      rabbitmq:
+      reloader:
         default:
-          enable: false
+          enable: true
         properties:
           enable:
-            default: false
-            type: boolean
-        type: object
-      redis:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      secret-generator:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      traefik:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
+            default: true
             type: boolean
         type: object
     type: object

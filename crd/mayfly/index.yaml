@@ -1,0 +1,21 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: crd
+metadata:
+  name: mayfly
+  description: ScheduledResource CRD for mayfly
+options:
+  apply:
+    default: true
+    examples:
+    - true
+    type: boolean
+  release:
+    default: 0.1.6
+    examples:
+    - 0.1.6
+    type: string
+dependencies: []
+providers: null
+tfaddtype: null
