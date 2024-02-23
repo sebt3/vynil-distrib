@@ -1,6 +1,30 @@
 const VERSION="1.22.1";
 const SRC=src;
 const DEST=dest;
+const DOIT=config.apply;
+const crdFiles=[
+    "apiextensions.k8s.io_v1_CustomResourceDefinition_backups.postgresql.cnpg.io.yaml",
+    "apiextensions.k8s.io_v1_CustomResourceDefinition_clusters.postgresql.cnpg.io.yaml",
+    "apiextensions.k8s.io_v1_CustomResourceDefinition_poolers.postgresql.cnpg.io.yaml",
+    "apiextensions.k8s.io_v1_CustomResourceDefinition_scheduledbackups.postgresql.cnpg.io.yaml"
+];
+fn pre_install() {
+    if ! global::DOIT {
+        return;
+    }
+    for file in global::crdFiles {
+        shell(`kubectl replace -f ${global::SRC}/${file} || kubectl create -f ${global::SRC}/${file}`);
+    }
+}
+fn post_destroy() {
+    if ! global::DOIT {
+        return;
+    }
+    for file in global::crdFiles {
+        shell(`kubectl delete -f ${global::SRC}/${file}`);
+    }
+}
+
 fn pre_pack() {
     shell(`curl -sL https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v${global::VERSION}/cnpg-${global::VERSION}.yaml >${global::SRC}/release.yaml`);
 }
@@ -19,20 +43,3 @@ fn post_pack() {
         shell(`rm -f ${global::DEST}/${file}`);
     }
 }
-
-const DOIT=config.apply;
-fn pre_install() {
-    if ! global::DOIT {
-        return;
-    }
-    for file in [
-        "apiextensions.k8s.io_v1_CustomResourceDefinition_backups.postgresql.cnpg.io.yaml",
-        "apiextensions.k8s.io_v1_CustomResourceDefinition_clusters.postgresql.cnpg.io.yaml",
-        "apiextensions.k8s.io_v1_CustomResourceDefinition_poolers.postgresql.cnpg.io.yaml",
-        "apiextensions.k8s.io_v1_CustomResourceDefinition_scheduledbackups.postgresql.cnpg.io.yaml"
-    ] {
-        shell(`kubectl apply -f ${global::SRC}/${file}`);
-    }
-}
-
-

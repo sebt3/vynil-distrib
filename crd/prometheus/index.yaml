@@ -6,11 +6,6 @@ metadata:
   name: prometheus
   description: CRD for Prometheus Operator
 options:
-  release:
-    default: 0.71.0
-    examples:
-    - 0.71.0
-    type: string
   apply:
     default: true
     examples:

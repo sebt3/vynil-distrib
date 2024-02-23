@@ -6,12 +6,6 @@ metadata:
   name: secret-generator
   description: CRD for Secret Generator
 options:
-  release:
-    default: 3.4.0
-    description: secret-generator version to use
-    examples:
-    - 3.4.0
-    type: string
   apply:
     default: true
     examples:
@@ -19,3 +13,4 @@ options:
     type: boolean
 dependencies: []
 providers: null
+tfaddtype: null

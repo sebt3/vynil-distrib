@@ -6,11 +6,6 @@ metadata:
   name: flux
   description: CRDs for FluxCD
 options:
-  release:
-    default: 2.2.3
-    examples:
-    - 2.2.3
-    type: string
   apply:
     default: true
     examples:

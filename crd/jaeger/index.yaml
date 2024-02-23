@@ -11,11 +11,6 @@ options:
     examples:
     - true
     type: boolean
-  release:
-    default: 1.53.0
-    examples:
-    - 1.53.0
-    type: string
 dependencies: []
 providers: null
 tfaddtype: null
