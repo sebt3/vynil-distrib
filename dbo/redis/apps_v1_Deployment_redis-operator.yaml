@@ -32,9 +32,17 @@ spec:
         - /manager
         args:
         - --leader-elect
+        ports:
+        - containerPort: 9443
+          name: webhook-server
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /tmp/k8s-webhook-server/serving-certs
+          name: cert
+          readOnly: true
         env:
         - name: ENABLE_WEBHOOKS
-          value: "false"
+          value: "true"
         resources: 
           limits:
             cpu: 500m
@@ -44,3 +52,8 @@ spec:
             memory: 500Mi
       serviceAccountName: "redis-operator"
       serviceAccount: "redis-operator"
+      volumes:
+      - name: cert
+        secret:
+          defaultMode: 420
+          secretName: webhook-server-cert
