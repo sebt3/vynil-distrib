@@ -1,4 +1,4 @@
-const VERSION="0.15.9";
+const VERSION="0.14.0";
 const SRC=src;
 const DEST=dest;
 const DOIT=config.apply;
