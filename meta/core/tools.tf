@@ -6,6 +6,8 @@ locals {
     jaeger = { for k, v in var.tools.jaeger : k => v if k!="enable" }
     metrics_server = { for k, v in var.tools.node_problem_detector : k => v if k!="enable" }
     node_problem_detector = { for k, v in var.tools.node_problem_detector : k => v if k!="enable" }
+    tekton_pipelines = { for k, v in var.tools.tekton_pipelines : k => v if k!="enable" }
+    tekton_triggers = { for k, v in var.tools.tekton_triggers : k => v if k!="enable" }
 }
 
 resource "kubernetes_namespace_v1" "tools-ns" {
@@ -15,6 +17,42 @@ resource "kubernetes_namespace_v1" "tools-ns" {
     labels = local.common-labels
     name = var.tools.namespace
   }
+}
+
+resource "kubectl_manifest" "tekton_pipelines" {
+  count = var.tools.tekton_pipelines.enable ? 1 : 0
+  depends_on = [kubernetes_namespace_v1.tools-ns]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "tekton-pipelines"
+      namespace: "${var.tools.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "core"
+      component: "tekton-pipelines"
+      options: ${jsonencode(local.tekton_pipelines)}
+  EOF
+}
+
+resource "kubectl_manifest" "tekton_triggers" {
+  count = var.tools.tekton_triggers.enable ? 1 : 0
+  depends_on = [kubernetes_namespace_v1.tools-ns]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "tekton-triggers"
+      namespace: "${var.tools.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "core"
+      component: "tekton-triggers"
+      options: ${jsonencode(local.tekton_triggers)}
+  EOF
 }
 
 resource "kubectl_manifest" "mayfly" {

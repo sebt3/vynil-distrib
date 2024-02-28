@@ -50,14 +50,6 @@ options:
         repository: tekton-releases/github.com/tektoncd/pipeline/cmd/webhook
         tag: v0.57.0@sha256:23cbd3301ff967151230f4fc2540110338ecf062583e6456d9dc905db9f08350
     properties:
-      app:
-        default: null
-        properties:
-          pull_policy:
-            enum:
-            - Always
-            - Never
-            - IfNotPresent
       controller:
         default:
           pull_policy: IfNotPresent
@@ -115,6 +107,10 @@ options:
         properties:
           pull_policy:
             default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
             type: string
           registry:
             default: gcr.io
@@ -135,6 +131,10 @@ options:
         properties:
           pull_policy:
             default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
             type: string
           registry:
             default: gcr.io
@@ -147,14 +147,9 @@ options:
             type: string
         type: object
     type: object
-dependencies: []
-providers:
-  kubernetes: true
-  authentik: true
-  kubectl: true
-  postgresql: null
-  mysql: null
-  restapi: true
-  http: true
-  gitea: null
+dependencies:
+- dist: null
+  category: crd
+  component: tekton-pipelines
+providers: null
 tfaddtype: null

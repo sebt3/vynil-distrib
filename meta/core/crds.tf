@@ -18,9 +18,45 @@ locals {
     crd-mongo = { for k, v in var.crds.mongo : k => v if k!="enable" }
     crd-pg = { for k, v in var.crds.pg : k => v if k!="enable" }
     crd-mayfly = { for k, v in var.crds.mayfly : k => v if k!="enable" }
+    crd-tekton_pipelines = { for k, v in var.crds.tekton_pipelines : k => v if k!="enable" }
+    crd-tekton_triggers = { for k, v in var.crds.tekton_triggers : k => v if k!="enable" }
 }
 
-resource "kubectl_manifest" "crd-jmayflyaeger" {
+resource "kubectl_manifest" "crd-tekton_pipelines" {
+  count = (var.crds.tekton_pipelines.enable || var.tools.tekton_pipelines.enable) ? 1 : 0
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-tekton-pipelines"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "crd"
+      component: "tekton-pipelines"
+      options: ${jsonencode(local.crd-tekton_pipelines)}
+  EOF
+}
+
+resource "kubectl_manifest" "crd-tekton_triggers" {
+  count = (var.crds.tekton_triggers.enable || var.tools.tekton_triggers.enable) ? 1 : 0
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-tekton-triggers"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "crd"
+      component: "tekton-triggers"
+      options: ${jsonencode(local.crd-tekton_triggers)}
+  EOF
+}
+
+resource "kubectl_manifest" "crd-mayfly" {
   count = (var.crds.mayfly.enable || var.tools.mayfly.enable) ? 1 : 0
   yaml_body  = <<-EOF
     apiVersion: "vynil.solidite.fr/v1"

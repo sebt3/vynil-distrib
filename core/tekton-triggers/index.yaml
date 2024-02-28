@@ -1,0 +1,118 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: tekton-triggers
+  description: null
+options:
+  images:
+    default:
+      controller:
+        pull_policy: IfNotPresent
+        registry: gcr.io
+        repository: tekton-releases/github.com/tektoncd/triggers/cmd/controller
+        tag: v0.26.1@sha256:276c6167a2a9b2822d268ad7e84517ee45c92ccd978546db17ff2a3763721f7e
+      interceptors:
+        pull_policy: IfNotPresent
+        registry: gcr.io
+        repository: tekton-releases/github.com/tektoncd/triggers/cmd/interceptors
+        tag: v0.26.1@sha256:ffc13aab0d0e16836c98bdf15f516a7f9df4e3eed1184a64825193f6a2fa6753
+      webhook:
+        pull_policy: IfNotPresent
+        registry: gcr.io
+        repository: tekton-releases/github.com/tektoncd/triggers/cmd/webhook
+        tag: v0.26.1@sha256:229240b3ac6770bb8513f672d1b19fa9879be6c379b73a47d94b208a1d6e3992
+    examples:
+    - controller:
+        pull_policy: IfNotPresent
+        registry: gcr.io
+        repository: tekton-releases/github.com/tektoncd/triggers/cmd/controller
+        tag: v0.26.1@sha256:276c6167a2a9b2822d268ad7e84517ee45c92ccd978546db17ff2a3763721f7e
+      interceptors:
+        pull_policy: IfNotPresent
+        registry: gcr.io
+        repository: tekton-releases/github.com/tektoncd/triggers/cmd/interceptors
+        tag: v0.26.1@sha256:ffc13aab0d0e16836c98bdf15f516a7f9df4e3eed1184a64825193f6a2fa6753
+      webhook:
+        pull_policy: IfNotPresent
+        registry: gcr.io
+        repository: tekton-releases/github.com/tektoncd/triggers/cmd/webhook
+        tag: v0.26.1@sha256:229240b3ac6770bb8513f672d1b19fa9879be6c379b73a47d94b208a1d6e3992
+    properties:
+      controller:
+        default:
+          pull_policy: IfNotPresent
+          registry: gcr.io
+          repository: tekton-releases/github.com/tektoncd/triggers/cmd/controller
+          tag: v0.26.1@sha256:276c6167a2a9b2822d268ad7e84517ee45c92ccd978546db17ff2a3763721f7e
+        properties:
+          pull_policy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: gcr.io
+            type: string
+          repository:
+            default: tekton-releases/github.com/tektoncd/triggers/cmd/controller
+            type: string
+          tag:
+            default: v0.26.1@sha256:276c6167a2a9b2822d268ad7e84517ee45c92ccd978546db17ff2a3763721f7e
+            type: string
+        type: object
+      interceptors:
+        default:
+          pull_policy: IfNotPresent
+          registry: gcr.io
+          repository: tekton-releases/github.com/tektoncd/triggers/cmd/interceptors
+          tag: v0.26.1@sha256:ffc13aab0d0e16836c98bdf15f516a7f9df4e3eed1184a64825193f6a2fa6753
+        properties:
+          pull_policy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: gcr.io
+            type: string
+          repository:
+            default: tekton-releases/github.com/tektoncd/triggers/cmd/interceptors
+            type: string
+          tag:
+            default: v0.26.1@sha256:ffc13aab0d0e16836c98bdf15f516a7f9df4e3eed1184a64825193f6a2fa6753
+            type: string
+        type: object
+      webhook:
+        default:
+          pull_policy: IfNotPresent
+          registry: gcr.io
+          repository: tekton-releases/github.com/tektoncd/triggers/cmd/webhook
+          tag: v0.26.1@sha256:229240b3ac6770bb8513f672d1b19fa9879be6c379b73a47d94b208a1d6e3992
+        properties:
+          pull_policy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: gcr.io
+            type: string
+          repository:
+            default: tekton-releases/github.com/tektoncd/triggers/cmd/webhook
+            type: string
+          tag:
+            default: v0.26.1@sha256:229240b3ac6770bb8513f672d1b19fa9879be6c379b73a47d94b208a1d6e3992
+            type: string
+        type: object
+    type: object
+dependencies: []
+providers: null
+tfaddtype: null
