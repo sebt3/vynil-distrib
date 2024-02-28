@@ -75,15 +75,15 @@ data "kustomization_overlay" "data_no_ns" {
       - clientConfig:
           service:
             namespace: ${var.namespace}
-        name: mbackup.kb.io
+        name: mbackup.cnpg.io
       - clientConfig:
           service:
             namespace: ${var.namespace}
-        name: mcluster.kb.io
+        name: mcluster.cnpg.io
       - clientConfig:
           service:
             namespace: ${var.namespace}
-        name: mscheduledbackup.kb.io
+        name: mscheduledbackup.cnpg.io
     EOF
   }
   patches {
@@ -100,19 +100,19 @@ data "kustomization_overlay" "data_no_ns" {
       - clientConfig:
           service:
             namespace: ${var.namespace}
-        name: vbackup.kb.io
+        name: vbackup.cnpg.io
       - clientConfig:
           service:
             namespace: ${var.namespace}
-        name: vcluster.kb.io
+        name: vcluster.cnpg.io
       - clientConfig:
           service:
             namespace: ${var.namespace}
-        name: vpooler.kb.io
+        name: vpooler.cnpg.io
       - clientConfig:
           service:
             namespace: ${var.namespace}
-        name: vscheduledbackup.kb.io
+        name: vscheduledbackup.cnpg.io
     EOF
   }
 }
