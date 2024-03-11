@@ -22,7 +22,7 @@ fn pre_pack() {
 }
 fn post_pack() {
     for file in global::crdFiles {
-        shell(`sed -i 's/{{/\\{{/g;s/namespace: redis-operator$/namespace: {{ target_namespace }}/' ${global::DEST}/${file}`);
+        shell(`sed -i 's/# cert-manager.io/cert-manager.io/;s/\.Release\.Namespace/target_namespace/;s/\.Values\.certificate\.name/target_cert/;s/namespace: redis-operator$/namespace: {{ target_namespace }}/' ${global::DEST}/${file}`);
         shell(`mv ${global::DEST}/${file} ${global::DEST}/${file}.hbs`);
     }
 }

@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.4.1
-    # cert-manager.io/inject-ca-from: \{{ .Release.Namespace }}/\{{ .Values.certificate.name }}
+    cert-manager.io/inject-ca-from: {{ target_namespace }}/{{ target_cert }}
   creationTimestamp: null
   name: redis.redis.redis.opstreelabs.in
 spec:
