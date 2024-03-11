@@ -6,6 +6,35 @@ metadata:
   name: redis
   description: Redis Operator is a software to set up and manage Redis on Kubernetes.
 options:
+  image:
+    default:
+      pullPolicy: IfNotPresent
+      registry: quay.io
+      repository: opstree/redis-operator
+      tag: v0.15.1
+    examples:
+    - pullPolicy: IfNotPresent
+      registry: quay.io
+      repository: opstree/redis-operator
+      tag: v0.15.1
+    properties:
+      pullPolicy:
+        default: IfNotPresent
+        enum:
+        - Always
+        - Never
+        - IfNotPresent
+        type: string
+      registry:
+        default: quay.io
+        type: string
+      repository:
+        default: opstree/redis-operator
+        type: string
+      tag:
+        default: v0.15.1
+        type: string
+    type: object
   resources:
     default:
       limits:
@@ -46,35 +75,6 @@ options:
             default: 500Mi
             type: string
         type: object
-    type: object
-  image:
-    default:
-      pullPolicy: IfNotPresent
-      registry: quay.io
-      repository: opstree/redis-operator
-      tag: v0.15.1
-    examples:
-    - pullPolicy: IfNotPresent
-      registry: quay.io
-      repository: opstree/redis-operator
-      tag: v0.15.1
-    properties:
-      pullPolicy:
-        default: IfNotPresent
-        enum:
-        - Always
-        - Never
-        - IfNotPresent
-        type: string
-      registry:
-        default: quay.io
-        type: string
-      repository:
-        default: opstree/redis-operator
-        type: string
-      tag:
-        default: v0.15.1
-        type: string
     type: object
 dependencies:
 - dist: null
