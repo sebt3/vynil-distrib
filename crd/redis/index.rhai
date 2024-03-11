@@ -1,4 +1,4 @@
-const VERSION="0.14.0";
+const VERSION="0.15.9";
 const SRC=src;
 const DEST=dest;
 const DOIT=config.apply;
@@ -18,6 +18,11 @@ const crdFiles=[
 fn pre_pack() {
     for file in global::sources {
         shell(`curl -sL ${global::sourcesDir}/${file} > ${global::SRC}/${file}`);
+    }
+}
+fn post_pack() {
+    for file in global::crdFiles {
+        shell(`sed -i 's/namespace: redis-operator$/namespace: {{ target_namespace }}/' ${global::DEST}/${file}`);
     }
 }
 fn pre_install() {

@@ -6,6 +6,11 @@ metadata:
   name: redis
   description: CRD for Redis Operator
 options:
+  target_namespace:
+    default: vynil-dbo
+    examples:
+    - vynil-dbo
+    type: string
   apply:
     default: true
     examples:
