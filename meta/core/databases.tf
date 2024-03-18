@@ -28,7 +28,7 @@ resource "kubectl_manifest" "dbo-postgresql" {
       namespace: "${var.databases.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "dbo"
       component: "postgresql"
       options: ${jsonencode(local.postgresql)}
@@ -46,7 +46,7 @@ resource "kubectl_manifest" "dbo-redis" {
       namespace: "${var.databases.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "dbo"
       component: "redis"
       options: ${jsonencode(local.redis)}
@@ -64,7 +64,7 @@ resource "kubectl_manifest" "rabbitmq" {
       namespace: "${var.databases.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "dbo"
       component: "rabbitmq"
       options: ${jsonencode(local.letsencrypt)}
@@ -82,7 +82,7 @@ resource "kubectl_manifest" "mariadb" {
       namespace: "${var.databases.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "dbo"
       component: "mariadb"
       options: ${jsonencode(local.mariadb)}
@@ -100,7 +100,7 @@ resource "kubectl_manifest" "mysql" {
       namespace: "${var.databases.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "dbo"
       component: "mysql"
       options: ${jsonencode(local.mysql)}
@@ -118,7 +118,7 @@ resource "kubectl_manifest" "mongo" {
       namespace: "${var.databases.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "dbo"
       component: "mongo"
       options: ${jsonencode(local.mongo)}
@@ -136,7 +136,7 @@ resource "kubectl_manifest" "pg" {
       namespace: "${var.databases.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "dbo"
       component: "pg"
       options: ${jsonencode(local.pg)}

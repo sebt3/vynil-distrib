@@ -25,7 +25,7 @@ resource "kubectl_manifest" "secret-generator" {
       namespace: "${var.security.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "core"
       component: "secret-generator"
       options: ${jsonencode(local.secret-generator)}
@@ -43,7 +43,7 @@ resource "kubectl_manifest" "cert-manager" {
       namespace: "${var.security.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "core"
       component: "cert-manager"
       options: ${jsonencode(local.cert-manager)}
@@ -61,7 +61,7 @@ resource "kubectl_manifest" "letsencrypt" {
       namespace: "${var.security.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "core"
       component: "cert-manager-letsencrypt"
       options: ${jsonencode(local.letsencrypt)}
@@ -79,7 +79,7 @@ resource "kubectl_manifest" "self-sign" {
       namespace: "${var.security.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "core"
       component: "cert-manager-self-sign"
       options: ${jsonencode(local.self-sign)}

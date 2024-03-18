@@ -24,7 +24,7 @@ resource "kubectl_manifest" "mayfly" {
       namespace: "${var.tools.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "core"
       component: "mayfly"
       options: ${jsonencode(local.mayfly)}
@@ -42,7 +42,7 @@ resource "kubectl_manifest" "reloader" {
       namespace: "${var.tools.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "core"
       component: "reloader"
       options: ${jsonencode(local.reloader)}
@@ -60,7 +60,7 @@ resource "kubectl_manifest" "metrics_server" {
       namespace: "${var.tools.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "core"
       component: "metrics-server"
       options: ${jsonencode(local.metrics_server)}

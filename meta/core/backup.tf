@@ -22,7 +22,7 @@ resource "kubectl_manifest" "k8up" {
       namespace: "${var.backup.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "core"
       component: "k8up"
       options: ${jsonencode(local.k8up)}

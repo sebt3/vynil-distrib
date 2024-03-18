@@ -22,7 +22,7 @@ resource "kubectl_manifest" "traefik" {
       namespace: "${var.traefik.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "share"
       component: "traefik"
       options: ${jsonencode(local.traefik)}

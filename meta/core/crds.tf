@@ -3,6 +3,7 @@ locals {
       "vynil.solidite.fr/meta" = "core"
       "vynil.solidite.fr/name" = var.namespace
     }
+    crd-prometheus = { for k, v in var.crds.prometheus : k => v if k!="enable" }
     crd-k8up = { for k, v in var.crds.k8up : k => v if k!="enable" }
     crd-secret-generator = { for k, v in var.crds.secret-generator : k => v if k!="enable" }
     crd-cert-manager = { for k, v in var.crds.cert-manager : k => v if k!="enable" }
@@ -26,10 +27,27 @@ resource "kubectl_manifest" "crd-mayfly" {
       namespace: "${var.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "crd"
       component: "mayfly"
       options: ${jsonencode(local.crd-mayfly)}
+  EOF
+}
+
+resource "kubectl_manifest" "crd-prometheus" {
+  count = (var.crds.prometheus.enable) ? 1 : 0
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-prometheus"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "core"
+      category: "crd"
+      component: "prometheus"
+      options: ${jsonencode(local.crd-prometheus)}
   EOF
 }
 
@@ -43,7 +61,7 @@ resource "kubectl_manifest" "crd-cert-manager" {
       namespace: "${var.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "crd"
       component: "cert-manager"
       options: ${jsonencode(local.crd-cert-manager)}
@@ -60,7 +78,7 @@ resource "kubectl_manifest" "crd-secret-generator" {
       namespace: "${var.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "crd"
       component: "secret-generator"
       options: ${jsonencode(local.crd-cert-manager)}
@@ -77,7 +95,7 @@ resource "kubectl_manifest" "crd-k8up" {
       namespace: "${var.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "crd"
       component: "k8up"
       options: ${jsonencode(local.crd-cert-manager)}
@@ -94,7 +112,7 @@ resource "kubectl_manifest" "crd-traefik" {
       namespace: "${var.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "crd"
       component: "traefik"
       options: ${jsonencode(local.crd-traefik)}
@@ -111,7 +129,7 @@ resource "kubectl_manifest" "crd-redis" {
       namespace: "${var.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "crd"
       component: "redis"
       options: ${jsonencode(local.crd-redis)}
@@ -128,7 +146,7 @@ resource "kubectl_manifest" "crd-mariadb" {
       namespace: "${var.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "crd"
       component: "mariadb"
       options: ${jsonencode(local.crd-mariadb)}
@@ -145,7 +163,7 @@ resource "kubectl_manifest" "crd-mysql" {
       namespace: "${var.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "crd"
       component: "mysql"
       options: ${jsonencode(local.crd-mysql)}
@@ -162,7 +180,7 @@ resource "kubectl_manifest" "crd-rabbitmq" {
       namespace: "${var.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "crd"
       component: "rabbitmq"
       options: ${jsonencode(local.crd-rabbitmq)}
@@ -179,7 +197,7 @@ resource "kubectl_manifest" "crd-mongo" {
       namespace: "${var.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "crd"
       component: "mongo"
       options: ${jsonencode(local.crd-mongo)}
@@ -196,7 +214,7 @@ resource "kubectl_manifest" "crd-pg" {
       namespace: "${var.namespace}"
       labels: ${jsonencode(local.common-labels)}
     spec:
-      distrib: "core"
+      distrib: "${var.component}"
       category: "crd"
       component: "pg"
       options: ${jsonencode(local.crd-pg)}

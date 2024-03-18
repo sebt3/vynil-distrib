@@ -43,197 +43,6 @@ options:
         default: vynil-backup
         type: string
     type: object
-  security:
-    default:
-      cert-manager:
-        enable: true
-      letsencrypt:
-        enable: false
-      namespace: vynil-security
-      secret-generator:
-        enable: true
-      self-sign:
-        enable: false
-    examples:
-    - cert-manager:
-        enable: true
-      letsencrypt:
-        enable: false
-      namespace: vynil-security
-      secret-generator:
-        enable: true
-      self-sign:
-        enable: false
-    properties:
-      cert-manager:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      letsencrypt:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      namespace:
-        default: vynil-security
-        type: string
-      secret-generator:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      self-sign:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-    type: object
-  traefik:
-    default:
-      enable: true
-      namespace: traefik
-    examples:
-    - enable: true
-      namespace: traefik
-    properties:
-      enable:
-        default: true
-        type: boolean
-      namespace:
-        default: traefik
-        type: string
-    type: object
-  tools:
-    default:
-      jaeger:
-        enable: false
-      mayfly:
-        enable: true
-      metrics_server:
-        enable: false
-      namespace: vynil-tools
-      node_problem_detector:
-        enable: false
-      opentelemetry:
-        enable: false
-      prometheus:
-        enable: true
-      reloader:
-        enable: true
-      tekton_pipelines:
-        enable: false
-      tekton_triggers:
-        enable: false
-    examples:
-    - jaeger:
-        enable: false
-      mayfly:
-        enable: true
-      metrics_server:
-        enable: false
-      namespace: vynil-tools
-      node_problem_detector:
-        enable: false
-      opentelemetry:
-        enable: false
-      prometheus:
-        enable: true
-      reloader:
-        enable: true
-      tekton_pipelines:
-        enable: false
-      tekton_triggers:
-        enable: false
-    properties:
-      jaeger:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      mayfly:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      metrics_server:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      namespace:
-        default: vynil-tools
-        type: string
-      node_problem_detector:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      opentelemetry:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      prometheus:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      reloader:
-        default:
-          enable: true
-        properties:
-          enable:
-            default: true
-            type: boolean
-        type: object
-      tekton_pipelines:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-      tekton_triggers:
-        default:
-          enable: false
-        properties:
-          enable:
-            default: false
-            type: boolean
-        type: object
-    type: object
   crds:
     default:
       cert-manager:
@@ -435,6 +244,197 @@ options:
             type: boolean
         type: object
       traefik:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+    type: object
+  security:
+    default:
+      cert-manager:
+        enable: true
+      letsencrypt:
+        enable: false
+      namespace: vynil-security
+      secret-generator:
+        enable: true
+      self-sign:
+        enable: false
+    examples:
+    - cert-manager:
+        enable: true
+      letsencrypt:
+        enable: false
+      namespace: vynil-security
+      secret-generator:
+        enable: true
+      self-sign:
+        enable: false
+    properties:
+      cert-manager:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      letsencrypt:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      namespace:
+        default: vynil-security
+        type: string
+      secret-generator:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      self-sign:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+    type: object
+  traefik:
+    default:
+      enable: true
+      namespace: traefik
+    examples:
+    - enable: true
+      namespace: traefik
+    properties:
+      enable:
+        default: true
+        type: boolean
+      namespace:
+        default: traefik
+        type: string
+    type: object
+  tools:
+    default:
+      jaeger:
+        enable: false
+      mayfly:
+        enable: true
+      metrics_server:
+        enable: false
+      namespace: vynil-tools
+      node_problem_detector:
+        enable: false
+      opentelemetry:
+        enable: false
+      prometheus:
+        enable: true
+      reloader:
+        enable: true
+      tekton_pipelines:
+        enable: false
+      tekton_triggers:
+        enable: false
+    examples:
+    - jaeger:
+        enable: false
+      mayfly:
+        enable: true
+      metrics_server:
+        enable: false
+      namespace: vynil-tools
+      node_problem_detector:
+        enable: false
+      opentelemetry:
+        enable: false
+      prometheus:
+        enable: true
+      reloader:
+        enable: true
+      tekton_pipelines:
+        enable: false
+      tekton_triggers:
+        enable: false
+    properties:
+      jaeger:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      mayfly:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      metrics_server:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      namespace:
+        default: vynil-tools
+        type: string
+      node_problem_detector:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      opentelemetry:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      prometheus:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      reloader:
+        default:
+          enable: true
+        properties:
+          enable:
+            default: true
+            type: boolean
+        type: object
+      tekton_pipelines:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      tekton_triggers:
         default:
           enable: false
         properties:
