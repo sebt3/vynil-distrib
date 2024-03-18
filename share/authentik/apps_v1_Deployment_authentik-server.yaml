@@ -1,0 +1,73 @@
+# Source: authentik/templates/server-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authentik-server
+  labels:
+    helm.sh/chart: authentik-2023.10.7
+    app.kubernetes.io/name: authentik
+    app.kubernetes.io/instance: authentik
+    app.kubernetes.io/version: "2023.10.7"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: "server"
+spec:
+  strategy:
+    {}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: authentik
+      app.kubernetes.io/instance: authentik
+      app.kubernetes.io/component: "server"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: authentik
+        app.kubernetes.io/instance: authentik
+        app.kubernetes.io/component: "server"
+        app.kubernetes.io/version: "2023.10.7"
+      annotations:
+        goauthentik.io/config-checksum: 92e0692364c90a8b3c4cb0bf6b95463d3dd5910bb3b3a830679ef1e94856a1c1
+    spec:
+      enableServiceLinks: true
+      securityContext:
+        {}
+      containers:
+        - name: authentik
+          image: "ghcr.io/goauthentik/server:2023.10.7"
+          imagePullPolicy: "IfNotPresent"
+          args: ["server"]
+          env:
+          envFrom:
+            - secretRef:
+                name: authentik
+          volumeMounts:
+          ports:
+            - name: http
+              containerPort: 9000
+              protocol: TCP
+            - name: http-metrics
+              containerPort: 9300
+              protocol: TCP
+            - name: https
+              containerPort: 9443
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /-/health/live/
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          startupProbe:
+            failureThreshold: 60
+            httpGet:
+              path: /-/health/live/
+              port: http
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /-/health/ready/
+              port: http
+            periodSeconds: 10
+          securityContext:
+            {}
+      volumes:
