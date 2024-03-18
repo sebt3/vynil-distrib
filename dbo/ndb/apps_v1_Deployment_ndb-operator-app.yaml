@@ -1,0 +1,43 @@
+# Source: ndb-operator/templates/deployments.yaml
+# Deploy Ndb operator
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ndb-operator-app
+  namespace: vynil-dbo
+  labels:
+    release: 8.2.0-1.2.0
+    app: ndb-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ndb-operator
+  template:
+    metadata:
+      labels:
+        app: ndb-operator
+    spec:
+      serviceAccountName: ndb-operator-app-sa
+      hostname: ndb-operator-pod
+      subdomain: ndb-operator-svc
+      containers:
+        - name: ndb-operator-controller
+          image: container-registry.oracle.com/mysql/community-ndb-operator:8.2.0-1.2.0
+          imagePullPolicy: IfNotPresent
+          command:
+            - ndb-operator
+          args:
+            - -cluster-scoped=true
+          ports:
+            - containerPort: 1186
+          env:
+            # Expose the image name via env to the operator app
+            - name: NDB_OPERATOR_IMAGE
+              value: container-registry.oracle.com/mysql/community-ndb-operator:8.2.0-1.2.0
+            - name: NDB_OPERATOR_IMAGE_PULL_SECRET_NAME
+              value: 
+  # set maxUnavailable to 0 so that helm will wait for the pod to become ready
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0

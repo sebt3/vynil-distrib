@@ -1,0 +1,44 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: mayfly
+  description: An operator to manage ephemeral Kubernetes resources
+options:
+  targets:
+    default: v1;Pod,batch/v1;Job
+    examples:
+    - v1;Pod,batch/v1;Job
+    type: string
+  image:
+    default:
+      pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: nccloud/mayfly
+      tag: 0.1.6
+    examples:
+    - pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: nccloud/mayfly
+      tag: 0.1.6
+    properties:
+      pullPolicy:
+        default: IfNotPresent
+        type: string
+      registry:
+        default: ghcr.io
+        type: string
+      repository:
+        default: nccloud/mayfly
+        type: string
+      tag:
+        default: 0.1.6
+        type: string
+    type: object
+dependencies:
+- dist: null
+  category: crd
+  component: mayfly
+providers: null
+tfaddtype: null

@@ -1,0 +1,21 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: crd
+metadata:
+  name: mysql
+  description: CRD for mysql
+options:
+  release:
+    default: 8.2.0-2.1.1
+    examples:
+    - 8.2.0-2.1.1
+    type: string
+  apply:
+    default: true
+    examples:
+    - true
+    type: boolean
+dependencies: []
+providers: null
+tfaddtype: null

@@ -1,0 +1,15 @@
+# Source: ndb-operator/templates/services.yaml
+# This service is created to get an FQDN for operator pod.
+# The FQDN of this service will be used as the host name
+# when creating 'ndb-operator-user' user. Operator
+# will use this user account to create/modify/delete the root
+# user account.
+apiVersion: v1
+kind: Service
+metadata:
+  name: ndb-operator-svc
+  namespace: vynil-dbo
+spec:
+  selector:
+    app: ndb-operator
+  clusterIP: None

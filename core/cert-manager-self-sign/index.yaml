@@ -1,0 +1,32 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: cert-manager-self-sign
+  description: Configure cert-manager to use self-signed certificates.
+options:
+  commonName:
+    default: self-signed
+    examples:
+    - self-signed
+    type: string
+  duration:
+    default: 87660h
+    examples:
+    - 87660h
+    type: string
+dependencies:
+- dist: null
+  category: core
+  component: cert-manager
+- dist: null
+  category: crd
+  component: cert-manager
+providers:
+  kubernetes: null
+  authentik: null
+  kubectl: true
+  postgresql: null
+  restapi: null
+  http: null

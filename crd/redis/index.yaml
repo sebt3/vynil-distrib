@@ -1,0 +1,26 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: crd
+metadata:
+  name: redis
+  description: CRD for Redis Operator
+options:
+  apply:
+    default: true
+    examples:
+    - true
+    type: boolean
+  target_namespace:
+    default: vynil-dbo
+    examples:
+    - vynil-dbo
+    type: string
+  target_cert:
+    default: redis-cert
+    examples:
+    - redis-cert
+    type: string
+dependencies: []
+providers: null
+tfaddtype: null

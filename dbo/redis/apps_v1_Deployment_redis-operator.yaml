@@ -1,0 +1,59 @@
+# Source: redis-operator/templates/operator-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-operator
+  namespace: dbo-redis
+  labels:
+    app.kubernetes.io/name: redis-operator
+    helm.sh/chart: redis-operator-0.15.9
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: redis-operator
+    app.kubernetes.io/version: 0.15.1
+    app.kubernetes.io/component: operator
+    app.kubernetes.io/part-of: redis-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: redis-operator
+  template:
+    metadata:
+      annotations:
+        cert-manager.io/inject-ca-from: dbo-redis/serving-cert
+      labels:
+        name: redis-operator
+    spec:
+      containers:
+      - name: "redis-operator"
+        image: "quay.io/opstree/redis-operator:v0.15.1"
+        imagePullPolicy: Always
+        command:
+        - /manager
+        args:
+        - --leader-elect
+        ports:
+        - containerPort: 9443
+          name: webhook-server
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /tmp/k8s-webhook-server/serving-certs
+          name: cert
+          readOnly: true
+        env:
+        - name: ENABLE_WEBHOOKS
+          value: "true"
+        resources: 
+          limits:
+            cpu: 500m
+            memory: 500Mi
+          requests:
+            cpu: 500m
+            memory: 500Mi
+      serviceAccountName: "redis-operator"
+      serviceAccount: "redis-operator"
+      volumes:
+      - name: cert
+        secret:
+          defaultMode: 420
+          secretName: webhook-server-cert

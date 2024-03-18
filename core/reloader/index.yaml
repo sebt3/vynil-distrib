@@ -1,0 +1,36 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: reloader
+  description: A Kubernetes controller to watch changes in ConfigMap and Secrets and do rolling upgrades on Pods with their associated Deployment, StatefulSet, DaemonSet and DeploymentConfig
+options:
+  image:
+    default:
+      pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: stakater/reloader
+      tag: v1.0.48
+    examples:
+    - pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: stakater/reloader
+      tag: v1.0.48
+    properties:
+      pullPolicy:
+        default: IfNotPresent
+        type: string
+      registry:
+        default: ghcr.io
+        type: string
+      repository:
+        default: stakater/reloader
+        type: string
+      tag:
+        default: v1.0.48
+        type: string
+    type: object
+dependencies: []
+providers: null
+tfaddtype: null

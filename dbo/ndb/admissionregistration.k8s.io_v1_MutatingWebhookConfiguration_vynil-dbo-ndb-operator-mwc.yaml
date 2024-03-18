@@ -1,0 +1,36 @@
+# Source: ndb-operator/templates/mutating-webhook-configs.yaml
+# Register the webhook service as a mutating webhook
+# since mutating webhook(mwh) is a cluster scoped resource, append release
+# namespace along with release name to the vwh name to allow installing multiple
+# namespace scoped operators
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: vynil-dbo-ndb-operator-mwc
+  labels:
+    # This label will be used by the webhook server to
+    # list WebhookConfigurations to inject caBundle into
+    webhook-server: vynil-dbo-ndb-operator-webhook-service
+webhooks:
+  - clientConfig:
+      # caBundle will be filled in by the webhook server
+      service:
+        name: ndb-operator-webhook-service
+        namespace: vynil-dbo
+        path: /ndb/mutate
+        port: 9443
+    failurePolicy: Fail
+    name: mutating-webhook.ndbcluster.mysql.oracle.com
+    rules:
+      - apiGroups:
+          - mysql.oracle.com
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - ndbclusters
+    admissionReviewVersions:
+      - v1
+    sideEffects: None

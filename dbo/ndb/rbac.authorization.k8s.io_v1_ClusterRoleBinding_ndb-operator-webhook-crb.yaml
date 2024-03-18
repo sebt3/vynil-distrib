@@ -1,0 +1,15 @@
+# Source: ndb-operator/templates/rolebindings.yaml
+# Other RBACs for the WebHook Server
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ndb-operator-webhook-crb
+  namespace: vynil-dbo
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ndb-operator-webhook-cr
+subjects:
+  - kind: ServiceAccount
+    name: ndb-operator-webhook-sa
+    namespace: vynil-dbo

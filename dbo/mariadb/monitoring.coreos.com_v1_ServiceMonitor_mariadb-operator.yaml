@@ -1,0 +1,26 @@
+# Source: mariadb-operator/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mariadb-operator
+  labels:
+    
+    helm.sh/chart: mariadb-operator-0.22.0
+    app.kubernetes.io/name: mariadb-operator
+    app.kubernetes.io/instance: mariadb-operator
+    app.kubernetes.io/version: "v0.0.22"
+    app.kubernetes.io/managed-by: Helm
+    
+spec:
+  selector:
+    matchLabels:
+      
+      app.kubernetes.io/name: mariadb-operator
+      app.kubernetes.io/instance: mariadb-operator
+  namespaceSelector:
+    matchNames:
+    - "dbo-mariadb"
+  endpoints:
+  - port: metrics
+    interval: 30s
+    scrapeTimeout: 25s

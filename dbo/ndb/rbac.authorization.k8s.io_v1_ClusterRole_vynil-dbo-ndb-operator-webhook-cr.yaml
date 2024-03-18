@@ -1,0 +1,15 @@
+# Source: ndb-operator/templates/cluster-roles.yaml
+# ClusterRoles for the WebHook Server to access the cluster-scoped resources
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: vynil-dbo-ndb-operator-webhook-cr
+rules:
+  - apiGroups:
+      - admissionregistration.k8s.io
+    resources:
+      - validatingwebhookconfigurations
+      - mutatingwebhookconfigurations
+    verbs:
+      - list
+      - patch

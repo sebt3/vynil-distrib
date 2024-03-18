@@ -1,0 +1,16 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: crd
+metadata:
+  name: ndb
+  description: null
+options:
+  apply:
+    default: true
+    examples:
+    - true
+    type: boolean
+dependencies: []
+providers: null
+tfaddtype: null

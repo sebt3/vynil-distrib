@@ -1,0 +1,16 @@
+# Source: mayfly/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mayfly
+  namespace: vynil-tools
+  labels:
+    app: mayfly
+spec:
+  ports:
+    - name: metric
+      port: 8080
+      protocol: TCP
+      targetPort: 8082
+  selector:
+    app: mayfly

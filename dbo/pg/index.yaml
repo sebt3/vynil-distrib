@@ -1,0 +1,84 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: dbo
+metadata:
+  name: pg
+  description: CloudNativePG is an open source operator designed to manage PostgreSQL workloads on any supported Kubernetes cluster running in private, public, hybrid, or multi-cloud environments. CloudNativePG adheres to DevOps principles and concepts such as declarative configuration and immutable infrastructure.
+options:
+  image:
+    default:
+      pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: cloudnative-pg/cloudnative-pg
+      tag: 1.22.1
+    examples:
+    - pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: cloudnative-pg/cloudnative-pg
+      tag: 1.22.1
+    properties:
+      pullPolicy:
+        default: IfNotPresent
+        enum:
+        - Always
+        - Never
+        - IfNotPresent
+        type: string
+      registry:
+        default: ghcr.io
+        type: string
+      repository:
+        default: cloudnative-pg/cloudnative-pg
+        type: string
+      tag:
+        default: 1.22.1
+        type: string
+    type: object
+  resources:
+    default:
+      limits:
+        cpu: 100m
+        memory: 200Mi
+      requests:
+        cpu: 100m
+        memory: 100Mi
+    examples:
+    - limits:
+        cpu: 100m
+        memory: 200Mi
+      requests:
+        cpu: 100m
+        memory: 100Mi
+    properties:
+      limits:
+        default:
+          cpu: 100m
+          memory: 200Mi
+        properties:
+          cpu:
+            default: 100m
+            type: string
+          memory:
+            default: 200Mi
+            type: string
+        type: object
+      requests:
+        default:
+          cpu: 100m
+          memory: 100Mi
+        properties:
+          cpu:
+            default: 100m
+            type: string
+          memory:
+            default: 100Mi
+            type: string
+        type: object
+    type: object
+dependencies:
+- dist: null
+  category: crd
+  component: pg
+providers: null
+tfaddtype: null

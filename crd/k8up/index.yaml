@@ -1,0 +1,16 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: crd
+metadata:
+  name: k8up
+  description: CRD for k8up, the kubernetes backup operator
+options:
+  apply:
+    default: true
+    examples:
+    - true
+    type: boolean
+dependencies: []
+providers: null
+tfaddtype: null

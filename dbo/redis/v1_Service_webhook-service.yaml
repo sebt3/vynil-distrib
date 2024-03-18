@@ -1,0 +1,21 @@
+# Source: redis-operator/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name : redis-operator
+    helm.sh/chart : redis-operator-0.15.9
+    app.kubernetes.io/managed-by : Helm
+    app.kubernetes.io/instance : redis-operator
+    app.kubernetes.io/version : 0.15.1
+    app.kubernetes.io/component: webhook
+    app.kubernetes.io/part-of : redis-operator
+  name: webhook-service
+  namespace:  dbo-redis
+spec:
+  ports:
+    - port: 443
+      protocol: TCP
+      targetPort: 9443
+  selector:
+    name: redis-operator

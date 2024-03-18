@@ -1,0 +1,15 @@
+# Source: mysql-operator/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-operator
+  namespace: dbo-mysql
+  labels:
+    name: mysql-operator
+spec:
+  type: ClusterIP
+  ports:
+  - port: 9443
+    protocol: TCP
+  selector:
+    name: mysql-operator
