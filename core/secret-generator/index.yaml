@@ -6,12 +6,6 @@ metadata:
   name: secret-generator
   description: Automatically generated secrets for Kubernetes
 options:
-  release:
-    default: 3.4.0
-    description: secret-generator version to use
-    examples:
-    - 3.4.0
-    type: string
   namespaces:
     default: ''
     examples:
@@ -19,24 +13,30 @@ options:
     type: string
   image:
     default:
-      registry: quay.io
-      repository: mittwald/kubernetes-secret-generator
-      tag: latest
+      registry: docker.io
+      repository: arush/kubernetes-secret-generator
+      tag: v3.4.1
     examples:
-    - registry: quay.io
-      repository: mittwald/kubernetes-secret-generator
-      tag: latest
+    - registry: docker.io
+      repository: arush/kubernetes-secret-generator
+      tag: v3.4.1
     properties:
       registry:
-        default: quay.io
+        default: docker.io
         type: string
       repository:
-        default: mittwald/kubernetes-secret-generator
+        default: arush/kubernetes-secret-generator
         type: string
       tag:
-        default: latest
+        default: v3.4.1
         type: string
     type: object
+  release:
+    default: 3.4.0
+    description: secret-generator version to use
+    examples:
+    - 3.4.0
+    type: string
   secret_length:
     default: 40
     examples:
@@ -47,3 +47,4 @@ dependencies:
   category: crd
   component: secret-generator
 providers: null
+tfaddtype: null
