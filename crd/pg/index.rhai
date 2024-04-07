@@ -2,6 +2,7 @@ const VERSION="1.22.1";
 const SRC=src;
 const DEST=dest;
 const DOIT=config.apply;
+const PURGE=config.purge;
 const crdFiles=[
     "apiextensions.k8s.io_v1_CustomResourceDefinition_backups.postgresql.cnpg.io.yaml",
     "apiextensions.k8s.io_v1_CustomResourceDefinition_clusters.postgresql.cnpg.io.yaml",
@@ -17,7 +18,7 @@ fn pre_install() {
     }
 }
 fn post_destroy() {
-    if ! global::DOIT {
+    if ! global::PURGE {
         return;
     }
     for file in global::crdFiles {

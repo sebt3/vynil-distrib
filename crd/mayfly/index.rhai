@@ -2,6 +2,7 @@ const VERSION="0.1.6";
 const SRC=src;
 const DEST=dest;
 const DOIT=config.apply;
+const PURGE=config.purge;
 const sourcesDir=`https://github.com/NCCloud/mayfly/raw/v${VERSION}/deploy/crds`;
 const sources=[
     "cloud.namecheap.com_scheduledresources.yaml",
@@ -23,7 +24,7 @@ fn pre_install() {
     }
 }
 fn post_destroy() {
-    if ! global::DOIT {
+    if ! global::PURGE {
         return;
     }
     for file in global::crdFiles {

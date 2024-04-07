@@ -2,6 +2,7 @@ const VERSION="2.7.0";
 const SRC=src;
 const DEST=dest;
 const DOIT=config.apply;
+const PURGE=config.purge;
 const crdFiles=[
     "apiextensions.k8s.io_v1_CustomResourceDefinition_rabbitmqclusters.rabbitmq.com.yaml",
 ];
@@ -14,7 +15,7 @@ fn pre_install() {
     }
 }
 fn post_destroy() {
-    if ! global::DOIT {
+    if ! global::PURGE {
         return;
     }
     for file in global::crdFiles {

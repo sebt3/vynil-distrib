@@ -11,6 +11,11 @@ options:
     examples:
     - true
     type: boolean
+  purge:
+    default: false
+    examples:
+    - false
+    type: boolean
 dependencies: []
 providers: null
 tfaddtype: null

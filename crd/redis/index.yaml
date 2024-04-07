@@ -11,15 +11,20 @@ options:
     examples:
     - true
     type: boolean
-  target_namespace:
-    default: vynil-dbo
+  purge:
+    default: false
     examples:
-    - vynil-dbo
-    type: string
+    - false
+    type: boolean
   target_cert:
     default: redis-cert
     examples:
     - redis-cert
+    type: string
+  target_namespace:
+    default: vynil-dbo
+    examples:
+    - vynil-dbo
     type: string
 dependencies: []
 providers: null

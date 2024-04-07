@@ -2,6 +2,7 @@ const VERSION="25.0.0";
 const SRC=src;
 const DEST=dest;
 const DOIT=config.apply;
+const PURGE=config.purge;
 const crdFiles=[
     "apiextensions.k8s.io_v1_CustomResourceDefinition_ingressroutes.traefik.containo.us.yaml",
     "apiextensions.k8s.io_v1_CustomResourceDefinition_ingressroutes.traefik.io.yaml",
@@ -32,7 +33,7 @@ fn pre_install() {
     }
 }
 fn post_destroy() {
-    if ! global::DOIT {
+    if ! global::PURGE {
         return;
     }
     for file in global::crdFiles {

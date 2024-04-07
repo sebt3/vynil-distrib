@@ -2,6 +2,7 @@ const VERSION="0.71.0";
 const SRC=src;
 const DEST=dest;
 const DOIT=config.apply;
+const PURGE=config.purge;
 const sourcesDir=`https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v${VERSION}/example/prometheus-operator-crd`;
 const sources=[
     "monitoring.coreos.com_alertmanagerconfigs.yaml",
@@ -39,7 +40,7 @@ fn pre_install() {
     }
 }
 fn post_destroy() {
-    if ! global::DOIT {
+    if ! global::PURGE {
         return;
     }
     for file in global::crdFiles {

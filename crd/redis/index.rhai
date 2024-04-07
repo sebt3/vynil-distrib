@@ -2,6 +2,7 @@ const VERSION="0.15.9";
 const SRC=src;
 const DEST=dest;
 const DOIT=config.apply;
+const PURGE=config.purge;
 const sourcesDir=`https://raw.githubusercontent.com/OT-CONTAINER-KIT/helm-charts/redis-operator-${VERSION}/charts/redis-operator/crds`;
 const sources=[
     "redis.yaml",
@@ -35,7 +36,7 @@ fn pre_install() {
     }
 }
 fn post_destroy() {
-    if ! global::DOIT {
+    if ! global::PURGE {
         return;
     }
     for file in global::crdFiles {

@@ -2,6 +2,7 @@ const VERSION="3.4.0";
 const SRC=src;
 const DEST=dest;
 const DOIT=config.apply;
+const PURGE=config.purge;
 const sourcesDir=`https://raw.githubusercontent.com/mittwald/kubernetes-secret-generator/v${VERSION}/deploy/crds`;
 const sources=[
     "secretgenerator.mittwald.de_basicauths_crd.yaml",
@@ -27,7 +28,7 @@ fn pre_install() {
     }
 }
 fn post_destroy() {
-    if ! global::DOIT {
+    if ! global::PURGE {
         return;
     }
     for file in global::crdFiles {

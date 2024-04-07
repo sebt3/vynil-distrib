@@ -2,6 +2,7 @@ const VERSION="2.7.2";
 const SRC=src;
 const DEST=dest;
 const DOIT=config.apply;
+const PURGE=config.purge;
 const sourcesDir=`https://raw.githubusercontent.com/k8up-io/k8up/v${VERSION}/config/crd/apiextensions.k8s.io/v1`;
 const sources=[
     "k8up.io_archives.yaml",
@@ -37,7 +38,7 @@ fn pre_install() {
     }
 }
 fn post_destroy() {
-    if ! global::DOIT {
+    if ! global::PURGE {
         return;
     }
     for file in global::crdFiles {
