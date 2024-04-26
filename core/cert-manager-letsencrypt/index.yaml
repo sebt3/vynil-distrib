@@ -25,5 +25,8 @@ providers:
   authentik: null
   kubectl: true
   postgresql: null
+  mysql: null
   restapi: null
   http: null
+  gitea: null
+tfaddtype: null

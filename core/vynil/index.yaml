@@ -12,30 +12,30 @@ options:
         pullPolicy: IfNotPresent
         registry: docker.io
         repository: sebt3/vynil-agent
-        tag: 0.2.7
+        tag: 0.2.11
       operator:
         pullPolicy: IfNotPresent
         registry: docker.io
         repository: sebt3/vynil-operator
-        tag: 0.2.7
+        tag: 0.2.11
     examples:
     - agent:
         pullPolicy: IfNotPresent
         registry: docker.io
         repository: sebt3/vynil-agent
-        tag: 0.2.7
+        tag: 0.2.11
       operator:
         pullPolicy: IfNotPresent
         registry: docker.io
         repository: sebt3/vynil-operator
-        tag: 0.2.7
+        tag: 0.2.11
     properties:
       agent:
         default:
           pullPolicy: IfNotPresent
           registry: docker.io
           repository: sebt3/vynil-agent
-          tag: 0.2.7
+          tag: 0.2.11
         properties:
           pullPolicy:
             default: IfNotPresent
@@ -51,7 +51,7 @@ options:
             default: sebt3/vynil-agent
             type: string
           tag:
-            default: 0.2.7
+            default: 0.2.11
             description: vynil-agent version to use
             type: string
         type: object
@@ -60,7 +60,7 @@ options:
           pullPolicy: IfNotPresent
           registry: docker.io
           repository: sebt3/vynil-operator
-          tag: 0.2.7
+          tag: 0.2.11
         properties:
           pullPolicy:
             default: IfNotPresent
@@ -76,39 +76,21 @@ options:
             default: sebt3/vynil-operator
             type: string
           tag:
-            default: 0.2.7
+            default: 0.2.11
             description: vynil-operator version to use
             type: string
         type: object
     type: object
   resources:
     default:
-      limits:
-        cpu: 500m
-        memory: 512Mi
       requests:
         cpu: 50m
         memory: 256Mi
     examples:
-    - limits:
-        cpu: 500m
-        memory: 512Mi
-      requests:
+    - requests:
         cpu: 50m
         memory: 256Mi
     properties:
-      limits:
-        default:
-          cpu: 500m
-          memory: 512Mi
-        properties:
-          cpu:
-            default: 500m
-            type: string
-          memory:
-            default: 512Mi
-            type: string
-        type: object
       requests:
         default:
           cpu: 50m

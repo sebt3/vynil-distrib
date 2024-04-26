@@ -25,9 +25,6 @@ data "kustomization_overlay" "data" {
             - name: vynil-controller
               imagePullPolicy: "${var.images.operator.pullPolicy}"
               resources:
-                limits:
-                  cpu: "${var.resources.limits.cpu}"
-                  memory: "${var.resources.limits.memory}"
                 requests:
                   cpu: "${var.resources.requests.cpu}"
                   memory: "${var.resources.requests.memory}"
