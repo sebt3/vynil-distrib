@@ -4,28 +4,28 @@ kind: Component
 category: dbo
 metadata:
   name: ndb
-  description: null
+  description: Mysql-NDB operator
 options:
   image:
     default:
-      pullPolicy: IfNotPresent
+      pull_policy: IfNotPresent
       registry: container-registry.oracle.com
       repository: mysql/community-ndb-operator
-      tag: 8.2.0-1.2.0
+      tag: 8.4.0-1.4.0
     examples:
-    - pullPolicy: IfNotPresent
+    - pull_policy: IfNotPresent
       registry: container-registry.oracle.com
       repository: mysql/community-ndb-operator
-      tag: 8.2.0-1.2.0
+      tag: 8.4.0-1.4.0
     properties:
       properties:
         default: null
-        pullPolicy:
+        pull_policy:
           enum:
           - Always
           - Never
           - IfNotPresent
-      pullPolicy:
+      pull_policy:
         default: IfNotPresent
         type: string
       registry:
@@ -35,9 +35,17 @@ options:
         default: mysql/community-ndb-operator
         type: string
       tag:
-        default: 8.2.0-1.2.0
+        default: 8.4.0-1.4.0
         type: string
     type: object
 dependencies: []
-providers: null
+providers:
+  kubernetes: true
+  authentik: null
+  kubectl: true
+  postgresql: null
+  mysql: null
+  restapi: null
+  http: null
+  gitea: null
 tfaddtype: null

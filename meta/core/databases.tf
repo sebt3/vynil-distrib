@@ -6,6 +6,7 @@ locals {
     mysql = { for k, v in var.databases.mysql : k => v if k!="enable" }
     mongo = { for k, v in var.databases.mongo : k => v if k!="enable" }
     pg = { for k, v in var.databases.pg : k => v if k!="enable" }
+    ndb = { for k, v in var.databases.ndb : k => v if k!="enable" }
 }
 
 resource "kubernetes_namespace_v1" "databases-ns" {
@@ -140,5 +141,23 @@ resource "kubectl_manifest" "pg" {
       category: "dbo"
       component: "pg"
       options: ${jsonencode(local.pg)}
+  EOF
+}
+
+resource "kubectl_manifest" "ndb" {
+  count = var.databases.ndb.enable? 1 : 0
+  depends_on = [kubernetes_namespace_v1.databases-ns, kubectl_manifest.crd-ndb]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "dbo-ndb"
+      namespace: "${var.databases.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "${var.component}"
+      category: "dbo"
+      component: "ndb"
+      options: ${jsonencode(local.ndb)}
   EOF
 }

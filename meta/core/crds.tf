@@ -14,6 +14,7 @@ locals {
     crd-rabbitmq = { for k, v in var.crds.rabbitmq : k => v if k!="enable" }
     crd-mongo = { for k, v in var.crds.mongo : k => v if k!="enable" }
     crd-pg = { for k, v in var.crds.pg : k => v if k!="enable" }
+    crd-ndb = { for k, v in var.crds.ndb : k => v if k!="enable" }
     crd-mayfly = { for k, v in var.crds.mayfly : k => v if k!="enable" }
 }
 
@@ -218,5 +219,22 @@ resource "kubectl_manifest" "crd-pg" {
       category: "crd"
       component: "pg"
       options: ${jsonencode(local.crd-pg)}
+  EOF
+}
+
+resource "kubectl_manifest" "crd-ndb" {
+  count = (var.crds.ndb.enable || var.databases.ndb.enable)? 1 : 0
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-ndb"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "${var.component}"
+      category: "crd"
+      component: "ndb"
+      options: ${jsonencode(local.crd-ndb)}
   EOF
 }

@@ -1,7 +1,7 @@
-const VERSION="8.2.0-1.2.0";
-const DEST=dest;
-fn post_pack() {
-    shell(`curl -sL https://raw.githubusercontent.com/mysql/mysql-ndb-operator/release-${global::VERSION}/deploy/charts/ndb-operator/crds/mysql.oracle.com_ndbclusters.yaml >${global::DEST}/mysql.oracle.com_ndbclusters.yaml`);
+const VERSION="8.4.0-1.4.0";
+const SRC=src;
+fn pre_pack() {
+    shell(`curl -sL https://raw.githubusercontent.com/mysql/mysql-ndb-operator/release-${global::VERSION}/deploy/charts/ndb-operator/crds/mysql.oracle.com_ndbclusters.yaml >${global::SRC}/mysql.oracle.com_ndbclusters.yaml`);
 }
 
 const DOIT=config.apply;
@@ -10,10 +10,8 @@ fn pre_install() {
         return;
     }
     for file in [
-        "mysql.oracle.com_ndbclusters.yaml",
+        "apiextensions.k8s.io_v1_CustomResourceDefinition_ndbclusters.mysql.oracle.com.yaml",
     ] {
         shell(`kubectl apply -f ${global::SRC}/${file}`);
     }
 }
-
-

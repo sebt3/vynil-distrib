@@ -46,6 +46,8 @@ options:
         enable: false
       mysql:
         enable: false
+      ndb:
+        enable: false
       opentelemetry:
         enable: false
       pg:
@@ -80,6 +82,8 @@ options:
       mongo:
         enable: false
       mysql:
+        enable: false
+      ndb:
         enable: false
       opentelemetry:
         enable: false
@@ -157,6 +161,14 @@ options:
             type: boolean
         type: object
       mysql:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      ndb:
         default:
           enable: false
         properties:
