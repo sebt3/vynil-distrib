@@ -6,38 +6,33 @@ metadata:
   name: k8up
   description: Kubernetes Backup Operator
 options:
-  timezone:
-    default: Europe/Paris
-    examples:
-    - Europe/Paris
-    type: string
   images:
     default:
       backup:
         registry: ghcr.io
         repository: k8up-io/k8up
-        tag: v2.7.2
+        tag: v2.10.0
       operator:
         pullPolicy: IfNotPresent
         registry: ghcr.io
         repository: k8up-io/k8up
-        tag: v2.7.2
+        tag: v2.10.0
     examples:
     - backup:
         registry: ghcr.io
         repository: k8up-io/k8up
-        tag: v2.7.2
+        tag: v2.10.0
       operator:
         pullPolicy: IfNotPresent
         registry: ghcr.io
         repository: k8up-io/k8up
-        tag: v2.7.2
+        tag: v2.10.0
     properties:
       backup:
         default:
           registry: ghcr.io
           repository: k8up-io/k8up
-          tag: v2.7.2
+          tag: v2.10.0
         properties:
           registry:
             default: ghcr.io
@@ -46,7 +41,7 @@ options:
             default: k8up-io/k8up
             type: string
           tag:
-            default: v2.7.2
+            default: v2.10.0
             type: string
         type: object
       operator:
@@ -54,7 +49,7 @@ options:
           pullPolicy: IfNotPresent
           registry: ghcr.io
           repository: k8up-io/k8up
-          tag: v2.7.2
+          tag: v2.10.0
         properties:
           pullPolicy:
             default: IfNotPresent
@@ -66,7 +61,7 @@ options:
             default: k8up-io/k8up
             type: string
           tag:
-            default: v2.7.2
+            default: v2.10.0
             type: string
         type: object
     type: object
@@ -111,12 +106,22 @@ options:
             type: string
         type: object
     type: object
+  timezone:
+    default: Europe/Paris
+    examples:
+    - Europe/Paris
+    type: string
 dependencies:
 - dist: null
   category: crd
-  component: prometheus
-- dist: null
-  category: crd
   component: k8up
-providers: null
+providers:
+  kubernetes: null
+  authentik: null
+  kubectl: true
+  postgresql: null
+  mysql: null
+  restapi: null
+  http: null
+  gitea: null
 tfaddtype: null

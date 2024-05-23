@@ -1,0 +1,91 @@
+resource "kubectl_manifest" "ServiceMonitor_k8up-monitor" {
+  count = var.conditions.have_servicemonitors?1:0
+  yaml_body  = <<-EOF
+    apiVersion: monitoring.coreos.com/v1
+    kind: ServiceMonitor
+    metadata:
+      name: "${var.instance}-${var.component}"
+      namespace: ${var.namespace}
+      labels: ${jsonencode(local.common_labels)}
+    spec:
+      endpoints:
+      - port: http
+        interval: 60s
+      selector:
+        matchLabels: ${jsonencode(local.k8up_labels)}
+EOF
+}
+
+resource "kubectl_manifest" "PrometheusRule_k8up-rule" {
+  count = var.conditions.have_prometheusrules?1:0
+  yaml_body  = <<-EOF
+    apiVersion: monitoring.coreos.com/v1
+    kind: PrometheusRule
+    metadata:
+      name: "${var.instance}-${var.component}"
+      namespace: ${var.namespace}
+      labels: ${jsonencode(local.common_labels)}
+    spec:
+      groups:
+      - name: K8up
+        rules:
+        - alert: K8upResticErrors
+          expr: k8up_backup_restic_last_errors > 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Amount of errors of last restic backup
+            description: This alert is fired when error number is > 0
+            runbook_url: https://k8up.io/k8up/explanations/runbooks/K8upResticErrors.html
+        - alert: K8upBackupNotRunning
+          expr: sum(rate(k8up_jobs_total[25h])) == 0 and on(namespace) k8up_schedules_gauge > 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: No K8up jobs were run in {{ $labels.namespace }} within the last 24 hours. Check the operator, there might be a deadlock
+            runbook_url: https://k8up.io/k8up/explanations/runbooks/K8upBackupNotRunning.html
+        - alert: K8upArchiveFailed
+          expr: (sum(kube_job_status_failed) by(job_name, namespace) * on(job_name, namespace) group_right() kube_job_labels{label_k8up_syn_tools_type="archive"}) > 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Job in {{ $labels.namespace }} of type {{ $labels.label_k8up_syn_tools_type }} failed
+            runbook_url: https://k8up.io/k8up/explanations/runbooks/K8upArchiveFailed.html
+        - alert: K8upBackupFailed
+          expr: (sum(kube_job_status_failed) by(job_name, namespace) * on(job_name, namespace) group_right() kube_job_labels{label_k8up_syn_tools_type="backup"}) > 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Job in {{ $labels.namespace }} of type {{ $labels.label_k8up_syn_tools_type }} failed
+            runbook_url: https://k8up.io/k8up/explanations/runbooks/K8upBackupFailed.html
+        - alert: K8upCheckFailed
+          expr: (sum(kube_job_status_failed) by(job_name, namespace) * on(job_name, namespace) group_right() kube_job_labels{label_k8up_syn_tools_type="check"}) > 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Job in {{ $labels.namespace }} of type {{ $labels.label_k8up_syn_tools_type }} failed
+            runbook_url: https://k8up.io/k8up/explanations/runbooks/K8upCheckFailed.html
+        - alert: K8upPruneFailed
+          expr: (sum(kube_job_status_failed) by(job_name, namespace) * on(job_name, namespace) group_right() kube_job_labels{label_k8up_syn_tools_type="prune"}) > 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Job in {{ $labels.namespace }} of type {{ $labels.label_k8up_syn_tools_type }} failed
+            runbook_url: https://k8up.io/k8up/explanations/runbooks/K8upPruneFailed.html
+        - alert: K8upRestoreFailed
+          expr: (sum(kube_job_status_failed) by(job_name, namespace) * on(job_name, namespace) group_right() kube_job_labels{label_k8up_syn_tools_type="restore"}) > 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: Job in {{ $labels.namespace }} of type {{ $labels.label_k8up_syn_tools_type }} failed
+            runbook_url: https://k8up.io/k8up/explanations/runbooks/K8upRestoreFailed.html
+EOF
+}
+

@@ -1,27 +1,18 @@
-const VERSION="25.0.0";
+const VERSION="28.0.0";
 const SRC=src;
 const DEST=dest;
 const DOIT=config.apply;
 const PURGE=config.purge;
 const crdFiles=[
-    "apiextensions.k8s.io_v1_CustomResourceDefinition_ingressroutes.traefik.containo.us.yaml",
     "apiextensions.k8s.io_v1_CustomResourceDefinition_ingressroutes.traefik.io.yaml",
-    "apiextensions.k8s.io_v1_CustomResourceDefinition_ingressroutetcps.traefik.containo.us.yaml",
     "apiextensions.k8s.io_v1_CustomResourceDefinition_ingressroutetcps.traefik.io.yaml",
-    "apiextensions.k8s.io_v1_CustomResourceDefinition_ingressrouteudps.traefik.containo.us.yaml",
     "apiextensions.k8s.io_v1_CustomResourceDefinition_ingressrouteudps.traefik.io.yaml",
-    "apiextensions.k8s.io_v1_CustomResourceDefinition_middlewares.traefik.containo.us.yaml",
     "apiextensions.k8s.io_v1_CustomResourceDefinition_middlewares.traefik.io.yaml",
-    "apiextensions.k8s.io_v1_CustomResourceDefinition_middlewaretcps.traefik.containo.us.yaml",
     "apiextensions.k8s.io_v1_CustomResourceDefinition_middlewaretcps.traefik.io.yaml",
-    "apiextensions.k8s.io_v1_CustomResourceDefinition_serverstransports.traefik.containo.us.yaml",
     "apiextensions.k8s.io_v1_CustomResourceDefinition_serverstransports.traefik.io.yaml",
     "apiextensions.k8s.io_v1_CustomResourceDefinition_serverstransporttcps.traefik.io.yaml",
-    "apiextensions.k8s.io_v1_CustomResourceDefinition_tlsoptions.traefik.containo.us.yaml",
     "apiextensions.k8s.io_v1_CustomResourceDefinition_tlsoptions.traefik.io.yaml",
-    "apiextensions.k8s.io_v1_CustomResourceDefinition_tlsstores.traefik.containo.us.yaml",
     "apiextensions.k8s.io_v1_CustomResourceDefinition_tlsstores.traefik.io.yaml",
-    "apiextensions.k8s.io_v1_CustomResourceDefinition_traefikservices.traefik.containo.us.yaml",
     "apiextensions.k8s.io_v1_CustomResourceDefinition_traefikservices.traefik.io.yaml",
 ];
 fn pre_install() {

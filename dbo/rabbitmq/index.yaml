@@ -6,35 +6,90 @@ metadata:
   name: rabbitmq
   description: RabbitMQ Operator
 options:
-  release:
-    default: 2.7.0
-    description: RabbitMQ Operator version to use
-    examples:
-    - 2.7.0
-    type: string
-  image:
+  images:
     default:
-      registry: quay.io
-      repository: rabbitmqoperator/cluster-operator
-      tag: 2.7.0
+      manager:
+        pull_policy: IfNotPresent
+        registry: docker.io
+        repository: rabbitmqoperator/cluster-operator
+        tag: 2.9.0
+      topology:
+        pull_policy: IfNotPresent
+        registry: docker.io
+        repository: rabbitmqoperator/messaging-topology-operator
+        tag: 1.14.1
     examples:
-    - registry: quay.io
-      repository: rabbitmqoperator/cluster-operator
-      tag: 2.7.0
+    - manager:
+        pull_policy: IfNotPresent
+        registry: docker.io
+        repository: rabbitmqoperator/cluster-operator
+        tag: 2.9.0
+      topology:
+        pull_policy: IfNotPresent
+        registry: docker.io
+        repository: rabbitmqoperator/messaging-topology-operator
+        tag: 1.14.1
     properties:
-      registry:
-        default: quay.io
-        type: string
-      repository:
-        default: rabbitmqoperator/cluster-operator
-        type: string
-      tag:
-        default: 2.7.0
-        type: string
+      manager:
+        default:
+          pull_policy: IfNotPresent
+          registry: docker.io
+          repository: rabbitmqoperator/cluster-operator
+          tag: 2.9.0
+        properties:
+          pull_policy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: rabbitmqoperator/cluster-operator
+            type: string
+          tag:
+            default: 2.9.0
+            type: string
+        type: object
+      topology:
+        default:
+          pull_policy: IfNotPresent
+          registry: docker.io
+          repository: rabbitmqoperator/messaging-topology-operator
+          tag: 1.14.1
+        properties:
+          pull_policy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: rabbitmqoperator/messaging-topology-operator
+            type: string
+          tag:
+            default: 1.14.1
+            type: string
+        type: object
     type: object
 dependencies:
 - dist: null
   category: crd
   component: rabbitmq
-providers: null
+providers:
+  kubernetes: null
+  authentik: null
+  kubectl: true
+  postgresql: null
+  mysql: null
+  restapi: null
+  http: null
+  gitea: null
 tfaddtype: null

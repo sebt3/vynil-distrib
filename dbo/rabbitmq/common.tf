@@ -10,15 +10,16 @@ locals {
     "vynil.solidite.fr/owner-component" = var.component
     "app.kubernetes.io/managed-by" = "vynil"
   },local.core_labels)
-  vynil_labels = merge({
-    "app.kubernetes.io/componant" = var.component
+  manager_labels = merge({
+    "app.kubernetes.io/componant" = "manager"
   },local.core_labels)
-  vynil_all_labels = merge({
-    "app.kubernetes.io/componant" = var.component
+  manager_all_labels = merge({
+    "app.kubernetes.io/componant" = "manager"
   },local.common_labels)
-}
-data "kustomization_overlay" "data" {
-  namespace = var.namespace
-  common_labels = local.common_labels
-  resources = [ for file in fileset(path.module, "*.yaml"): file if file != "index.yaml"]
+  topology_labels = merge({
+    "app.kubernetes.io/componant" = "topology"
+  },local.core_labels)
+  topology_all_labels = merge({
+    "app.kubernetes.io/componant" = "topology"
+  },local.common_labels)
 }

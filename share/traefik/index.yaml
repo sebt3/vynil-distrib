@@ -6,22 +6,17 @@ metadata:
   name: traefik
   description: Traefik is an open-source Edge Router that makes publishing your services a fun and easy experience. It receives requests on behalf of your system and finds out which components are responsible for handling them.
 options:
-  is-default:
-    default: 'true'
-    examples:
-    - 'true'
-    type: string
   image:
     default:
       pullPolicy: IfNotPresent
       registry: docker.io
       repository: traefik
-      tag: v2.11.0
+      tag: v3.0.1
     examples:
     - pullPolicy: IfNotPresent
       registry: docker.io
       repository: traefik
-      tag: v2.11.0
+      tag: v3.0.1
     properties:
       pullPolicy:
         default: IfNotPresent
@@ -37,7 +32,7 @@ options:
         default: traefik
         type: string
       tag:
-        default: v2.11.0
+        default: v3.0.1
         type: string
     type: object
   ingressClass:
@@ -45,12 +40,27 @@ options:
     examples:
     - traefik
     type: string
+  is-default:
+    default: 'true'
+    examples:
+    - 'true'
+    type: string
+  use_plugins:
+    default: true
+    examples:
+    - true
+    type: boolean
 dependencies:
 - dist: null
   category: crd
   component: traefik
-- dist: null
-  category: crd
-  component: prometheus
-providers: null
+providers:
+  kubernetes: null
+  authentik: null
+  kubectl: true
+  postgresql: null
+  mysql: null
+  restapi: null
+  http: null
+  gitea: null
 tfaddtype: null
