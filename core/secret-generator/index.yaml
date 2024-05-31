@@ -8,34 +8,40 @@ metadata:
 options:
   image:
     default:
-      registry: quay.io
-      repository: mittwald/kubernetes-secret-generator
-      tag: v3.4.0
+      pull_policy: IfNotPresent
+      registry: docker.io
+      repository: sebt3/kubernetes-secret-generator
+      tag: 3.4.0
     examples:
-    - registry: quay.io
-      repository: mittwald/kubernetes-secret-generator
-      tag: v3.4.0
+    - pull_policy: IfNotPresent
+      registry: docker.io
+      repository: sebt3/kubernetes-secret-generator
+      tag: 3.4.0
     properties:
+      properties:
+        default: null
+        pull_policy:
+          enum:
+          - Always
+          - Never
+          - IfNotPresent
+      pull_policy:
+        default: IfNotPresent
+        type: string
       registry:
-        default: quay.io
+        default: docker.io
         type: string
       repository:
-        default: mittwald/kubernetes-secret-generator
+        default: sebt3/kubernetes-secret-generator
         type: string
       tag:
-        default: v3.4.0
+        default: 3.4.0
         type: string
     type: object
   namespaces:
     default: ''
     examples:
     - ''
-    type: string
-  release:
-    default: 3.4.0
-    description: secret-generator version to use
-    examples:
-    - 3.4.0
     type: string
   secret_length:
     default: 40
@@ -46,5 +52,13 @@ dependencies:
 - dist: null
   category: crd
   component: secret-generator
-providers: null
+providers:
+  kubernetes: true
+  authentik: null
+  kubectl: true
+  postgresql: null
+  mysql: null
+  restapi: null
+  http: null
+  gitea: null
 tfaddtype: null
