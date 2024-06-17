@@ -7,6 +7,7 @@ locals {
     mongo = { for k, v in var.databases.mongo : k => v if k!="enable" }
     pg = { for k, v in var.databases.pg : k => v if k!="enable" }
     ndb = { for k, v in var.databases.ndb : k => v if k!="enable" }
+    crdb = { for k, v in var.databases.crdb : k => v if k!="enable" }
 }
 
 resource "kubernetes_namespace_v1" "databases-ns" {
@@ -33,6 +34,24 @@ resource "kubectl_manifest" "dbo-postgresql" {
       category: "dbo"
       component: "postgresql"
       options: ${jsonencode(local.postgresql)}
+  EOF
+}
+
+resource "kubectl_manifest" "dbo-crdb" {
+  count = var.databases.crdb.enable ? 1 : 0
+  depends_on = [kubernetes_namespace_v1.databases-ns,kubectl_manifest.crd-crdb]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "dbo-crdb"
+      namespace: "${var.databases.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "${var.component}"
+      category: "dbo"
+      component: "crdb"
+      options: ${jsonencode(local.crdb)}
   EOF
 }
 

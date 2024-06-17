@@ -33,7 +33,8 @@ locals {
     var.conditions.have_gateway?[
       "--providers.kubernetesgateway",
       "--experimental.kubernetesgateway",
-    ]:[]
+    ]:[],
+    var.backend_skip_verify?["--serverstransport.insecureskipverify"]:[]
   )
 }
 resource "kubectl_manifest" "DaemonSet_traefik" {

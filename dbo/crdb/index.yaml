@@ -1,0 +1,79 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: dbo
+metadata:
+  name: crdb
+  description: CockroachDB operator
+options:
+  images:
+    default:
+      cockroach:
+        registry: docker.io
+        repository: cockroachdb/cockroach
+      operator:
+        pull_policy: IfNotPresent
+        registry: docker.io
+        repository: cockroachdb/cockroach-operator
+        tag: v2.14.0
+    examples:
+    - cockroach:
+        registry: docker.io
+        repository: cockroachdb/cockroach
+      operator:
+        pull_policy: IfNotPresent
+        registry: docker.io
+        repository: cockroachdb/cockroach-operator
+        tag: v2.14.0
+    properties:
+      cockroach:
+        default:
+          registry: docker.io
+          repository: cockroachdb/cockroach
+        properties:
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: cockroachdb/cockroach
+            type: string
+        type: object
+      operator:
+        default:
+          pull_policy: IfNotPresent
+          registry: docker.io
+          repository: cockroachdb/cockroach-operator
+          tag: v2.14.0
+        properties:
+          pull_policy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: cockroachdb/cockroach-operator
+            type: string
+          tag:
+            default: v2.14.0
+            type: string
+        type: object
+    type: object
+dependencies:
+- dist: null
+  category: crd
+  component: crdb
+providers:
+  kubernetes: null
+  authentik: null
+  kubectl: true
+  postgresql: null
+  mysql: null
+  restapi: null
+  http: null
+  gitea: null
+tfaddtype: null

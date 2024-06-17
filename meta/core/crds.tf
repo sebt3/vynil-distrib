@@ -16,6 +16,79 @@ locals {
     crd-pg = { for k, v in var.crds.pg : k => v if k!="enable" }
     crd-ndb = { for k, v in var.crds.ndb : k => v if k!="enable" }
     crd-mayfly = { for k, v in var.crds.mayfly : k => v if k!="enable" }
+    crd-hnc = { for k, v in var.crds.hnc : k => v if k!="enable" }
+    crd-capsule = { for k, v in var.crds.capsule : k => v if k!="enable" }
+    crd-kyverno = { for k, v in var.crds.kyverno : k => v if k!="enable" }
+    crd-kuberest = { for k, v in var.crds.kuberest : k => v if k!="enable" }
+    crd-crdb = { for k, v in var.crds.crdb : k => v if k!="enable" }
+}
+
+resource "kubectl_manifest" "crd-kuberest" {
+  count = (var.crds.kuberest.enable || var.tools.kuberest.enable) ? 1 : 0
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-kuberest"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "${var.component}"
+      category: "crd"
+      component: "kuberest"
+      options: ${jsonencode(local.crd-kuberest)}
+  EOF
+}
+
+resource "kubectl_manifest" "crd-kyverno" {
+  count = (var.crds.kyverno.enable || var.security.kyverno.enable) ? 1 : 0
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-kyverno"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "${var.component}"
+      category: "crd"
+      component: "kyverno"
+      options: ${jsonencode(local.crd-kyverno)}
+  EOF
+}
+
+resource "kubectl_manifest" "crd-capsule" {
+  count = (var.crds.capsule.enable || var.security.capsule.enable) ? 1 : 0
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-capsule"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "${var.component}"
+      category: "crd"
+      component: "capsule"
+      options: ${jsonencode(local.crd-capsule)}
+  EOF
+}
+
+resource "kubectl_manifest" "crd-hnc" {
+  count = (var.crds.hnc.enable || var.security.hnc.enable) ? 1 : 0
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-hnc"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "${var.component}"
+      category: "crd"
+      component: "hnc"
+      options: ${jsonencode(local.crd-hnc)}
+  EOF
 }
 
 resource "kubectl_manifest" "crd-mayfly" {
@@ -117,6 +190,23 @@ resource "kubectl_manifest" "crd-traefik" {
       category: "crd"
       component: "traefik"
       options: ${jsonencode(local.crd-traefik)}
+  EOF
+}
+
+resource "kubectl_manifest" "crd-crdb" {
+  count = (var.crds.crdb.enable || var.databases.crdb.enable)? 1 : 0
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "crd-crdb"
+      namespace: "${var.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "${var.component}"
+      category: "crd"
+      component: "crdb"
+      options: ${jsonencode(local.crd-crdb)}
   EOF
 }
 

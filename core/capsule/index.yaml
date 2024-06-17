@@ -1,0 +1,61 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: capsule
+  description: Capsule multi-tenants manager
+options:
+  images:
+    default:
+      operator:
+        pull_policy: IfNotPresent
+        registry: ghcr.io
+        repository: projectcapsule/capsule
+        tag: v0.7.0
+    examples:
+    - operator:
+        pull_policy: IfNotPresent
+        registry: ghcr.io
+        repository: projectcapsule/capsule
+        tag: v0.7.0
+    properties:
+      operator:
+        default:
+          pull_policy: IfNotPresent
+          registry: ghcr.io
+          repository: projectcapsule/capsule
+          tag: v0.7.0
+        properties:
+          pull_policy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: ghcr.io
+            type: string
+          repository:
+            default: projectcapsule/capsule
+            type: string
+          tag:
+            default: v0.7.0
+            type: string
+        type: object
+    type: object
+dependencies:
+- dist: null
+  category: crd
+  component: capsule
+providers:
+  kubernetes: true
+  authentik: null
+  kubectl: true
+  postgresql: null
+  mysql: null
+  restapi: null
+  http: null
+  gitea: null
+tfaddtype: null

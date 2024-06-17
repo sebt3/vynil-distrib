@@ -1,16 +1,35 @@
 locals {
+    kuberest = { for k, v in var.tools.kuberest : k => v if k!="enable" }
     mayfly = { for k, v in var.tools.mayfly : k => v if k!="enable" }
     reloader = { for k, v in var.tools.reloader : k => v if k!="enable" }
     metrics_server = { for k, v in var.tools.node_problem_detector : k => v if k!="enable" }
 }
 
 resource "kubernetes_namespace_v1" "tools-ns" {
-  count = ( var.tools.reloader.enable || var.tools.mayfly.enable || var.tools.metrics_server.enable )? 1 : 0
+  count = ( var.tools.kuberest.enable || var.tools.reloader.enable || var.tools.mayfly.enable || var.tools.metrics_server.enable )? 1 : 0
   metadata {
     annotations = local.annotations
     labels = local.common-labels
     name = var.tools.namespace
   }
+}
+
+resource "kubectl_manifest" "kuberest" {
+  count = var.tools.kuberest.enable ? 1 : 0
+  depends_on = [kubernetes_namespace_v1.tools-ns]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "kuberest"
+      namespace: "${var.tools.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "${var.component}"
+      category: "core"
+      component: "kuberest"
+      options: ${jsonencode(local.kuberest)}
+  EOF
 }
 
 resource "kubectl_manifest" "mayfly" {

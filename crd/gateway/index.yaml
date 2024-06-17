@@ -4,7 +4,7 @@ kind: Component
 category: crd
 metadata:
   name: gateway
-  description: null
+  description: CRD for the gateway k8s extention
 options:
   apply:
     default: true

@@ -30,13 +30,23 @@ options:
     type: object
   crds:
     default:
+      capsule:
+        enable: false
       cert-manager:
         enable: false
+      crdb:
+        enable: false
       flux:
+        enable: false
+      hnc:
         enable: false
       jaeger:
         enable: false
       k8up:
+        enable: false
+      kuberest:
+        enable: false
+      kyverno:
         enable: false
       mariadb:
         enable: false
@@ -67,13 +77,23 @@ options:
       traefik:
         enable: false
     examples:
-    - cert-manager:
+    - capsule:
+        enable: false
+      cert-manager:
+        enable: false
+      crdb:
         enable: false
       flux:
+        enable: false
+      hnc:
         enable: false
       jaeger:
         enable: false
       k8up:
+        enable: false
+      kuberest:
+        enable: false
+      kyverno:
         enable: false
       mariadb:
         enable: false
@@ -104,6 +124,14 @@ options:
       traefik:
         enable: false
     properties:
+      capsule:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
       cert-manager:
         default:
           enable: false
@@ -112,7 +140,23 @@ options:
             default: false
             type: boolean
         type: object
+      crdb:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
       flux:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      hnc:
         default:
           enable: false
         properties:
@@ -129,6 +173,22 @@ options:
             type: boolean
         type: object
       k8up:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      kuberest:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      kyverno:
         default:
           enable: false
         properties:
@@ -251,6 +311,8 @@ options:
     type: object
   databases:
     default:
+      crdb:
+        enable: false
       mariadb:
         enable: false
       mongo:
@@ -269,7 +331,9 @@ options:
       redis:
         enable: true
     examples:
-    - mariadb:
+    - crdb:
+        enable: false
+      mariadb:
         enable: false
       mongo:
         enable: true
@@ -287,6 +351,14 @@ options:
       redis:
         enable: true
     properties:
+      crdb:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
       mariadb:
         default:
           enable: false
@@ -355,25 +427,16 @@ options:
             type: boolean
         type: object
     type: object
-  flux:
-    default:
-      enable: false
-      namespace: flux
-    examples:
-    - enable: false
-      namespace: flux
-    properties:
-      enable:
-        default: false
-        type: boolean
-      namespace:
-        default: flux
-        type: string
-    type: object
   security:
     default:
+      capsule:
+        enable: false
       cert-manager:
         enable: true
+      hnc:
+        enable: false
+      kyverno:
+        enable: false
       letsencrypt:
         enable: false
       namespace: vynil-security
@@ -382,8 +445,14 @@ options:
       self-sign:
         enable: false
     examples:
-    - cert-manager:
+    - capsule:
+        enable: false
+      cert-manager:
         enable: true
+      hnc:
+        enable: false
+      kyverno:
+        enable: false
       letsencrypt:
         enable: false
       namespace: vynil-security
@@ -392,12 +461,36 @@ options:
       self-sign:
         enable: false
     properties:
+      capsule:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
       cert-manager:
         default:
           enable: true
         properties:
           enable:
             default: true
+            type: boolean
+        type: object
+      hnc:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      kyverno:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
             type: boolean
         type: object
       letsencrypt:
@@ -432,6 +525,8 @@ options:
     default:
       jaeger:
         enable: false
+      kuberest:
+        enable: false
       mayfly:
         enable: true
       metrics_server:
@@ -452,6 +547,8 @@ options:
     examples:
     - jaeger:
         enable: false
+      kuberest:
+        enable: false
       mayfly:
         enable: true
       metrics_server:
@@ -471,6 +568,14 @@ options:
         enable: false
     properties:
       jaeger:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      kuberest:
         default:
           enable: false
         properties:
@@ -571,4 +676,4 @@ providers:
   restapi: null
   http: null
   gitea: null
-tfaddtype: null
+tfaddtype: false
