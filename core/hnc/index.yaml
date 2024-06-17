@@ -1,0 +1,61 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: hnc
+  description: Hierarchical Namespace Controller allow for better multi-tenancy configuration
+options:
+  images:
+    default:
+      operator:
+        pull_policy: IfNotPresent
+        registry: gcr.io
+        repository: k8s-staging-multitenancy/hnc-manager
+        tag: v1.1.0
+    examples:
+    - operator:
+        pull_policy: IfNotPresent
+        registry: gcr.io
+        repository: k8s-staging-multitenancy/hnc-manager
+        tag: v1.1.0
+    properties:
+      operator:
+        default:
+          pull_policy: IfNotPresent
+          registry: gcr.io
+          repository: k8s-staging-multitenancy/hnc-manager
+          tag: v1.1.0
+        properties:
+          pull_policy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: gcr.io
+            type: string
+          repository:
+            default: k8s-staging-multitenancy/hnc-manager
+            type: string
+          tag:
+            default: v1.1.0
+            type: string
+        type: object
+    type: object
+dependencies:
+- dist: null
+  category: crd
+  component: hnc
+providers:
+  kubernetes: true
+  authentik: null
+  kubectl: true
+  postgresql: null
+  mysql: null
+  restapi: null
+  http: null
+  gitea: null
+tfaddtype: null

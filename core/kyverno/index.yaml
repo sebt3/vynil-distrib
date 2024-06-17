@@ -1,0 +1,265 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: kyverno
+  description: The kyverno policies manager
+options:
+  images:
+    default:
+      background:
+        pull_policy: IfNotPresent
+        registry: ghcr.io
+        repository: kyverno/background-controller
+        tag: v1.12.4
+      cleanup:
+        pull_policy: IfNotPresent
+        registry: ghcr.io
+        repository: kyverno/cleanup-controller
+        tag: v1.12.4
+      cli:
+        pull_policy: IfNotPresent
+        registry: ghcr.io
+        repository: kyverno/kyverno-cli
+        tag: v1.12.4
+      kubectl:
+        pull_policy: IfNotPresent
+        registry: docker.io
+        repository: bitnami/kubectl
+        tag: 1.28.5
+      kyverno:
+        pull_policy: IfNotPresent
+        registry: ghcr.io
+        repository: kyverno/kyverno
+        tag: v1.12.4
+      pre:
+        pull_policy: IfNotPresent
+        registry: ghcr.io
+        repository: kyverno/kyvernopre
+        tag: v1.12.4
+      reports:
+        pull_policy: IfNotPresent
+        registry: ghcr.io
+        repository: kyverno/reports-controller
+        tag: v1.12.4
+    examples:
+    - background:
+        pull_policy: IfNotPresent
+        registry: ghcr.io
+        repository: kyverno/background-controller
+        tag: v1.12.4
+      cleanup:
+        pull_policy: IfNotPresent
+        registry: ghcr.io
+        repository: kyverno/cleanup-controller
+        tag: v1.12.4
+      cli:
+        pull_policy: IfNotPresent
+        registry: ghcr.io
+        repository: kyverno/kyverno-cli
+        tag: v1.12.4
+      kubectl:
+        pull_policy: IfNotPresent
+        registry: docker.io
+        repository: bitnami/kubectl
+        tag: 1.28.5
+      kyverno:
+        pull_policy: IfNotPresent
+        registry: ghcr.io
+        repository: kyverno/kyverno
+        tag: v1.12.4
+      pre:
+        pull_policy: IfNotPresent
+        registry: ghcr.io
+        repository: kyverno/kyvernopre
+        tag: v1.12.4
+      reports:
+        pull_policy: IfNotPresent
+        registry: ghcr.io
+        repository: kyverno/reports-controller
+        tag: v1.12.4
+    properties:
+      background:
+        default:
+          pull_policy: IfNotPresent
+          registry: ghcr.io
+          repository: kyverno/background-controller
+          tag: v1.12.4
+        properties:
+          pull_policy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: ghcr.io
+            type: string
+          repository:
+            default: kyverno/background-controller
+            type: string
+          tag:
+            default: v1.12.4
+            type: string
+        type: object
+      cleanup:
+        default:
+          pull_policy: IfNotPresent
+          registry: ghcr.io
+          repository: kyverno/cleanup-controller
+          tag: v1.12.4
+        properties:
+          pull_policy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: ghcr.io
+            type: string
+          repository:
+            default: kyverno/cleanup-controller
+            type: string
+          tag:
+            default: v1.12.4
+            type: string
+        type: object
+      cli:
+        default:
+          pull_policy: IfNotPresent
+          registry: ghcr.io
+          repository: kyverno/kyverno-cli
+          tag: v1.12.4
+        properties:
+          pull_policy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: ghcr.io
+            type: string
+          repository:
+            default: kyverno/kyverno-cli
+            type: string
+          tag:
+            default: v1.12.4
+            type: string
+        type: object
+      kubectl:
+        default:
+          pull_policy: IfNotPresent
+          registry: docker.io
+          repository: bitnami/kubectl
+          tag: 1.28.5
+        properties:
+          pull_policy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: bitnami/kubectl
+            type: string
+          tag:
+            default: 1.28.5
+            type: string
+        type: object
+      kyverno:
+        default:
+          pull_policy: IfNotPresent
+          registry: ghcr.io
+          repository: kyverno/kyverno
+          tag: v1.12.4
+        properties:
+          pull_policy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: ghcr.io
+            type: string
+          repository:
+            default: kyverno/kyverno
+            type: string
+          tag:
+            default: v1.12.4
+            type: string
+        type: object
+      pre:
+        default:
+          pull_policy: IfNotPresent
+          registry: ghcr.io
+          repository: kyverno/kyvernopre
+          tag: v1.12.4
+        properties:
+          pull_policy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: ghcr.io
+            type: string
+          repository:
+            default: kyverno/kyvernopre
+            type: string
+          tag:
+            default: v1.12.4
+            type: string
+        type: object
+      reports:
+        default:
+          pull_policy: IfNotPresent
+          registry: ghcr.io
+          repository: kyverno/reports-controller
+          tag: v1.12.4
+        properties:
+          pull_policy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: ghcr.io
+            type: string
+          repository:
+            default: kyverno/reports-controller
+            type: string
+          tag:
+            default: v1.12.4
+            type: string
+        type: object
+    type: object
+dependencies:
+- dist: null
+  category: crd
+  component: kyverno
+providers:
+  kubernetes: null
+  authentik: null
+  kubectl: true
+  postgresql: null
+  mysql: null
+  restapi: null
+  http: null
+  gitea: null
+tfaddtype: null

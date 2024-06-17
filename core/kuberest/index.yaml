@@ -1,0 +1,66 @@
+---
+apiVersion: vinyl.solidite.fr/v1beta1
+kind: Component
+category: core
+metadata:
+  name: kuberest
+  description: a REST controller to manage all your configurations
+options:
+  images:
+    default:
+      operator:
+        pull_policy: IfNotPresent
+        registry: docker.io
+        repository: sebt3/kuberest
+        tag: 1.0.0
+    examples:
+    - operator:
+        pull_policy: IfNotPresent
+        registry: docker.io
+        repository: sebt3/kuberest
+        tag: 1.0.0
+    properties:
+      operator:
+        default:
+          pull_policy: IfNotPresent
+          registry: docker.io
+          repository: sebt3/kuberest
+          tag: 1.0.0
+        properties:
+          pull_policy:
+            default: IfNotPresent
+            enum:
+            - Always
+            - Never
+            - IfNotPresent
+            type: string
+          registry:
+            default: docker.io
+            type: string
+          repository:
+            default: sebt3/kuberest
+            type: string
+          tag:
+            default: 1.0.0
+            type: string
+        type: object
+    type: object
+  multi_tenant:
+    default: false
+    examples:
+    - false
+    type: boolean
+dependencies:
+- dist: null
+  category: crd
+  component: kuberest
+providers:
+  kubernetes: true
+  authentik: null
+  kubectl: true
+  postgresql: null
+  mysql: null
+  restapi: null
+  http: null
+  gitea: null
+tfaddtype: null

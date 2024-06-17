@@ -1,4 +1,6 @@
 locals {
+    hnc = { for k, v in var.security.hnc : k => v if k!="enable" }
+    kyverno = { for k, v in var.security.kyverno : k => v if k!="enable" }
     secret-generator = { for k, v in var.security.secret-generator : k => v if k!="enable" }
     cert-manager = { for k, v in var.security.cert-manager : k => v if k!="enable" }
     letsencrypt = { for k, v in var.security.letsencrypt : k => v if k!="enable" }
@@ -6,12 +8,48 @@ locals {
 }
 
 resource "kubernetes_namespace_v1" "security-ns" {
-  count = ( (var.databases.mariadb.enable || var.security.cert-manager.enable) || var.security.secret-generator.enable )? 1 : 0
+  count = ( var.security.hnc.enable || var.security.kyverno.enable || (var.databases.mariadb.enable || var.security.cert-manager.enable) || var.security.secret-generator.enable )? 1 : 0
   metadata {
     annotations = local.annotations
     labels = local.common-labels
     name = var.security.namespace
   }
+}
+
+resource "kubectl_manifest" "kyverno" {
+  count = var.security.kyverno.enable ? 1 : 0
+  depends_on = [kubernetes_namespace_v1.security-ns]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "kyverno"
+      namespace: "${var.security.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "${var.component}"
+      category: "core"
+      component: "kyverno"
+      options: ${jsonencode(local.kyverno)}
+  EOF
+}
+
+resource "kubectl_manifest" "hnc" {
+  count = var.security.hnc.enable ? 1 : 0
+  depends_on = [kubernetes_namespace_v1.security-ns]
+  yaml_body  = <<-EOF
+    apiVersion: "vynil.solidite.fr/v1"
+    kind: "Install"
+    metadata:
+      name: "hnc"
+      namespace: "${var.security.namespace}"
+      labels: ${jsonencode(local.common-labels)}
+    spec:
+      distrib: "${var.component}"
+      category: "core"
+      component: "hnc"
+      options: ${jsonencode(local.hnc)}
+  EOF
 }
 
 resource "kubectl_manifest" "secret-generator" {

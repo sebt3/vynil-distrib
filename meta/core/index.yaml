@@ -34,9 +34,15 @@ options:
         enable: false
       flux:
         enable: false
+      hnc:
+        enable: false
       jaeger:
         enable: false
       k8up:
+        enable: false
+      kuberest:
+        enable: false
+      kyverno:
         enable: false
       mariadb:
         enable: false
@@ -71,9 +77,15 @@ options:
         enable: false
       flux:
         enable: false
+      hnc:
+        enable: false
       jaeger:
         enable: false
       k8up:
+        enable: false
+      kuberest:
+        enable: false
+      kyverno:
         enable: false
       mariadb:
         enable: false
@@ -120,6 +132,14 @@ options:
             default: false
             type: boolean
         type: object
+      hnc:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
       jaeger:
         default:
           enable: false
@@ -129,6 +149,22 @@ options:
             type: boolean
         type: object
       k8up:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      kuberest:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      kyverno:
         default:
           enable: false
         properties:
@@ -355,25 +391,14 @@ options:
             type: boolean
         type: object
     type: object
-  flux:
-    default:
-      enable: false
-      namespace: flux
-    examples:
-    - enable: false
-      namespace: flux
-    properties:
-      enable:
-        default: false
-        type: boolean
-      namespace:
-        default: flux
-        type: string
-    type: object
   security:
     default:
       cert-manager:
         enable: true
+      hnc:
+        enable: false
+      kyverno:
+        enable: false
       letsencrypt:
         enable: false
       namespace: vynil-security
@@ -384,6 +409,10 @@ options:
     examples:
     - cert-manager:
         enable: true
+      hnc:
+        enable: false
+      kyverno:
+        enable: false
       letsencrypt:
         enable: false
       namespace: vynil-security
@@ -398,6 +427,22 @@ options:
         properties:
           enable:
             default: true
+            type: boolean
+        type: object
+      hnc:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      kyverno:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
             type: boolean
         type: object
       letsencrypt:
@@ -432,6 +477,8 @@ options:
     default:
       jaeger:
         enable: false
+      kuberest:
+        enable: false
       mayfly:
         enable: true
       metrics_server:
@@ -452,6 +499,8 @@ options:
     examples:
     - jaeger:
         enable: false
+      kuberest:
+        enable: false
       mayfly:
         enable: true
       metrics_server:
@@ -471,6 +520,14 @@ options:
         enable: false
     properties:
       jaeger:
+        default:
+          enable: false
+        properties:
+          enable:
+            default: false
+            type: boolean
+        type: object
+      kuberest:
         default:
           enable: false
         properties:
@@ -571,4 +628,4 @@ providers:
   restapi: null
   http: null
   gitea: null
-tfaddtype: null
+tfaddtype: false
